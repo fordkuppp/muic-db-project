@@ -1,0 +1,21 @@
+:root {
+    --primary-color: #00d1b2;
+}
+
+.navbar {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.navbar-brand a {
+    color: black;
+    font-weight: 900;
+    font-size: larger;
+}
+
+.footer {
+    background-color: var(--primary-color);
+}
+
+:link {
+    color: #ffffff;
+}

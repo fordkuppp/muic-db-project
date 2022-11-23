@@ -9,8 +9,10 @@
     <script src="https://kit.fontawesome.com/7a215e7166.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/index.js" defer></script>
+    {% block head %}
+    {% endblock %}
 </head>
-
 <body>
     <div class="layout">
         <header class="header">
@@ -24,6 +26,7 @@
             {% include "elements/footer.html" %}
         </footer>
     </div>
-
+    {% block modal %}
+    {% endblock %}
 </body>
 </html>

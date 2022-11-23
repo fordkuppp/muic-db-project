@@ -8,8 +8,18 @@ db.init_app(app)
 
 
 @app.route("/")
-def index():
-    return render_template("default.html")
+def home():
+    return render_template("home.html")
+
+
+@app.route("/user/login", methods=["GET", "POST"])
+def login():
+    return "LOGIN PAGE"
+
+
+@app.route("/user/signup", methods=["GET", "POST"])
+def signup():
+    return "SIGNUP PAGE"
 
 
 if __name__ == "__main__":

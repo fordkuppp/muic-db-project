@@ -1,7 +1,7 @@
 const loginCloseButton = document.getElementById("login-close-button");
 const loginBlock = document.getElementById("login-modal");
 const signupBlock = document.getElementById("signup-modal");
-const resetBlock = document.getElementById("reset-modal");
+const forgetBlock = document.getElementById("forget-modal");
 const masterBlock = document.getElementById("master-modal")
 const active = "is-active"
 
@@ -14,9 +14,9 @@ function closeSignupBlock() { signupBlock.classList.remove(active); }
 
 function openSignupBlock() { signupBlock.classList.add(active); }
 
-function closeResetBlock() { resetBlock.classList.remove(active); }
+function closeForgetBlock() { forgetBlock.classList.remove(active); }
 
-function openResetBlock() { resetBlock.classList.add(active); }
+function openForgetBlock() { forgetBlock.classList.add(active); }
 
 function openMasterBlock() { masterBlock.classList.add(active); }
 

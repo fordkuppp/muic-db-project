@@ -21,6 +21,10 @@
     color: #ffffff;
 }
 
+.modal {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
 .modal-card {
     width: 90%;
     max-width: 400px;

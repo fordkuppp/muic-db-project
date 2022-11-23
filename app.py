@@ -27,5 +27,13 @@ def signup():
     return redirect("home")
 
 
+@app.route("/user/forget/", methods=["GET", "POST"])
+def forget():
+    if request.method == "POST":
+        print(request.form)
+        return "success"
+    return redirect("home")
+
+
 if __name__ == "__main__":
     app.run(debug=True)

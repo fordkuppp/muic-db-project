@@ -1,4 +1,12 @@
 {% extends 'default.html' %}
+
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js" integrity="sha256-r9S9KZvN5nEN1voCkVbj4RdMSLwAa4qeujL5ZOWSN4M=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.2.0/dist/axios.min.js" integrity="sha256-xJNTehIpC6/bk41FMzIkPAjeo8cYvnGnxbv/YgAM1og=" crossorigin="anonymous"></script>
+<script src="//cdn.jsdelivr.net/npm/simple-crypto-js@2.5.0/dist/SimpleCrypto.min.js"></script>
+<script src="/static/index.js" defer></script>
+{% endblock %}
+
 {% block main %}
 <section>
 </section>
@@ -7,4 +15,5 @@
 {% block modal %}
 {% include "elements/forms/login.html" %}
 {% include "elements/forms/signup.html" %}
+{% include "elements/forms/master_key.html" %}
 {% endblock %}

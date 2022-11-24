@@ -1,12 +1,11 @@
 from typing import Any
 from flask import Flask, render_template, redirect, request
 from flask_sqlalchemy import SQLAlchemy
+import yaml
+import mysql.connector
+from sqlalchemy import text
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://username:password@server/db"
-db = SQLAlchemy()
-db.init_app(app)
-
 
 @app.route("/")
 def home():
@@ -45,6 +44,9 @@ def login():
 
 @app.route("/user/signup/", methods=["POST"])
 def signup():
+    data = request.form.get('email')
+    app.logger.info(data)
+    return data
     pass
 
 
@@ -82,6 +84,30 @@ def completed():
 def hiatus():
     pass
 
+
+@app.route("/dbtest")
+def dbtest():
+    # statement = f"INSERT INTO reader_db.user (username, email, password, last_login, role_id) VALUES ('fesfsefe', 'test', 'test', '2022-11-24 21:52:50', 2);"
+    statement = f"SELECT * FROM user;"
+
+    db = get_db()
+    cur = db.cursor()
+    cur.execute(statement)
+    result = cur.fetchall()
+    print(str(result))
+    db.commit()
+
+    return str(result)
+
+def get_db():
+    cred = yaml.load(open('cred.yaml'), Loader=yaml.Loader)  
+    db = mysql.connector.connect(
+        host=cred["mysql_host"],
+        user=cred["mysql_user"],
+        password=cred["mysql_password"],
+        database=cred["mysql_db"]
+    )
+    return db
 
 if __name__ == "__main__":
     app.run(debug=True)

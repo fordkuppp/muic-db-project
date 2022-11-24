@@ -5,7 +5,7 @@
             <button class="delete" aria-label="close" onclick="closeSignupBlock();"></button>
         </header>
         <section class="modal-card-body">
-            <form method="post" action="{{url_for('signup')}}">
+            <form method="post" action="{{url_for('user.register')}}">
                 <div class="field">
                     <label class="label">Email</label>
                     <div class="control has-icons-left has-icons-right">
@@ -28,7 +28,7 @@
                 <div class="field">
                     <label class="label">Password</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="Password" placeholder="Password" id="password1" name="password" required>
+                        <input class="input" type="password" placeholder="Password" id="password1" name="password1" onkeyup='check();' required>
                         <span class="icon is-small is-left">
                             <i class="fa fa-lock"></i>
                         </span>
@@ -37,11 +37,12 @@
                 <div class="field">
                     <label class="label">Confirm Password</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="Password" placeholder="Retype password" id="password2" name="password2" required>
+                        <input class="input" type="password" placeholder="Retype password" id="password2" name="password2" onkeyup='check();' required>
                         <span class="icon is-small is-left">
                             <i class="fa fa-lock"></i>
                         </span>
                     </div>
+                    <span id="match"></span>
                 </div>
                 <div class="field">
                     <div class="control">
@@ -62,3 +63,15 @@
         </footer>
     </div>
 </div>
+
+<script>
+    var check = function() {
+        if (document.getElementById('password1').value ==
+            document.getElementById('password2').value) {
+            document.getElementById('match').innerHTML = '';
+        } else {
+            document.getElementById('match').style.color = 'red';
+            document.getElementById('match').innerHTML = 'Passwords do not match';
+        }
+    }
+</script>

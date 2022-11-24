@@ -14,32 +14,14 @@
     <div class="block-body">
         <div class="main-carousel"
             data-flickity='{"autoPlay": true, "pauseAutoPlayOnHover": true,  "pageDots": false, "contain": true}'>
-            <!-- HERE for testing -->
-            {% for i in range(24) %}
-            <div class="carousel-cell trending-item">
-                <a title="novel title" href="/">
-                    <div class="inner">
-                        <div class="icon">
-                            <img src="/static/cover-default.png" data-src="/static/cover-default.png" alt="name alt"
-                                title="novel title">
-                            <span class="latest-chapter">chapter xx</span>
-                        </div>
-                        <div class="meta">
-                            <h4 class="name title is-6">novel name</h4>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            {% endfor %}
-            <!-- TEsting end here -->
             {% for novel in popular %}
             <div class="carousel-cell trending-item">
                 <a title="{{novel.name}}" href="{{novel.get_absolute_url}}">
                     <div class="inner">
                         <div class="icon">
-                            <img src="/static/cover-default.png" data-src="/static/cover-default.png"
-                                alt="{{novel.alt}}" title="{{novel.name}}">
-                            <span class="latest-chapter">{{novel.chapters.first}}</span>
+                            <img src="{{novel.image}}" data-src="{{novel.image}}" alt="{{novel.alt}}"
+                                title="{{novel.name}}">
+                            <span class="latest-chapter">{{novel.latest_chap}}</span>
                         </div>
                         <div class="meta">
                             <h4 class="name title is-6">{{novel.name}}</h4>
@@ -52,7 +34,7 @@
     </div>
 </section>
 <section class="block">
-    <section class="block-head">
+    <div class="block-head">
         <div class="title is-5 bolder">
             <span>LATEST UPDATES</span>
         </div>
@@ -60,8 +42,41 @@
             View more
             <i class="fa fa-angle-right" aria-hidden="true"></i>
         </a>
-    </section>
-    <section class="block-body"></section>
+    </div>
+    <div class="block-body grid-items">
+        {% for novel in latest %}
+        <article class="book-item latest-item">
+            <div class="inner">
+                <div class="thumb tooltip-hover">
+                    <a href="{{novel.get_absolute_url}}">
+                        <img src="{{novel.image}}" data-src="{{novel.image}}}" alt="{{novel.alt}}">
+                    </a>
+                </div>
+                <div class="meta">
+                    <div class="title">
+                        <h3>
+                            <a href="{{novel.get_absolute_url}}" title="{{novel.name}}">{{novel.name}}</a>
+                        </h3>
+                    </div>
+                    <div class="chapters">
+                        {% for chapter in novel.chapters %}
+                        <div class="chap-item">
+                            <h4>
+                                <a title="{{novel.name}} - {{chapter.name}}" href="{{chapter.get_absolute_url}}">
+                                    {{chapter.name}}
+                                </a>
+                            </h4>
+                            <div class="updated-date">
+                                <span>{{chapter.get_date}}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
 </section>
 {% endblock %}
 

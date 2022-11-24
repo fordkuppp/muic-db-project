@@ -5,6 +5,8 @@ import yaml
 import mysql.connector
 from sqlalchemy import text
 
+from . import db
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -47,43 +49,6 @@ def signup():
     data = request.form.get('email')
     app.logger.info(data)
     return data
-    pass
-
-
-@app.route("/user/forget/", methods=["POST"])
-def forget():
-    pass
-
-
-@app.route("/user/forget/<string:token>", methods=["POST"])
-def new_pass(token: str):
-    pass
-
-
-@app.route("/latest/")
-def latest():
-    pass
-
-
-@app.route("/popular/")
-def popular():
-    pass
-
-
-@app.route("/status/on_going/")
-def on_going():
-    pass
-
-
-@app.route("/status/complete/")
-def completed():
-    pass
-
-
-@app.route("/status/hiatus/")
-def hiatus():
-    pass
-
 
 @app.route("/dbtest")
 def dbtest():
@@ -108,6 +73,3 @@ def get_db():
         database=cred["mysql_db"]
     )
     return db
-
-if __name__ == "__main__":
-    app.run(debug=True)

@@ -5,7 +5,7 @@
             <button class="delete" aria-label="close" onclick="closeSignupBlock();"></button>
         </header>
         <section class="modal-card-body">
-            <form method="post" action="{{url_for('signup')}}">
+            <form method="post" action="{{url_for('user.register')}}">
                 <div class="field">
                     <label class="label">Email</label>
                     <div class="control has-icons-left has-icons-right">
@@ -28,7 +28,7 @@
                 <div class="field">
                     <label class="label">Password</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="Password" placeholder="Password" id="password1" name="password" required>
+                        <input class="input" type="password" placeholder="Password" id="password1" name="password1" required>
                         <span class="icon is-small is-left">
                             <i class="fa fa-lock"></i>
                         </span>
@@ -37,7 +37,7 @@
                 <div class="field">
                     <label class="label">Confirm Password</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="Password" placeholder="Retype password" id="password2" name="password2" required>
+                        <input class="input" type="password" placeholder="Retype password" id="password2" name="password2" required>
                         <span class="icon is-small is-left">
                             <i class="fa fa-lock"></i>
                         </span>

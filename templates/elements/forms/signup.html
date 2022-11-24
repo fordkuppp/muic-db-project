@@ -1,0 +1,64 @@
+<div class="modal" id="signup-modal">
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <strong class="modal-card-title">Register</strong>
+            <button class="delete" aria-label="close" onclick="closeSignupBlock();"></button>
+        </header>
+        <section class="modal-card-body">
+            <form method="post" action="{{url_for('signup')}}">
+                <div class="field">
+                    <label class="label">Email</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input class="input" type="text" placeholder="Email" id="email" required>
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-envelope"></i>
+                        </span>
+                        <p class="help is-danger"></p>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Username</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input class="input" type="text" placeholder="Display name" id="username" required>
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Password</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input class="input" type="Password" placeholder="Password" id="password1" required>
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-lock"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Confirm Password</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input class="input" type="Password" placeholder="Retype password" id="password2" required>
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-lock"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button class="button submit is-primary" type="submit">
+                            <strong>
+                                SIGNUP
+                            </strong>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </section>
+        <footer class="modal-card-foot">
+            <a title="Back to login" onclick="closeSignupBlock(); openLoginBlock();">
+                <i class="fa fa-angle-right"></i>
+                Back to login
+            </a>
+        </footer>
+    </div>
+</div>

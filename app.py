@@ -9,7 +9,32 @@ db.init_app(app)
 
 @app.route("/")
 def home():
-    return render_template("home.html")
+    return render_template("starter/home.html")
+
+
+@app.route("/user/login/", methods=["POST"])
+def login():
+    pass
+
+
+@app.route("/user/signup/", methods=["POST"])
+def signup():
+    pass
+
+
+@app.route("/user/forget/", methods=["POST"])
+def forget():
+    pass
+
+
+@app.route("/user/new_pass/", methods=["POST"])
+def new_pass():
+    pass
+
+
+@app.route("/latest/")
+def latest():
+    pass
 
 
 if __name__ == "__main__":

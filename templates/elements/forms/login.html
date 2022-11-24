@@ -1,0 +1,49 @@
+<div class="modal" id="login-modal">
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <strong class="modal-card-title">Login</strong>
+            <button class="delete" aria-label="close" onclick="closeLoginBlock();"></button>
+        </header>
+        <section class="modal-card-body">
+            <form method="post" action="{{url_for('login')}}">
+                <div class="field">
+                    <label class="label">Username</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input class="input" type="text" placeholder="Username" required>
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Password</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input class="input" type="Password" placeholder="Password" required>
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-lock"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button class="button submit is-primary" type="submit">
+                            <strong>
+                                LOGIN
+                            </strong>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </section>
+        <footer class="modal-card-foot">
+            <a onclick="openForgetBlock(); closeLoginBlock();">
+                <i class="fa fa-angle-right"></i>
+                Forgot password
+            </a>
+            <a onclick="openSignupBlock(); closeLoginBlock();">
+                <i class="fa fa-angle-right"></i>
+                Create an account
+            </a>
+        </footer>
+    </div>
+</div>

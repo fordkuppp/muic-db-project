@@ -1,0 +1,72 @@
+{% extends 'default.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block main %}
+<section class="block">
+    <div class="block-head">
+        <div class="title is-5 bolder">
+            <span>HOT UPDATES</span>
+        </div>
+    </div>
+    <div class="block-body">
+        <div class="main-carousel"
+            data-flickity='{"autoPlay": true, "pauseAutoPlayOnHover": true,  "pageDots": false, "contain": true}'>
+            <!-- HERE for testing -->
+            {% for i in range(24) %}
+            <div class="carousel-cell trending-item">
+                <a title="novel title" href="/">
+                    <div class="inner">
+                        <div class="icon">
+                            <img src="/static/cover-default.png" data-src="/static/cover-default.png" alt="name alt"
+                                title="novel title">
+                            <span class="latest-chapter">chapter xx</span>
+                        </div>
+                        <div class="meta">
+                            <h4 class="name title is-6">novel name</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+            <!-- TEsting end here -->
+            {% for novel in popular %}
+            <div class="carousel-cell trending-item">
+                <a title="{{novel.name}}" href="{{novel.get_absolute_url}}">
+                    <div class="inner">
+                        <div class="icon">
+                            <img src="/static/cover-default.png" data-src="/static/cover-default.png"
+                                alt="{{novel.alt}}" title="{{novel.name}}">
+                            <span class="latest-chapter">{{novel.chapters.first}}</span>
+                        </div>
+                        <div class="meta">
+                            <h4 class="name title is-6">{{novel.name}}</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<section class="block">
+    <section class="block-head">
+        <div class="title is-5 bolder">
+            <span>LATEST UPDATES</span>
+        </div>
+        <a title="View more" href="{{ url_for('latest')}}" class="right-icon">
+            View more
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+        </a>
+    </section>
+    <section class="block-body"></section>
+</section>
+{% endblock %}
+
+{% block modal %}
+{% include "elements/forms/login.html" %}
+{% include "elements/forms/signup.html" %}
+{% include "elements/forms/forget.html" %}
+{% endblock %}

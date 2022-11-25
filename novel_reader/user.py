@@ -59,12 +59,35 @@ def register():
         return "Username or email is already in used!"
 
 
-@bp.route("/login/", methods=["POST"])
+@bp.route("/login", methods=["POST"])
 def login():
-    pass
+    username = request.form['username']
+    password = request.form['password']
+    
+    db = get_db()
+    cur = db.cursor()
+    
+    cur.execute(
+        "SELECT * FROM user WHERE username = %s",
+        (username,)
+    )
+    user = cur.fetchone()
+    
+    if user is None:
+        return "Incorrect username"
+    elif not bcrypt.checkpw(password.encode("utf-8"), user[3].encode("utf-8")):
+        return "Incorrect password"
+    
+    session.clear()
+    session['user_id'] = user[0]
+    return redirect("/")
 
+@bp.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/")
 
-@bp.route("/forget/", methods=["POST"])
+@bp.route("/forget", methods=["POST"])
 def forget():
     pass
 

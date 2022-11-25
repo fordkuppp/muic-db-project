@@ -17,14 +17,20 @@
         </div>
         <div class="navbar-end">
             <div class="navbar-item">
-                <div class="buttons">
-                    <a class="button is-primary" onclick="openSignupBlock();">
-                        <strong>Sign up</strong>
-                    </a>
-                    <a class="button is-light" onclick="openLoginBlock();">
-                        Log in
-                    </a>
-                </div>
+                {% if not g.user %}
+                    <div class="buttons">
+                        <a class="button is-primary" onclick="openSignupBlock();">
+                            <strong>Register</strong>
+                        </a>
+                        <a class="button is-light" onclick="openLoginBlock();">
+                            Log in
+                        </a>
+                    </div>
+                {% else %} 
+                    <div class="button">
+                        <a class="button is-primary">Profile</a>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

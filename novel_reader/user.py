@@ -15,7 +15,6 @@ import bcrypt
 
 bp = Blueprint("user", __name__, url_prefix="/user")
 
-
 @bp.route("/register", methods=["POST"])
 def register():
     try:
@@ -29,7 +28,7 @@ def register():
         time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         salt = bcrypt.gensalt()
         hashed_password = bcrypt.hashpw(password1.encode("utf-8"), salt)
-        print(hashed_password)
+
         if password1 != password2:
             return "Passwords do not match!"
 
@@ -42,12 +41,22 @@ def register():
 
         cur.execute(add_user, data_user)
         db.commit()
-        cur.close()
 
+        cur.execute(
+            "SELECT * FROM user WHERE username = %s;",
+            (username,)
+        )
+        
+        user = cur.fetchone()
+        
+        session.clear()
+        cur.close()
+        session["user_id"] = user[0]
+        
         return redirect("/")
 
     except IntegrityError:
-        return "Username or password is already in used!"
+        return "Username or email is already in used!"
 
 
 @bp.route("/login/", methods=["POST"])
@@ -67,3 +76,18 @@ def new_pass(token: str):
         pass
     else:
         return render_template("starter/reset.html")
+    
+@bp.before_app_request
+def load_logged_in_user():
+    user_id = session.get('user_id')
+
+    if user_id is None:
+        g.user = None
+    else:
+        db = get_db()
+        cur = db.cursor()   
+        cur.execute(
+            "SELECT * FROM user WHERE id = %s",
+            (user_id,)
+        )
+        g.user = cur.fetchone()

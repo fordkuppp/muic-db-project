@@ -1,0 +1,56 @@
+{% extends 'default.html' %}
+
+{% block head %}
+{% endblock %}
+{% block main %}
+<div class="block">
+    <div class="block-head">
+        <div class="title is-5 bolder">
+            <span>{{endpoint}}</span>
+        </div>
+    </div>
+    <div class="block-body">
+        <div class="list">
+            {% for novel in result %}
+            <article class="book-item">
+                <div class="book-detailed-item">
+                    <div class="thumb">
+                        <a title="{{novel.name}}" href="{{novel.get_absolute_url}}">
+                            <img src="{{novel.image}}" data-src="{{novel.get_absolute_url}}" alt="{{novel.alt}}"
+                                title="{{novel.name}}">
+                        </a>
+                        <span class="latest-chapter" title="{{novel.latest_chap}}">
+                            {{novel.latest_chap}}
+                        </span>
+                    </div>
+                    <div class="meta">
+                        <div class="title is-3">
+                                <a title="{{novel.name}}" href="{{novel.get_absolute_url}}">
+                                    {{novel.name}}
+                                </a>
+                        </div>
+                        <div class="views">
+                            <i style="color: #a71d2a;" class="fas fa-eye"></i>
+                            <span>{{novel.hits}}</span>
+                        </div>
+                        <div class="genres">
+                            {% for item in novel.genres %}
+                            <span class="{{item.slug}}">
+                                {{item.name}}
+                            </span>
+                            {% endfor %}
+                        </div>
+                        <div class="summary">
+                            <p>{{novel.description}}</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block modal %}
+{% endblock %}

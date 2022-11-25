@@ -9,6 +9,7 @@ from flask import (
     url_for,
 )
 from novel_reader.db import get_db
+from typing import Any
 
 bp = Blueprint("home", __name__, url_prefix="/")
 
@@ -50,34 +51,193 @@ def home():
                 ],
             }
         )
-    return render_template("starter/home.html", popular=popular, latest=latest)
+    return render_template("starter/home.html", popular="POPULAR NOVELS", latest=latest)
 
 
 @bp.route("/latest/")
 def latest():
-    pass
+    data: list[dict] = []
+    for _ in range(40):
+        data.append(
+            {
+                "name": "Best Novel",
+                "image": "/static/cover-default.png",
+                "get_absolute_url": "/novel/novel-slug/",
+                "alt": "alt",
+                "hits": 30,
+                "description": "This is novel description that is very very and very super duper long.",
+                "genres": [{
+                    "name": "Action",
+                    "slug": "action"
+                },
+                {
+                    "name": "Martial Arts",
+                    "slug": "martial-arts"
+                }],
+                "latest_chap": "chapter XX"
+            }
+        )
+
+    return render_template("starter/list.html", endpoint="LATEST NOVELS", result=data)
 
 
 @bp.route("/popular/")
 def popular():
-    pass
+    data: list[dict] = []
+    for _ in range(40):
+        data.append(
+            {
+                "name": "Best Novel",
+                "image": "/static/cover-default.png",
+                "get_absolute_url": "/novel/novel-slug/",
+                "alt": "alt",
+                "hits": 30,
+                "description": "This is novel description that is very very and very super duper long.",
+                "genres": [{
+                    "name": "Action",
+                    "slug": "action"
+                },
+                {
+                    "name": "Martial Arts",
+                    "slug": "martial-arts"
+                }],
+                "latest_chap": "chapter XX"
+            }
+        )
+
+    return render_template("starter/list.html", endpoint="POPULAR NOVELS", result=data)
 
 
 @bp.route("/status/on_going/")
 def on_going():
-    pass
+    data: list[dict] = []
+    for _ in range(40):
+        data.append(
+            {
+                "name": "Best Novel",
+                "image": "/static/cover-default.png",
+                "get_absolute_url": "/novel/novel-slug/",
+                "alt": "alt",
+                "hits": 30,
+                "description": "This is novel description that is very very and very super duper long.",
+                "genres": [{
+                    "name": "Action",
+                    "slug": "action"
+                },
+                {
+                    "name": "Martial Arts",
+                    "slug": "martial-arts"
+                }],
+                "latest_chap": "chapter XX"
+            }
+        )
+
+    return render_template("starter/list.html", endpoint="ON-GOING NOVELS", result=data)
 
 
 @bp.route("/status/complete/")
 def completed():
-    pass
+    data: list[dict] = []
+    for _ in range(40):
+        data.append(
+            {
+                "name": "Best Novel",
+                "image": "/static/cover-default.png",
+                "get_absolute_url": "/novel/novel-slug/",
+                "alt": "alt",
+                "hits": 30,
+                "description": "This is novel description that is very very and very super duper long.",
+                "genres": [{
+                    "name": "Action",
+                    "slug": "action"
+                },
+                {
+                    "name": "Martial Arts",
+                    "slug": "martial-arts"
+                }],
+                "latest_chap": "chapter XX"
+            }
+        )
+
+    return render_template("starter/list.html", endpoint="COMPLETED NOVELS", result=data)
 
 
 @bp.route("/status/hiatus/")
 def hiatus():
-    pass
+    data: list[dict] = []
+    for _ in range(40):
+        data.append(
+            {
+                "name": "Best Novel",
+                "image": "/static/cover-default.png",
+                "get_absolute_url": "/novel/novel-slug/",
+                "alt": "alt",
+                "hits": 30,
+                "description": "This is novel description that is very very and very super duper long.",
+                "genres": [{
+                    "name": "Action",
+                    "slug": "action"
+                },
+                {
+                    "name": "Martial Arts",
+                    "slug": "martial-arts"
+                }],
+                "latest_chap": "chapter XX"
+            }
+        )
+
+    return render_template("starter/list.html", endpoint="HIATUS NOVELS", result=data)
 
 
 @bp.route("/search/")
 def search():
-    pass
+    data: list[dict] = []
+    for _ in range(40):
+        data.append(
+            {
+                "name": "Best Novel",
+                "image": "/static/cover-default.png",
+                "get_absolute_url": "/novel/novel-slug/",
+                "alt": "alt",
+                "hits": 30,
+                "description": "This is novel description that is very very and very super duper long.",
+                "genres": [{
+                    "name": "Action",
+                    "slug": "action"
+                },
+                {
+                    "name": "Martial Arts",
+                    "slug": "martial-arts"
+                }],
+                "latest_chap": "chapter XX"
+            }
+        )
+
+    return render_template("starter/list.html", endpoint="COMPLETED NOVELS", result=data)
+
+
+@bp.route("/status/hiatus/")
+def hiatus():
+    data: list[dict] = []
+    for _ in range(40):
+        data.append(
+            {
+                "name": "Best Novel",
+                "image": "/static/cover-default.png",
+                "get_absolute_url": "/novel/novel-slug/",
+                "alt": "alt",
+                "hits": 30,
+                "description": "This is novel description that is very very and very super duper long.",
+                "genres": [{
+                    "name": "Action",
+                    "slug": "action"
+                },
+                {
+                    "name": "Martial Arts",
+                    "slug": "martial-arts"
+                }],
+                "latest_chap": "chapter XX"
+            }
+        )
+
+    return render_template("starter/list.html", endpoint="SEARCH: KEYWORD", result=data)

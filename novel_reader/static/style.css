@@ -486,3 +486,11 @@ section.header {
 .book-detailed-item .meta .title a:hover {
     color: var(--primary-color-hover);
 }
+
+.block:first-child {
+    margin-top: 1.5rem;
+}
+
+.block:last-child {
+    margin-bottom: 1.5rem;
+}

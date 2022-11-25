@@ -24,7 +24,7 @@ def home():
             {
                 "name": "Novel Name",
                 "image": "/static/cover-default.png",
-                "get_absolute_url": "/novel-slug/",
+                "slug": "best-novel",
                 "alt": "alt",
                 "latest_chap": "chapter X",
             }
@@ -35,23 +35,23 @@ def home():
             {
                 "name": "Best Novel",
                 "image": "/static/cover-default.png",
-                "get_absolute_url": "/novel/novel-slug/",
+                "slug": "best-novel",
                 "alt": "alt",
                 "chapters": [
                     {
                         "name": "chapter XX",
-                        "get_absolute_url": "/chapter/slug/",
+                        "slug": "chapter-xx",
                         "get_date": "2 hours ago",
                     },
                     {
                         "name": "chapter XX",
-                        "get_absolute_url": "/chapter/slug/",
+                        "slug": "chapter-xx",
                         "get_date": "2 hours ago",
                     },
                 ],
             }
         )
-    return render_template("starter/home.html", popular="POPULAR NOVELS", latest=latest)
+    return render_template("starter/home.html", popular=popular, latest=latest)
 
 
 @bp.route("/latest/")
@@ -62,7 +62,7 @@ def latest():
             {
                 "name": "Best Novel",
                 "image": "/static/cover-default.png",
-                "get_absolute_url": "/novel/novel-slug/",
+                "slug": "best-novel",
                 "alt": "alt",
                 "hits": 30,
                 "description": "This is novel description that is very very and very super duper long.",
@@ -89,7 +89,7 @@ def popular():
             {
                 "name": "Best Novel",
                 "image": "/static/cover-default.png",
-                "get_absolute_url": "/novel/novel-slug/",
+                "slug": "best-novel",
                 "alt": "alt",
                 "hits": 30,
                 "description": "This is novel description that is very very and very super duper long.",
@@ -116,7 +116,7 @@ def on_going():
             {
                 "name": "Best Novel",
                 "image": "/static/cover-default.png",
-                "get_absolute_url": "/novel/novel-slug/",
+                "slug": "best-novel",
                 "alt": "alt",
                 "hits": 30,
                 "description": "This is novel description that is very very and very super duper long.",
@@ -143,7 +143,7 @@ def completed():
             {
                 "name": "Best Novel",
                 "image": "/static/cover-default.png",
-                "get_absolute_url": "/novel/novel-slug/",
+                "slug": "best-novel",
                 "alt": "alt",
                 "hits": 30,
                 "description": "This is novel description that is very very and very super duper long.",
@@ -170,7 +170,7 @@ def hiatus():
             {
                 "name": "Best Novel",
                 "image": "/static/cover-default.png",
-                "get_absolute_url": "/novel/novel-slug/",
+                "slug": "best-novel",
                 "alt": "alt",
                 "hits": 30,
                 "description": "This is novel description that is very very and very super duper long.",
@@ -197,34 +197,7 @@ def search():
             {
                 "name": "Best Novel",
                 "image": "/static/cover-default.png",
-                "get_absolute_url": "/novel/novel-slug/",
-                "alt": "alt",
-                "hits": 30,
-                "description": "This is novel description that is very very and very super duper long.",
-                "genres": [{
-                    "name": "Action",
-                    "slug": "action"
-                },
-                {
-                    "name": "Martial Arts",
-                    "slug": "martial-arts"
-                }],
-                "latest_chap": "chapter XX"
-            }
-        )
-
-    return render_template("starter/list.html", endpoint="COMPLETED NOVELS", result=data)
-
-
-@bp.route("/status/hiatus/")
-def hiatus():
-    data: list[dict] = []
-    for _ in range(40):
-        data.append(
-            {
-                "name": "Best Novel",
-                "image": "/static/cover-default.png",
-                "get_absolute_url": "/novel/novel-slug/",
+                "slug": "best-novel",
                 "alt": "alt",
                 "hits": 30,
                 "description": "This is novel description that is very very and very super duper long.",
@@ -241,3 +214,12 @@ def hiatus():
         )
 
     return render_template("starter/list.html", endpoint="SEARCH: KEYWORD", result=data)
+
+
+@bp.route("/novel/<string:slug>/")
+def novel(slug: str):
+    pass
+
+@bp.route("/chapter/<string:slug>/")
+def chapter(slug: str):
+    pass

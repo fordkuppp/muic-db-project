@@ -233,7 +233,7 @@ section.header {
 }
 
 .block-head .right-icon:hover {
-    color: var(--link-default);
+    color: var(--primary-color-hover);
 }
 
 .grid-items {

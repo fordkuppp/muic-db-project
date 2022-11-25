@@ -236,6 +236,24 @@ section.header {
     color: var(--primary-color-hover);
 }
 
+#reset-block {
+    margin: 100px;
+}
+
+#reset-block header {
+    background-color: var(--primary-color);
+}
+
+#reset-block .modal-card-title {
+    color: white;
+}
+
+#reset-block .modal-card-body {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom: 1px solid #dbdbdb;
+}
+
 .grid-items {
     padding: 7.5px;
     display: flex;

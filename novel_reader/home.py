@@ -1,9 +1,17 @@
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint,
+    flash,
+    g,
+    redirect,
+    render_template,
+    request,
+    session,
+    url_for,
 )
 from novel_reader.db import get_db
 
-bp = Blueprint('home', __name__, url_prefix='/')
+bp = Blueprint("home", __name__, url_prefix="/")
+
 
 @bp.route("/")
 def home():
@@ -22,17 +30,28 @@ def home():
         )
 
     for _ in range(30):
-        latest.append({
-            "name": "Best Novel",
-            "image": "/static/cover-default.png",
-            "get_absolute_url": "/novel/novel-slug/",
-            "alt": "alt",
-            "chapters": [
-                {"name": "chapter XX", "get_absolute_url": "/chapter/slug/", "get_date": "2 hours ago"}, 
-                {"name": "chapter XX", "get_absolute_url": "/chapter/slug/", "get_date": "2 hours ago"}
-                ]
-            })
+        latest.append(
+            {
+                "name": "Best Novel",
+                "image": "/static/cover-default.png",
+                "get_absolute_url": "/novel/novel-slug/",
+                "alt": "alt",
+                "chapters": [
+                    {
+                        "name": "chapter XX",
+                        "get_absolute_url": "/chapter/slug/",
+                        "get_date": "2 hours ago",
+                    },
+                    {
+                        "name": "chapter XX",
+                        "get_absolute_url": "/chapter/slug/",
+                        "get_date": "2 hours ago",
+                    },
+                ],
+            }
+        )
     return render_template("starter/home.html", popular=popular, latest=latest)
+
 
 @bp.route("/latest/")
 def latest():
@@ -56,4 +75,9 @@ def completed():
 
 @bp.route("/status/hiatus/")
 def hiatus():
+    pass
+
+
+@bp.route("/search/")
+def search():
     pass

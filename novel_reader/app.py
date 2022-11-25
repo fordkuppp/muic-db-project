@@ -9,6 +9,7 @@ from . import db
 
 app = Flask(__name__)
 
+
 @app.route("/")
 def home():
     # This is sample data for showing template
@@ -26,16 +27,26 @@ def home():
         )
 
     for _ in range(30):
-        latest.append({
-            "name": "Best Novel",
-            "image": "/static/cover-default.png",
-            "get_absolute_url": "/novel/novel-slug/",
-            "alt": "alt",
-            "chapters": [
-                {"name": "chapter XX", "get_absolute_url": "/chapter/slug/", "get_date": "2 hours ago"}, 
-                {"name": "chapter XX", "get_absolute_url": "/chapter/slug/", "get_date": "2 hours ago"}
-                ]
-            })
+        latest.append(
+            {
+                "name": "Best Novel",
+                "image": "/static/cover-default.png",
+                "get_absolute_url": "/novel/novel-slug/",
+                "alt": "alt",
+                "chapters": [
+                    {
+                        "name": "chapter XX",
+                        "get_absolute_url": "/chapter/slug/",
+                        "get_date": "2 hours ago",
+                    },
+                    {
+                        "name": "chapter XX",
+                        "get_absolute_url": "/chapter/slug/",
+                        "get_date": "2 hours ago",
+                    },
+                ],
+            }
+        )
     return render_template("starter/home.html", popular=popular, latest=latest)
 
 
@@ -46,7 +57,7 @@ def login():
 
 @app.route("/user/signup/", methods=["POST"])
 def signup():
-    data = request.form.get('email')
+    data = request.form.get("email")
     app.logger.info(data)
     return data
 
@@ -64,12 +75,13 @@ def dbtest():
 
     return str(result)
 
+
 def get_db():
-    cred = yaml.load(open('cred.yaml'), Loader=yaml.Loader)  
+    cred = yaml.load(open("cred.yaml"), Loader=yaml.Loader)
     db = mysql.connector.connect(
         host=cred["mysql_host"],
         user=cred["mysql_user"],
         password=cred["mysql_password"],
-        database=cred["mysql_db"]
+        database=cred["mysql_db"],
     )
     return db

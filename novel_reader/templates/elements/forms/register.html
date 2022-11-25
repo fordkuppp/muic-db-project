@@ -6,8 +6,7 @@
         </header>
         <section class="modal-card-body">
             <form method="post" action="{{url_for('user.register')}}">
-                <div class="field">
-                    <label class="label">Email</label>
+                <div class="field"><label class="label">Email</label>
                     <div class="control has-icons-left has-icons-right">
                         <input class="input" type="text" placeholder="Email" id="email" name="email" required>
                         <span class="icon is-small is-left">
@@ -19,7 +18,8 @@
                 <div class="field">
                     <label class="label">Username</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="text" placeholder="Display name" id="username" name="username" required>
+                        <input class="input" type="text" placeholder="Display name" id="username" name="username"
+                            required>
                         <span class="icon is-small is-left">
                             <i class="fas fa-user"></i>
                         </span>
@@ -28,27 +28,27 @@
                 <div class="field">
                     <label class="label">Password</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="password" placeholder="Password" id="password1" name="password1" onkeyup='check();' required>
-                        <span class="icon is-small is-left">
-                            <i class="fa fa-lock"></i>
+                        <input class="input" type="password" placeholder="Password" id="password1" name="password1"
+                            onkeyup='check();' required>
+                        <span class="icon is-small is-left"><i class="fa fa-lock"></i>
                         </span>
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Confirm Password</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="password" placeholder="Retype password" id="password2" name="password2" onkeyup='check();' required>
+                        <input class="input" type="password" placeholder="Retype password" id="password2"
+                            name="password2" onkeyup='check();' required>
                         <span class="icon is-small is-left">
                             <i class="fa fa-lock"></i>
                         </span>
                     </div>
-                    <span id="match"></span>
+                    <p id="match" class="help is-danger"></p>
                 </div>
                 <div class="field">
                     <div class="control">
                         <button class="button submit is-primary" type="submit">
-                            <strong>
-                                SIGNUP
+                            <strong>SIGNUP
                             </strong>
                         </button>
                     </div>
@@ -57,21 +57,25 @@
         </section>
         <footer class="modal-card-foot">
             <a title="Back to login" onclick="closeSignupBlock(); openLoginBlock();">
-                <i class="fa fa-angle-right"></i>
-                Back to login
-            </a>
+                <i class="fa fa-angle-right">
+                </i>Back to login </a>
         </footer>
     </div>
 </div>
 
 <script>
-    var check = function() {
-        if (document.getElementById('password1').value ==
-            document.getElementById('password2').value) {
-            document.getElementById('match').innerHTML = '';
-        } else {
-            document.getElementById('match').style.color = 'red';
-            document.getElementById('match').innerHTML = 'Passwords do not match';
+    const pass1 = document.getElementById('password1');
+    const pass2 = document.getElementById('password2');
+    const target = document.getElementById('match');
+    var check = function () {
+        if (pass1.value != pass2.value) {
+            target.innerHTML = 'Passwords do not match';
+        }
+        else if (pass1.length < 8) {
+            target.innerHTML = 'Passwords must have at least 8 characters'
+        }
+        else {
+            target.innerHTML = '';
         }
     }
 </script>

@@ -5,60 +5,65 @@
 {% endblock %}
 
 {% block main %}
-<div style="background-color: rgba(0,0,0,0.3);">
+<div id="reset-block">
     <div class="modal-card">
-        <header class="modal-card-head">
-            <strong class="modal-card-title">Login</strong>
-            <button class="delete" aria-label="close" onclick="closeLoginBlock();"></button>
+        <header class="modal-card-head" >
+            <strong class="modal-card-title">RESET PASSWORD</strong>
         </header>
         <section class="modal-card-body">
-            <form method="post" action="{{url_for('login')}}">
-                <div class="field">
-                    <label class="label">Username</label>
-                    <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="text" placeholder="Username" required>
-                        <span class="icon is-small is-left">
-                            <i class="fas fa-user"></i>
-                        </span>
-                    </div>
-                </div>
+            <form method="post" action="">
                 <div class="field">
                     <label class="label">Password</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="Password" placeholder="Password" required>
+                        <input class="input" type="password" placeholder="Password" id="reset1" name="password1" onkeyup='pass();' required>
                         <span class="icon is-small is-left">
                             <i class="fa fa-lock"></i>
                         </span>
                     </div>
                 </div>
                 <div class="field">
+                    <label class="label">Confirm Password</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input class="input" type="password" placeholder="Retype password" id="reset2" name="password2" onkeyup='pass();' required>
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-lock"></i>
+                        </span>
+                    </div>
+                    <p id="check" class="help is-danger"></p>
+                </div>
+                <div class="field">
                     <div class="control">
                         <button class="button submit is-primary" type="submit">
                             <strong>
-                                LOGIN
+                                SAVE
                             </strong>
                         </button>
                     </div>
                 </div>
             </form>
         </section>
-        <footer class="modal-card-foot">
-            <a onclick="openForgetBlock(); closeLoginBlock();">
-                <i class="fa fa-angle-right"></i>
-                Forgot password
-            </a>
-            <a onclick="openSignupBlock(); closeLoginBlock();">
-                <i class="fa fa-angle-right"></i>
-                Create an account
-            </a>
-        </footer>
     </div>
 </div>
+<script>
+    const pass1 = document.getElementById('reset1');
+    const pass2 = document.getElementById('reset2');
+    const target = document.getElementById('check');
+    var pass = function() {
+        if (pass1.value != pass2.value) {
+            target.innerHTML = 'Passwords do not match';
+        }
+        else if (pass1.length < 8) {
+            target.innerHTML = 'Passwords must have at least 8 characters'
+        }
+        else {
+            target.innerHTML = '';
+        }
+    }
+</script>
 {% endblock %}
 
 {% block modal %}
 {% include "elements/forms/login.html" %}
-{% include "elements/forms/signup.html" %}
-{% include "elements/forms/master_key.html" %}
+{% include "elements/forms/register.html" %}
 {% include "elements/forms/forget.html" %}
 {% endblock %}

@@ -27,8 +27,13 @@
                         </a>
                     </div>
                 {% else %} 
-                    <div class="button">
-                        <a class="button is-primary">Profile</a>
+                    <div class="buttons">
+                        <a class="button is-primary">
+                            <strong>Profile</strong>
+                        </a>
+                        <a class="button is-light" href="{{ url_for('user.logout')}}">
+                            Log out
+                        </a>
                     </div>
                 {% endif %}
             </div>

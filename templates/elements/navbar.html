@@ -1,9 +1,19 @@
 <div class="navbar">
-    <div class="container">
+    <div class="container" style="align-items: center;">
         <div class="navbar-brand">
-            <a class="navbar-item" href="https://bulma.io">
-                <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+            <a class="navbar-item" href="{{url_for('home')}}">
+                LOGOHERE
             </a>
+        </div>
+        <div class="navbar-start" style="display: flex;">
+            <form id="search" autocomplete="off" action="/search/" method="get">
+                <div class="inner">
+                    <input id="input-header-search" type="text" name="q" placeholder="Search.." autocomplete="off">
+                </div>
+                <a title="Advance search" class="advance-search">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </a>
+            </form>
         </div>
         <div class="navbar-end">
             <div class="navbar-item">

@@ -39,6 +39,44 @@ section.header {
     align-items: center;
 }
 
+.navbar-brand a:hover {
+    color: #000;
+}
+
+#search {
+    float: left;
+    height: 32px;
+    position: relative;
+    width: 310px;
+    margin-left: 10px;
+}
+
+#search .inner {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    border: none;
+}
+
+#search input {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #d5d5d5;
+    border-radius: 4px;
+    transition: border-color 0.2s ease-in-out;
+    padding: 4px 37px 4px 10px;
+    font-family: "Nunito Sans", sans-serif;
+    color: #555;
+}
+
+.advance-search {
+    position: absolute;
+    top: 6px;
+    right: 0;
+    padding: 0 10px;
+}
+
 .navbar.main {
     background-color: var(--primary-color);
 }
@@ -315,4 +353,20 @@ section.header {
     white-space: nowrap;
     overflow: hidden;
     width: 100%;
+}
+
+.load-more {
+    width: 100%;
+    padding: 20px;
+    text-transform: uppercase;
+    font-size: 17px;
+    text-align: center;
+}
+
+.load-more a {
+    color: #000;
+}
+
+.load-more a:hover {
+    color: var(--primary-color-hover);
 }

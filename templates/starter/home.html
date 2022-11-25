@@ -33,7 +33,7 @@
         </div>
     </div>
 </section>
-<section class="block">
+<section class="block" style="margin-bottom: 5px;">
     <div class="block-head">
         <div class="title is-5 bolder">
             <span>LATEST UPDATES</span>
@@ -78,6 +78,13 @@
         {% endfor %}
     </div>
 </section>
+<div class="block" style="margin-bottom: 1.5rem;">
+    <div class="load-more">
+        <a href="{{url_for('latest')}}">View more
+            <i class="fa fa-caret-down"></i>
+        </a>
+    </div>
+</div>
 {% endblock %}
 
 {% block modal %}

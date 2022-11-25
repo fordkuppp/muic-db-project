@@ -15,6 +15,43 @@ import bcrypt
 
 bp = Blueprint("user", __name__, url_prefix="/user")
 
+@bp.route("/profile")
+def profile():
+    user_id = session.get('user_id')
+    
+    db = get_db()
+    cur = db.cursor()  
+    cur.execute(
+        "SELECT * FROM bookmark WHERE user_id = %s",
+        (user_id,)
+    )
+    novel_id = cur.fetchall()
+    bookmarks = []
+    
+    for novel_id in novel_id:
+        cur.execute(
+            "SELECT * FROM novel WHERE id = %s",
+            (novel_id[1],)
+        )
+        bookmarks.append(cur.fetchall())
+
+    return render_template("starter/profile.html", bookmarks = bookmarks)
+
+@bp.before_app_request
+def load_logged_in_user():
+    user_id = session.get('user_id')
+
+    if user_id is None:
+        g.user = None
+    else:
+        db = get_db()
+        cur = db.cursor()   
+        cur.execute(
+            "SELECT * FROM user WHERE id = %s",
+            (user_id,)
+        )
+        g.user = cur.fetchone()
+        
 @bp.route("/register", methods=["POST"])
 def register():
     try:
@@ -91,7 +128,6 @@ def logout():
 def forget():
     pass
 
-
 @bp.route("/forget/<string:token>/", methods=["POST", "GET"])
 def new_pass(token: str):
     print("HI")
@@ -99,18 +135,3 @@ def new_pass(token: str):
         pass
     else:
         return render_template("starter/reset.html")
-    
-@bp.before_app_request
-def load_logged_in_user():
-    user_id = session.get('user_id')
-
-    if user_id is None:
-        g.user = None
-    else:
-        db = get_db()
-        cur = db.cursor()   
-        cur.execute(
-            "SELECT * FROM user WHERE id = %s",
-            (user_id,)
-        )
-        g.user = cur.fetchone()

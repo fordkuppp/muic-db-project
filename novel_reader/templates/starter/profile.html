@@ -6,7 +6,15 @@
 <body>
 
 <button type="button">change password</button>
-<button type="button">see bookmarks</button>
+
+<table>
+{% for bookmark in bookmarks %}
+    <tr>
+        <td>{{ bookmark[0] }}</td>
+    </tr>
+{% endfor %}
+</table>
+
 
 </body>
 </html>

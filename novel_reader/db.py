@@ -25,10 +25,10 @@ def close_db(e=None):
         db.close()
         
 def init_db():
-    db = get_db()
-
     with current_app.open_resource('schema.sql') as f:
-        db.executescript(f.read().decode('utf8'))
+        with get_db().cursor() as cur:
+            cur.execute(f.read().decode('utf8'))
+        cur.commit()
 
 @click.command('init-db')
 def init_db_command():

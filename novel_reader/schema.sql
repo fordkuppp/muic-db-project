@@ -28,6 +28,10 @@ create table user
     password   char(60)     not null,
     last_login datetime     null,
     role_id    int          null,
+    constraint email
+        unique (email),
+    constraint username
+        unique (username),
     constraint role_id
         foreign key (role_id) references role (id)
 );

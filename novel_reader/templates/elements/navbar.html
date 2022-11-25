@@ -32,15 +32,15 @@
 <nav class="navbar main" role="navigation" aria-label="main navigation">
     <div class="container">
         <div class="navbar-start">
-            <a class="navbar-item" href="{{url_for('home')}}">
+            <a class="navbar-item" href="{{url_for('home.home')}}">
                 Home
             </a>
 
-            <a class="navbar-item" href="{{url_for('latest')}}">
+            <a class="navbar-item" href="{{url_for('home.latest')}}">
                 LATEST
             </a>
 
-            <a class="navbar-item" href="{{url_for('popular')}}">
+            <a class="navbar-item" href="{{url_for('home.popular')}}">
                 POPULAR
             </a>
             <div class="navbar-item has-dropdown is-hoverable">
@@ -48,13 +48,13 @@
                     STATUS
                 </a>
                 <div class="navbar-dropdown">
-                    <a class="navbar-item" href="{{url_for('on_going')}}">
+                    <a class="navbar-item" href="{{url_for('home.on_going')}}">
                         ON GOING
                     </a>
-                    <a class="navbar-item" href="{{url_for('completed')}}">
+                    <a class="navbar-item" href="{{url_for('home.completed')}}">
                         COMPLETED
                     </a>
-                    <a class="navbar-item" href="{{url_for('hiatus')}}">
+                    <a class="navbar-item" href="{{url_for('home.hiatus')}}">
                         HIATUS
                     </a>
                 </div>

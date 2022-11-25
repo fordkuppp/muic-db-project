@@ -5,11 +5,11 @@
             <button class="delete" aria-label="close" onclick="closeLoginBlock();"></button>
         </header>
         <section class="modal-card-body">
-            <form method="post" action="{{url_for('login')}}">
+            <form method="post" action="{{url_for('user.login')}}">
                 <div class="field">
                     <label class="label">Username</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="text" placeholder="Username" required>
+                        <input class="input" type="text" placeholder="Username" name="username" required>
                         <span class="icon is-small is-left">
                             <i class="fas fa-user"></i>
                         </span>
@@ -18,7 +18,7 @@
                 <div class="field">
                     <label class="label">Password</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="Password" placeholder="Password" required>
+                        <input class="input" type="Password" placeholder="Password" name="password" required>
                         <span class="icon is-small is-left">
                             <i class="fa fa-lock"></i>
                         </span>

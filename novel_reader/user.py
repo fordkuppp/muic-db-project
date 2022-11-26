@@ -90,6 +90,7 @@ def register():
         session.clear()
         cur.close()
         session["user_id"] = user["id"]
+        session["role_id"] = user["role_id"]
         
         return redirect("/")
 
@@ -119,6 +120,7 @@ def login():
     cur.close()
     session.clear()
     session['user_id'] = user["id"]
+    session["role_id"] = user["role_id"]
     return redirect("/")
 
 @bp.route("/logout")

@@ -5,7 +5,12 @@
 </head>
 <body>
 
-<button type="button">change password</button>
+<button type="button">change password</button> </br>
+
+{% if g.user.role_id == 2 %}
+    <button type="button" onclick="location.href='{{url_for('admin.admin')}}'">go to admin panel</button>
+{% endif %}
+
 
 <table>
 {% for bookmark in bookmarks %}

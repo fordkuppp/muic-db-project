@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+all novels
+<button type="button" onclick="location.href='{{url_for('admin.novel_add')}}'">add novel</button>
+<table>
+{% for novel in novels %}
+    <tr>
+        <td>
+            {{ novel.name }}
+        </td>
+        <td>
+            <button type="button" onclick="location.href='{{url_for('admin.novel_edit')}}'">add/edit chapter</button>
+        </td>
+    </tr>
+{% endfor %}
+</table>
+
+
+</body>
+</html>

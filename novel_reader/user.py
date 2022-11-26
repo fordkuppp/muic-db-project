@@ -20,21 +20,21 @@ def profile():
     user_id = session.get('user_id')
     
     db = get_db()
-    cur = db.cursor()  
+    cur = db.cursor(dictionary=True)  
     cur.execute(
         "SELECT * FROM bookmark WHERE user_id = %s",
         (user_id,)
     )
     novel_id = cur.fetchall()
     bookmarks = []
-    
     for novel_id in novel_id:
         cur.execute(
             "SELECT * FROM novel WHERE id = %s",
-            (novel_id[1],)
+            (novel_id["novel_id"],)
         )
         bookmarks.append(cur.fetchall())
 
+    cur.close()
     return render_template("starter/profile.html", bookmarks = bookmarks)
 
 @bp.before_app_request
@@ -45,18 +45,19 @@ def load_logged_in_user():
         g.user = None
     else:
         db = get_db()
-        cur = db.cursor()   
+        cur = db.cursor(dictionary=True)   
         cur.execute(
             "SELECT * FROM user WHERE id = %s",
             (user_id,)
         )
         g.user = cur.fetchone()
+        cur.close()
         
 @bp.route("/register", methods=["POST"])
 def register():
     try:
         db = get_db()
-        cur = db.cursor()
+        cur = db.cursor(dictionary=True)
 
         username = request.form["username"]
         password1 = request.form["password1"]
@@ -88,7 +89,7 @@ def register():
         
         session.clear()
         cur.close()
-        session["user_id"] = user[0]
+        session["user_id"] = user["id"]
         
         return redirect("/")
 
@@ -102,7 +103,7 @@ def login():
     password = request.form['password']
     
     db = get_db()
-    cur = db.cursor()
+    cur = db.cursor(dictionary=True)
     
     cur.execute(
         "SELECT * FROM user WHERE username = %s",
@@ -112,11 +113,12 @@ def login():
     
     if user is None:
         return "Incorrect username"
-    elif not bcrypt.checkpw(password.encode("utf-8"), user[3].encode("utf-8")):
+    elif not bcrypt.checkpw(password.encode("utf-8"), user["password"].encode("utf-8")):
         return "Incorrect password"
     
+    cur.close()
     session.clear()
-    session['user_id'] = user[0]
+    session['user_id'] = user["id"]
     return redirect("/")
 
 @bp.route("/logout")
@@ -130,7 +132,6 @@ def forget():
 
 @bp.route("/forget/<string:token>/", methods=["POST", "GET"])
 def new_pass(token: str):
-    print("HI")
     if request.method == "POST":
         pass
     else:

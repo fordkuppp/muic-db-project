@@ -28,12 +28,38 @@ def admin():
     cur.execute("SELECT * FROM novel")
     novels = cur.fetchall()
     cur.close()
-    print(novels)
-    return render_template("starter/admin.html", novels = novels)
+    return render_template("starter/admin/admin.html", novels = novels)
 
 @bp.route("/novel/edit")
 def novel_edit():
-    return "pretend this works"
+    db = get_db()
+    cur = db.cursor(dictionary=True)  
+    novel_id = request.args.get('id')
+    cur.execute("SELECT * FROM chapter WHERE novel_id = %s", (novel_id,))
+    chapters = cur.fetchall()
+    cur.close()
+    return render_template("starter/admin/novel/edit.html", chapters = chapters)
+
+@bp.route("/novel/edit/chapter", methods=["POST"])
+def chapter_edit():
+    chapter_name = request.form["chapterName"]
+    chapter_content = request.form["chapterContent"]
+    chapter_id = request.args.get('id')
+    db = get_db()
+    cur = db.cursor(dictionary=True)
+    
+    cur.execute(
+        "UPDATE chapter SET name = %s WHERE id = %s;",
+        (chapter_name, chapter_id)
+    )
+    cur.execute(
+        "UPDATE chapter SET content = %s WHERE id = %s;",
+        (chapter_content, chapter_id)
+    )
+    db.commit()
+    cur.close()
+        
+    return redirect("/admin")
 
 @bp.route("/novel/add", methods=["POST"])
 def novel_add():

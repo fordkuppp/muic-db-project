@@ -13,7 +13,7 @@ all novels
             {{ novel.name }}
         </td>
         <td>
-            <button type="button" onclick="location.href='{{url_for('admin.novel_edit')}}'">add/edit chapter</button>
+            <button type="button" onclick="location.href='{{url_for('admin.novel_edit')}}?id={{ novel.id }}'">add/edit chapter</button>
         </td>
     </tr>
 {% endfor %}

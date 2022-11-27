@@ -30,7 +30,7 @@ def admin():
     cur.close()
     return render_template("starter/admin/admin.html", novels = novels)
 
-@bp.route("/novel/edit")
+@bp.route("/edit")
 def novel_edit():
     db = get_db()
     cur = db.cursor(dictionary=True)  
@@ -40,7 +40,7 @@ def novel_edit():
     cur.close()
     return render_template("starter/admin/novel/edit.html", chapters = chapters)
 
-@bp.route("/novel/edit/chapter", methods=["POST"])
+@bp.route("/edit", methods=["POST"])
 def chapter_edit():
     chapter_name = request.form["chapterName"]
     chapter_content = request.form["chapterContent"]
@@ -59,8 +59,8 @@ def chapter_edit():
     db.commit()
     cur.close()
         
-    return redirect("/admin")
+    return novel_edit()
 
-@bp.route("/novel/add", methods=["POST"])
+@bp.route("/add", methods=["POST"])
 def novel_add():
     return "pretend this works"

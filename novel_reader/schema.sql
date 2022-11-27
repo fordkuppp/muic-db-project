@@ -38,7 +38,7 @@ create table novel
 
 create table chapter
 (
-    id       int          not null
+    id       int auto_increment
         primary key,
     name     varchar(255) null,
     novel_id int          not null,

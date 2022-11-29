@@ -1,0 +1,102 @@
+{% extends 'default.html' %}
+
+{% block head %}
+{% endblock %}
+{% block main %}
+<div class="book-details">
+    <div class="book-info">
+        <div id="cover" class="cover block">
+            <div class="img-cover">
+                <img src="{{novel.image}}" data-src="{{novel.image}}" alt="{{novel.alt}}">
+            </div>
+            <div class="read-box">
+                <a id="readchapterbtn" href="{{novel.chapters.0.slug}}" title="Read Chapter 1">READ
+                </a>
+                <a class="bookmark-btn" title="Bookmark" onclick="openLoginBlock();">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+        </div>
+        <div class="detail">
+            <div class="block-head title is-4">
+                {{novel.name}}
+            </div>
+            <div class="meta block-body mt-1">
+                <p>
+                    <strong>Author :</strong>
+                    <a href="{{novel.author.slug}}">
+                        <span>{{novel.author.username}}</span>
+                    </a>
+                </p>
+                <p>
+                    <strong>Status :</strong>
+                    <a href="{{novel.status.slug}}">
+                        <span>{{novel.status.name}}</span>
+                    </a>
+                </p>
+                <p><strong>Genres :</strong>
+                    {% for item in novel.genres %}
+                    <a href="{{item.slug}}">
+                        {{item.name}}
+                    </a>
+                    {% endfor %}
+
+                </p>
+                <p>
+                    <strong>Chapters: </strong>
+                    <span>{{novel.chapters|length}}</span>
+                </p>
+                <p>
+                    <strong>Last update: </strong>
+                    <span>{{novel.modified}}</span>
+                </p>
+
+            </div>
+            <div class="block-head">
+                <div class="title"><span>SUMMARY</span></div>
+            </div>
+            <div class="block block-body">
+                <p class="content" style="margin-bottom: unset;line-height: 1.8; padding: 10px;">
+                    {{novel.description}}
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <div class="mt-1">
+        <div class="mt-1">
+
+        </div>
+        <div class="mt-1">
+            <div class="block-header">
+                <div class="title">
+                    <span>CHAPTERS ({{novel.chapters|length}})</span>
+                </div>
+            </div>
+            <div class="block-body" id="chapters" data-sort="desc">
+                <div id="chapter-list-inner">
+                    <ul class="chapter-list" id="chapter-list">
+                        {% for item in novel.chapters %}
+                        <li id="c-{{loop.index}}">
+                            <a href="{{item.slug}}" title="{{novel.name}} - {{item.name}}">
+                                <div>
+                                    <strong class="chapter-title">
+                                        {{item.name}}
+                                    </strong>
+                                    <time class="chapter-update">
+                                        {{item.get_date}}
+                                    </time>
+                                </div>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block modal %}
+{% endblock %}

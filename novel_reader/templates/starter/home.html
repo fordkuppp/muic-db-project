@@ -62,7 +62,7 @@
                         {% for chapter in novel.chapters %}
                         <div class="chap-item">
                             <h4>
-                                <a title="{{novel.name}} - {{chapter.name}}" href="{{url_for('home.chapter', slug=chapter.slug)}}">
+                                <a title="{{novel.name}} - {{chapter.name}}" href="{{url_for('home.chapter', novel=novel.slug, slug=chapter.slug)}}">
                                     {{chapter.name}}
                                 </a>
                             </h4>

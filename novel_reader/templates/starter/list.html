@@ -3,7 +3,7 @@
 {% block head %}
 {% endblock %}
 {% block main %}
-<div class="block">
+<div>
     <div class="block-head">
         <div class="title is-5 bolder">
             <span>{{endpoint}}</span>
@@ -15,7 +15,7 @@
             <article class="book-item">
                 <div class="book-detailed-item">
                     <div class="thumb">
-                        <a title="{{novel.name}}" href="{{url_for('home.novel')}}">
+                        <a title="{{novel.name}}" href="{{url_for('home.novel', slug=novel.slug)}}">
                             <img src="{{novel.image}}" data-src="{{url_for('home.novel', slug=novel.slug)}}" alt="{{novel.alt}}"
                                 title="{{novel.name}}">
                         </a>

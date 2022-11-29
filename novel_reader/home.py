@@ -66,15 +66,11 @@ def latest():
                 "alt": "alt",
                 "hits": 30,
                 "description": "This is novel description that is very very and very super duper long.",
-                "genres": [{
-                    "name": "Action",
-                    "slug": "action"
-                },
-                {
-                    "name": "Martial Arts",
-                    "slug": "martial-arts"
-                }],
-                "latest_chap": "chapter XX"
+                "genres": [
+                    {"name": "Action", "slug": "action"},
+                    {"name": "Martial Arts", "slug": "martial-arts"},
+                ],
+                "latest_chap": "chapter XX",
             }
         )
 
@@ -93,15 +89,11 @@ def popular():
                 "alt": "alt",
                 "hits": 30,
                 "description": "This is novel description that is very very and very super duper long.",
-                "genres": [{
-                    "name": "Action",
-                    "slug": "action"
-                },
-                {
-                    "name": "Martial Arts",
-                    "slug": "martial-arts"
-                }],
-                "latest_chap": "chapter XX"
+                "genres": [
+                    {"name": "Action", "slug": "action"},
+                    {"name": "Martial Arts", "slug": "martial-arts"},
+                ],
+                "latest_chap": "chapter XX",
             }
         )
 
@@ -120,15 +112,11 @@ def on_going():
                 "alt": "alt",
                 "hits": 30,
                 "description": "This is novel description that is very very and very super duper long.",
-                "genres": [{
-                    "name": "Action",
-                    "slug": "action"
-                },
-                {
-                    "name": "Martial Arts",
-                    "slug": "martial-arts"
-                }],
-                "latest_chap": "chapter XX"
+                "genres": [
+                    {"name": "Action", "slug": "action"},
+                    {"name": "Martial Arts", "slug": "martial-arts"},
+                ],
+                "latest_chap": "chapter XX",
             }
         )
 
@@ -147,15 +135,11 @@ def completed():
                 "alt": "alt",
                 "hits": 30,
                 "description": "This is novel description that is very very and very super duper long.",
-                "genres": [{
-                    "name": "Action",
-                    "slug": "action"
-                },
-                {
-                    "name": "Martial Arts",
-                    "slug": "martial-arts"
-                }],
-                "latest_chap": "chapter XX"
+                "genres": [
+                    {"name": "Action", "slug": "action"},
+                    {"name": "Martial Arts", "slug": "martial-arts"},
+                ],
+                "latest_chap": "chapter XX",
             }
         )
 
@@ -174,15 +158,11 @@ def hiatus():
                 "alt": "alt",
                 "hits": 30,
                 "description": "This is novel description that is very very and very super duper long.",
-                "genres": [{
-                    "name": "Action",
-                    "slug": "action"
-                },
-                {
-                    "name": "Martial Arts",
-                    "slug": "martial-arts"
-                }],
-                "latest_chap": "chapter XX"
+                "genres": [
+                    {"name": "Action", "slug": "action"},
+                    {"name": "Martial Arts", "slug": "martial-arts"},
+                ],
+                "latest_chap": "chapter XX",
             }
         )
 
@@ -201,25 +181,43 @@ def search():
                 "alt": "alt",
                 "hits": 30,
                 "description": "This is novel description that is very very and very super duper long.",
-                "genres": [{
-                    "name": "Action",
-                    "slug": "action"
-                },
-                {
-                    "name": "Martial Arts",
-                    "slug": "martial-arts"
-                }],
-                "latest_chap": "chapter XX"
+                "genres": [
+                    {"name": "Action", "slug": "action"},
+                    {"name": "Martial Arts", "slug": "martial-arts"},
+                ],
+                "latest_chap": "chapter XX",
             }
         )
 
     return render_template("starter/list.html", endpoint="SEARCH: KEYWORD", result=data)
 
 
-@bp.route("/novel/<string:slug>/")
+@bp.route("/<string:slug>/")
 def novel(slug: str):
-    pass
+    chapters: list[dict] = []
+    for i in range(20):
+        chapters.append(
+            {"name": f"chapter {i}", "slug": f"chapter-{i}", "created": "1 day ago"}
+        )
+    data: dict = {
+        "name": "Best Novel",
+        "image": "/static/cover-default.png",
+        "slug": "best-novel",
+        "alt": "alt",
+        "hits": 30,
+        "description": "This is novel description that is very very and very super duper long.",
+        "author": {"username": "user 007", "slug": "user-007"},
+        "status": {"name": "On going", "slug": "on-going"},
+        "genres": [
+            {"name": "Action", "slug": "action"},
+            {"name": "Martial Arts", "slug": "martial-arts"},
+        ],
+        "chapters": chapters,
+        "modified": "1 day ago",
+    }
+    return render_template("starter/novel.html", novel=data)
 
-@bp.route("/chapter/<string:slug>/")
-def chapter(slug: str):
+
+@bp.route("/<string:novel>/ch/<string:slug>/")
+def chapter(novel: str, slug: str):
     pass

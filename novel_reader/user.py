@@ -138,3 +138,8 @@ def new_pass(token: str):
         pass
     else:
         return render_template("starter/reset.html")
+
+
+@bp.route("/<string:username>/all")
+def all_novels():
+    pass

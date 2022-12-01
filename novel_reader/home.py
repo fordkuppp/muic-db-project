@@ -220,4 +220,29 @@ def novel(slug: str):
 
 @bp.route("/<string:novel>/ch/<string:slug>/")
 def chapter(novel: str, slug: str):
-    pass
+    chapters: list[dict] = []
+    for i in range(20):
+        chapters.append(
+            {"name": f"chapter {i}", "slug": f"chapter-{i}", "created": "1 day ago"}
+        )
+    data: dict = {
+        "name": "Best Novel",
+        "image": "/static/cover-default.png",
+        "slug": "best-novel",
+        "alt": "alt",
+        "hits": 30,
+        "description": "This is novel description that is very very and very super duper long.",
+        "author": {"username": "user 007", "slug": "user-007"},
+        "status": {"name": "On going", "slug": "on-going"},
+        "genres": [
+            {"name": "Action", "slug": "action"},
+            {"name": "Martial Arts", "slug": "martial-arts"},
+        ],
+        "chapters": chapters,
+        "modified": "1 day ago",
+    }
+    content: dict = {
+        "n": slug,
+        "content": "This is chapter content that is very very excited."
+    }
+    return render_template("starter/chapter.html", novel=data,chapter=content)

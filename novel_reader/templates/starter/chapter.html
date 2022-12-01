@@ -70,27 +70,12 @@
         <div class="mt-1">
             <div class="block-header">
                 <div class="title">
-                    <span>CHAPTERS ({{novel.chapters|length}})</span>
+                    <span>{{chapter.n}}</span>
                 </div>
             </div>
             <div class="block-body" id="chapters" data-sort="desc">
                 <div id="chapter-list-inner">
-                    <ul class="chapter-list" id="chapter-list">
-                        {% for item in novel.chapters %}
-                        <li id="c-{{loop.index}}">
-                            <a href="{{url_for('home.chapter',novel=novel.name, slug=item.slug)}}" title="{{novel.name}} - {{item.name}}">
-                                <div>
-                                    <strong class="chapter-title">
-                                        {{item.name}}
-                                    </strong>
-                                    <time class="chapter-update">
-                                        {{item.get_date}}
-                                    </time>
-                                </div>
-                            </a>
-                        </li>
-                        {% endfor %}
-                    </ul>
+                    {{chapter.content}}
                 </div>
             </div>
         </div>

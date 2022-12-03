@@ -350,7 +350,6 @@ section.header {
 }
 
 
-
 .latest-item .inner .meta .chapters .chap-item {
     display: flex;
     flex-direction: row;
@@ -519,6 +518,11 @@ section.header {
     display: flex;
 }
 
+#cover {
+    margin-bottom: 1.0rem;
+}
+
+
 .book-details .cover {
     width: 30%;
     margin-right: 5px;
@@ -595,6 +599,11 @@ section.header {
     font-weight: bolder;
 }
 
+.book-details .detail .meta {
+    padding: 20px;
+    height: 100%;
+}
+
 #summary {
     overflow-y: scroll;
     height: 130px;
@@ -606,7 +615,47 @@ section.header {
     padding: 15px;
 }
 
-.book-details .detail .meta {
-    padding: 20px;
-    height: 100%;
+.chapters .block-head {
+    padding: 10px;
+    margin-bottom: 5px;
+    font-weight: bolder;
+}
+
+#chapter-list-inner ul {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
+}
+
+#chapter-list-inner li {
+    padding: 15px;
+    position: relative;
+}
+
+#chapter-list-inner li:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+#chapter-list-inner li:hover a {
+    color: black
+}
+
+
+#chapter-list-inner a {
+    display: flex;
+    align-items: center;
+}
+
+#chapter-list-inner a div {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+}
+
+#chapter-list-inner .chapter-title {
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-transform: uppercase;
 }

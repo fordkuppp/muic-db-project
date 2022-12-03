@@ -10,7 +10,8 @@
                 <img src="{{novel.image}}" data-src="{{novel.image}}" alt="{{novel.alt}}">
             </div>
             <div class="read-box">
-                <a id="readchapterbtn" href="{{novel.chapters.0.slug}}" title="Read Chapter 1">READ
+                <a id="readchapterbtn" href="{{url_for('home.chapter',novel=novel.slug, slug=novel.chapters.0.slug)}}"
+                    title="Read Chapter 1">READ
                 </a>
                 <a class="bookmark-btn" title="Bookmark" onclick="openLoginBlock();">
                     <i class="far fa-heart"></i>
@@ -58,43 +59,31 @@
             <div class="block block-body" id="summary">
                 <p class="content">
                     {{novel.description}}
-                    {{novel.description}}
-                    {{novel.description}}
-                    {{novel.description}}
-                    {{novel.description}}
                 </p>
             </div>
         </div>
 
     </div>
-    <div class="mt-1">
-        <div class="mt-1">
-
+    <div class="mt-1 chapters">
+        <div class="block-head title is-4">
+            <span>CHAPTERS ({{novel.chapters|length}})</span>
         </div>
-        <div class="mt-1">
-            <div class="block-head title is-4">
-                <span>CHAPTERS ({{novel.chapters|length}})</span>
-            </div>
-            <div class="block-body" id="chapters" data-sort="desc">
-                <div id="chapter-list-inner">
-                    <ul class="chapter-list" id="chapter-list">
-                        {% for item in novel.chapters %}
-                        <li id="c-{{loop.index}}">
-                            <a href="{{url_for('home.chapter',novel=novel.name, slug=item.slug)}}"
-                                title="{{novel.name}} - {{item.name}}">
-                                <div>
-                                    <strong class="chapter-title">
-                                        {{item.name}}
-                                    </strong>
-                                    <time class="chapter-update">
-                                        {{item.get_date}}
-                                    </time>
-                                </div>
-                            </a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
+        <div class="block-body" id="chapters" data-sort="desc">
+            <div id="chapter-list-inner">
+                <ul class="chapter-list" id="chapter-list">
+                    {% for item in novel.chapters %}
+                    <li id="c-{{loop.index}}">
+                        <a href="{{url_for('home.chapter',novel=novel.slug, slug=item.slug)}}"
+                            title="{{novel.name}} - {{item.name}}">
+                            <div>
+                                <strong class="chapter-title">
+                                    {{item.name}}
+                                </strong>
+                            </div>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </div>

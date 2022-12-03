@@ -53,10 +53,8 @@
                     </a>
                 </div>
                 <div class="meta">
-                    <div class="title">
-                        <h3>
-                            <a href="{{url_for('home.novel', slug=novel.slug)}}" title="{{novel.name}}">{{novel.name}}</a>
-                        </h3>
+                    <div class="title is-5">
+                        <a href="{{url_for('home.novel', slug=novel.slug)}}" title="{{novel.name}}">{{novel.name}}</a>
                     </div>
                     <div class="chapters">
                         {% for chapter in novel.chapters %}

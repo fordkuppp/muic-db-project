@@ -16,17 +16,12 @@
     background-color: #f0f2f5;
 }
 
-.container {
-    max-width: 1140px;
-}
-
 div.main.container {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     margin-bottom: 0.25rem !important;
     margin-top: 0.25rem !important;
-
 }
 
 section.header {
@@ -39,12 +34,20 @@ section.header {
     align-items: center;
 }
 
+.navbar-brand {
+    margin-left: 0 !important;
+}
+
 .navbar-brand a:hover {
     color: #000;
 }
 
 .navbar a {
     text-transform: uppercase;
+}
+
+.navbar {
+    padding-left: 1.25rem;
 }
 
 #search {
@@ -148,9 +151,8 @@ section.header {
     border-bottom: 1px solid #e4e9f0;
     display: flex;
     justify-content: space-between;
-    padding: 10px 0;
+    padding: 15px 0;
     align-items: center;
-    margin-top: 10px;
 }
 
 .block-body {
@@ -158,6 +160,10 @@ section.header {
     background: white;
     margin-top: 5px;
     margin-bottom: 1.25rem;
+}
+
+.title:not(:last-child) {
+    margin-bottom: .75rem;
 }
 
 .title span {
@@ -322,22 +328,24 @@ section.header {
     margin: auto;
 }
 
-.latest-item h3 {
-    margin-bottom: 0;
-    overflow: hidden;
-}
 
-.latest-item .inner .meta .title h3 {
+.latest-item .inner .meta .title {
     display: flex;
     align-items: center;
     font-weight: bolder;
 }
 
-.latest-item .inner .meta .title h3 a {
+.latest-item .inner .meta .title a {
     color: #000;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
-.latest-item .inner .meta .title h3 a:hover {
+.latest-item .inner .meta .title a:hover {
     color: var(--primary-color-hover);
 }
 
@@ -581,10 +589,21 @@ section.header {
 }
 
 .book-details .detail .block-head {
-    padding: 20px;
+    padding: 10px;
     margin-top: 1.5rem;
     margin-bottom: 5px;
     font-weight: bolder;
+}
+
+#summary {
+    overflow-y: scroll;
+    height: 130px;
+    margin-bottom: 1.0rem;
+}
+
+#summary .content {
+    line-height: 1.6;
+    padding: 15px;
 }
 
 .book-details .detail .meta {

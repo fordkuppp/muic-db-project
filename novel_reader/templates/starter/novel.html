@@ -19,9 +19,9 @@
         </div>
         <div class="detail">
             <div class="block-head title is-4">
-                {{novel.name}}
+                <span>{{novel.name}}</span>
             </div>
-            <div class="meta block-body mt-1">
+            <div class="meta block-body mt-1" style="margin-bottom:0;">
                 <p>
                     <strong>Author :</strong>
                     <a href="{{novel.author.slug}}">
@@ -52,11 +52,15 @@
                 </p>
 
             </div>
-            <div class="block-head">
-                <div class="title"><span>SUMMARY</span></div>
+            <div class="block-head title is-4" style="margin-top: 0.25rem;">
+                <span>SUMMARY</span>
             </div>
-            <div class="block block-body">
-                <p class="content" style="margin-bottom: unset;line-height: 1.8; padding: 10px;">
+            <div class="block block-body" id="summary">
+                <p class="content">
+                    {{novel.description}}
+                    {{novel.description}}
+                    {{novel.description}}
+                    {{novel.description}}
                     {{novel.description}}
                 </p>
             </div>
@@ -68,17 +72,16 @@
 
         </div>
         <div class="mt-1">
-            <div class="block-header">
-                <div class="title">
-                    <span>CHAPTERS ({{novel.chapters|length}})</span>
-                </div>
+            <div class="block-head title is-4">
+                <span>CHAPTERS ({{novel.chapters|length}})</span>
             </div>
             <div class="block-body" id="chapters" data-sort="desc">
                 <div id="chapter-list-inner">
                     <ul class="chapter-list" id="chapter-list">
                         {% for item in novel.chapters %}
                         <li id="c-{{loop.index}}">
-                            <a href="{{url_for('home.chapter',novel=novel.name, slug=item.slug)}}" title="{{novel.name}} - {{item.name}}">
+                            <a href="{{url_for('home.chapter',novel=novel.name, slug=item.slug)}}"
+                                title="{{novel.name}} - {{item.name}}">
                                 <div>
                                     <strong class="chapter-title">
                                         {{item.name}}

@@ -1,5 +1,5 @@
 <div class="navbar">
-    <div class="container" style="align-items: center;">
+    <div class="container is-max-widescreen" style="align-items: center;">
         <div class="navbar-brand">
             <a class="navbar-item" href="{{url_for('home.home')}}">
                 LOGOHERE
@@ -41,7 +41,7 @@
     </div>
 </div>
 <nav class="navbar main" role="navigation" aria-label="main navigation">
-    <div class="container">
+    <div class="container is-max-widescreen">
         <div class="navbar-start">
             <a class="navbar-item" href="{{url_for('home.home')}}">
                 HOME
@@ -70,9 +70,14 @@
                     </a>
                 </div>
             </div>
-            <a class="navbar-item" onclick="openLoginBlock()">
+            <a class="navbar-item" {% if g.user.role_id == 1 or g.user.role_id ==2 %} href="{{url_for('user.all_novel')}}" {% else %} onclick="openLoginBlock()" {% endif %}>
                 WRITE NOVEL
             </a>
+            {% if g.user.role_id == 2 %}
+            <a class="navbar-item" href="{{url_for('admin.admin')}}">
+                ADMIN
+            </a>
+            {% endif %}
         </div>
     </div>
 </nav>

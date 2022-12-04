@@ -220,29 +220,23 @@ def novel(slug: str):
 
 @bp.route("/<string:novel>/ch/<string:slug>/")
 def chapter(novel: str, slug: str):
-    chapters: list[dict] = []
-    for i in range(20):
-        chapters.append(
-            {"name": f"chapter {i}", "slug": f"chapter-{i}", "created": "1 day ago"}
-        )
-    data: dict = {
-        "name": "Best Novel",
-        "image": "/static/cover-default.png",
-        "slug": "best-novel",
-        "alt": "alt",
-        "hits": 30,
-        "description": "This is novel description that is very very and very super duper long.",
-        "author": {"username": "user 007", "slug": "user-007"},
-        "status": {"name": "On going", "slug": "on-going"},
-        "genres": [
-            {"name": "Action", "slug": "action"},
-            {"name": "Martial Arts", "slug": "martial-arts"},
-        ],
-        "chapters": chapters,
-        "modified": "1 day ago",
+    chapter: dict = {
+        "name": "CHAPTER 01",
+        "slug": "chapter-01",
+        "novel": {"name": "Best Novel", "slug": "best-novel"},
+        # Content will be rich text format
+        "content": r'<h2 style="text-align: center;"><em>Chapter1: Hello world</em></h2><p>&nbsp;</p><p><em>Hello</em>, <span style="text-decoration: underline;"><strong>World!</strong></span></p>',
     }
-    content: dict = {
-        "n": slug,
-        "content": "This is chapter content that is very very excited."
+    # look for chapter that created before current chapter with same novel id
+    prev: dict = {
+        "name": "CHAPTER 00",
+        "novel": {"name": "Best Novel", "slug": "best-novel"},
+        "slug": "chapter-00",
     }
-    return render_template("starter/chapter.html", novel=data,chapter=content)
+    # look for chapter that created after current chapter with same novel id
+    next: dict = {
+        "name": "CHAPTER 02",
+        "novel": {"name": "Best Novel", "slug": "best-novel"},
+        "slug": "chapter-02",
+    }
+    return render_template("starter/chapter.html", chapter=chapter, prev=prev, next=next)

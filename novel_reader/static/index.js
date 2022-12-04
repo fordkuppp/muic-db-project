@@ -17,3 +17,7 @@ function closeForgetBlock() { forgetBlock.classList.remove(active); }
 
 function openForgetBlock() { forgetBlock.classList.add(active); }
 
+function goTop() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}

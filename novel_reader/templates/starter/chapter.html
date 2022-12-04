@@ -2,81 +2,48 @@
 
 {% block head %}
 {% endblock %}
+
 {% block main %}
-<div class="book-details">
-    <div class="book-info">
-        <div id="cover" class="cover block">
-            <div class="img-cover">
-                <img src="{{novel.image}}" data-src="{{novel.image}}" alt="{{novel.alt}}">
-            </div>
-            <div class="read-box">
-                <a id="readchapterbtn" href="{{novel.chapters.0.slug}}" title="Read Chapter 1">READ
-                </a>
-                <a class="bookmark-btn" title="Bookmark" onclick="openLoginBlock();">
-                    <i class="far fa-heart"></i>
-                </a>
-            </div>
-        </div>
-        <div class="detail">
-            <div class="block-head title is-4">
-                {{novel.name}}
-            </div>
-            <div class="meta block-body mt-1">
-                <p>
-                    <strong>Author :</strong>
-                    <a href="{{novel.author.slug}}">
-                        <span>{{novel.author.username}}</span>
-                    </a>
-                </p>
-                <p>
-                    <strong>Status :</strong>
-                    <a href="{{novel.status.slug}}">
-                        <span>{{novel.status.name}}</span>
-                    </a>
-                </p>
-                <p><strong>Genres :</strong>
-                    {% for item in novel.genres %}
-                    <a href="{{item.slug}}">
-                        {{item.name}}
-                    </a>
-                    {% endfor %}
-
-                </p>
-                <p>
-                    <strong>Chapters: </strong>
-                    <span>{{novel.chapters|length}}</span>
-                </p>
-                <p>
-                    <strong>Last update: </strong>
-                    <span>{{novel.modified}}</span>
-                </p>
-
-            </div>
-            <div class="block-head">
-                <div class="title"><span>SUMMARY</span></div>
-            </div>
-            <div class="block block-body">
-                <p class="content" style="margin-bottom: unset;line-height: 1.8; padding: 10px;">
-                    {{novel.description}}
-                </p>
-            </div>
-        </div>
-
+<div class="block viewer">
+    <div class="block-head title is-4" align="center">
+        <span>TITLE</span>
     </div>
-    <div class="mt-1">
-        <div class="mt-1">
-
+    <div class="viewer-content">
+        <div class="content-inner">
+            {{chapter.content|safe}}
         </div>
-        <div class="mt-1">
-            <div class="block-header">
-                <div class="title">
-                    <span>{{chapter.n}}</span>
-                </div>
-            </div>
-            <div class="block-body" id="chapters" data-sort="desc">
-                <div id="chapter-list-inner">
-                    {{chapter.content}}
-                </div>
+        <div class="action">
+            <div class="viewer-button">
+                <ul>
+                    <li>
+                        {% if prev %}
+                        <a id="btn-prev" title="Previous chapter" class="button is-primary"
+                            href="{{url_for('home.chapter', novel=prev.novel.slug, slug=prev.slug)}}">❮</a>
+                        {% else %}
+                        <a id="btn-prev" title="Previous chapter" class="button is-primary" disabled>❮</a>
+                        {% endif %}
+                    </li>
+                    <li>
+                        <a title="Novel index" href="{{url_for('home.novel', slug=chapter.novel.slug)}}"
+                            class="button is-primary">
+                            <i class="fa-solid fa-house" style="margin-right: 5px;"></i>
+                            HOME
+                        </a>
+                    </li>
+                    <li>
+                        {% if next %}
+                        <a id="btn-next" title="Next chapter" class="button is-primary"
+                            href="{{url_for('home.chapter', novel=next.novel.slug, slug=next.slug)}}">❯</a>
+                        {% else %}
+                        <a id="btn-next" title="Next chapter" class="button is-primary" disabled>❯</a>
+                        {% endif %}
+                    </li>
+                    <li>
+                        <a class="button is-primary" title="Back top" onclick="goToTop()">
+                            <i class="fa fa-arrow-up"></i>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

@@ -659,3 +659,25 @@ section.header {
     overflow: hidden;
     text-transform: uppercase;
 }
+
+.viewer .block-head {
+    display: block;
+    font-weight: bolder;
+}
+
+.viewer-content {
+    padding: 20px;
+}
+
+.viewer-button ul {
+    justify-content: center;
+    display: flex;
+}
+
+.viewer-button ul li {
+    margin-left: 5px;
+}
+
+.content-inner>* {
+    all: revert;
+}

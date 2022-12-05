@@ -105,7 +105,7 @@ def login():
     user = cur.fetchone()
 
     if (user is None) or (
-        not not bcrypt.checkpw(password.encode("utf-8"), user["password"].encode("utf-8"))
+        not bcrypt.checkpw(password.encode("utf-8"), user["password"].encode("utf-8"))
     ):
         session["login_error"] = "Invalid username or password"
         return redirect(next)

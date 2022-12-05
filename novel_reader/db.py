@@ -12,6 +12,7 @@ def get_db():
         cred = yaml.load(open('cred.yaml'), Loader=yaml.Loader)    
         g.db = mysql.connector.connect(
             host=cred["mysql_host"],
+            port=cred["mysql_port"],
             user=cred["mysql_user"],
             password=cred["mysql_password"],
             database=cred["mysql_db"]

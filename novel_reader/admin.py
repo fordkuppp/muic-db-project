@@ -63,4 +63,21 @@ def chapter_edit():
 
 @bp.route("/add", methods=["POST"])
 def novel_add():
-    return "pretend this works"
+    novel_name = request.form["novelName"]
+    novel_image = request.form["novelImage"]
+    novel_description = request.form["novelDescription"]
+    
+    now = datetime.now()
+    now = now.strftime('%Y-%m-%d %H:%M:%S')
+    
+    db = get_db()
+    cur = db.cursor(dictionary=True)
+    cur.execute(
+        "INSERT INTO reader_db.novel (name, image, description, created, modified, genre_id, status_id)\
+        VALUES (%s, %s, %s, %s, %s, 1, 1);", # TODO make the genre/status id chooseable from dropdown box
+        (novel_name, novel_image, novel_description, now, now)
+    )
+    db.commit()
+    cur.close()
+    
+    return redirect("/")

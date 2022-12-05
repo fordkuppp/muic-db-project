@@ -7,6 +7,34 @@
 </head>
 <body>
 all chapters
+<button formmethod="POST" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#add" type="button">add chapter</button>
+<form action="{{url_for('admin.chapter_add')}}" method="post">
+    <div class="modal fade" id="add" tableindex="-1" aria-labelledby="modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="label">Add chapter</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <input type="hidden" name="novelId" value={{novel_id}}>
+                </div>
+                    <div class="modal-body my-4">
+                            <div class="mb-3">
+                                <label for="chapterName" class="form-label">Chapter name</label>
+                                <input type="text" class="form-control" id="chapterName" name="chapterName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="chapterContent" class="form-label">Contents</label>
+                                <textarea type="text" class="form-control" id="chapterContent" name="chapterContent"></textarea>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</form>
 <table class="table">
 {% for chapter in chapters %}
     <tr>
@@ -24,13 +52,15 @@ all chapters
                 type="button">
                 edit chapter
             </button>
-            <form action="{{url_for('admin.chapter_edit')}}?id={{chapter.id}}" method="post">
+            <form action="{{url_for('admin.chapter_edit')}}" method="post">
                 <div class="modal fade" id="edit" tableindex="-1" aria-labelledby="modal" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="label">Edit chapter</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <input type="hidden" name="chapterId" value={{chapter.id}}>
+                                <input type="hidden" name="novelId" value={{chapter.novel_id}}>
                             </div>
                                 <div class="modal-body my-4">
                                         <div class="mb-3">

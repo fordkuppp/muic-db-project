@@ -1,0 +1,49 @@
+{% extends 'default.html' %}
+
+{% block head %}
+{% endblock %}
+
+{% block main %}
+<div class="controller block">
+    <div class="sidebar">
+        <div class="nav-item selected" align="center">
+            <a class="nav-link">
+                <strong>Profile</strong>
+            </a>
+        </div>
+        <div class="nav-item" align="center">
+            <a href="{{url_for('user.bookmarks')}}" class="nav-link">
+                <strong>bookmarks</strong>
+            </a>
+        </div>
+        <div class="nav-item" align="center">
+            <a href="{{url_for('user.novels')}}" class="nav-link">
+                <strong>your novels</strong>
+            </a>
+        </div>
+    </div>
+    <div class="mainbar">
+        <div class="block-body">
+            <div class="user-detail">
+                <p>
+                    <strong>Username:</strong>
+                    <span>{{g.user.username}}</span>
+                </p>
+                <br>
+                <p>
+                    <strong>Email:</strong>
+                    <span>{{g.user.email}}</span>
+                </p>
+                <br>
+                <p>
+                    <strong>Last login:</strong>
+                    <span>{{g.user.last_login}}</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block modal %}
+{% endblock %}

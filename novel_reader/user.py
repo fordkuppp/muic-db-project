@@ -30,7 +30,7 @@ def profile():
         bookmarks.append(cur.fetchall())
 
     cur.close()
-    return render_template("starter/profile.html", bookmarks=bookmarks)
+    return render_template("starter/user/profile.html", bookmarks=bookmarks)
 
 
 @bp.before_app_request
@@ -136,6 +136,55 @@ def new_pass(token: str):
         return render_template("starter/reset.html")
 
 
-@bp.route("/<string:username>/all")
-def all_novels(username: str):
-    pass
+@bp.route("/novels")
+def novels():
+    latest: list = []
+    for _ in range(30):
+        latest.append(
+            {
+                "name": "Best Novel",
+                "image": "/static/cover-default.png",
+                "slug": "best-novel",
+                "alt": "alt",
+                "chapters": [
+                    {
+                        "name": "chapter XX",
+                        "slug": "chapter-xx",
+                        "get_date": "2 hours ago",
+                    },
+                    {
+                        "name": "chapter XX",
+                        "slug": "chapter-xx",
+                        "get_date": "2 hours ago",
+                    },
+                ],
+            }
+        )
+    return render_template("starter/user/novel.html", latest=latest)
+
+
+@bp.route("/bookmarks")
+def bookmarks():
+    latest: list = []
+    for _ in range(28):
+        latest.append(
+            {
+                "name": "Best Novel",
+                "image": "/static/cover-default.png",
+                "slug": "best-novel",
+                "alt": "alt",
+                "chapters": [
+                    {
+                        "name": "chapter XX",
+                        "slug": "chapter-xx",
+                        "get_date": "2 hours ago",
+                    },
+                    {
+                        "name": "chapter XX",
+                        "slug": "chapter-xx",
+                        "get_date": "2 hours ago",
+                    },
+                ],
+            }
+        )
+    return render_template("starter/user/bookmarks.html", latest=latest)

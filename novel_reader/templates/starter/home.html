@@ -15,7 +15,7 @@
         <div class="main-carousel"
             data-flickity='{"autoPlay": true, "pauseAutoPlayOnHover": true,  "pageDots": false, "contain": true}'>
             {% for novel in popular %}
-            <div class="carousel-cell trending-item">
+            <article class="carousel-cell trending-item">
                 <a title="{{novel.name}}" href="{{url_for('home.novel', slug=novel.slug)}}">
                     <div class="inner">
                         <div class="icon">
@@ -28,7 +28,7 @@
                         </div>
                     </div>
                 </a>
-            </div>
+            </article>
             {% endfor %}
         </div>
     </div>

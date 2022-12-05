@@ -1,0 +1,63 @@
+{% extends 'default.html' %}
+
+{% block head %}
+{% endblock %}
+
+{% block main %}
+<div class="controller block">
+    <div class="sidebar">
+        <div class="nav-item" align="center">
+            <a href="{{url_for('user.profile')}}" class="nav-link">
+                <strong>Profile</strong>
+            </a>
+        </div>
+        <div class="nav-item selected" align="center">
+            <a class="nav-link">
+                <strong>bookmarks</strong>
+            </a>
+        </div>
+        <div class="nav-item" align="center">
+            <a href="{{url_for('user.novels')}}" class="nav-link">
+                <strong>your novels</strong>
+            </a>
+        </div>
+    </div>
+    <div class="mainbar">
+        <div class="block-body grid-items">
+            {% for novel in latest %}
+            <article class="book-item latest-item">
+                <div class="inner">
+                    <div class="thumb tooltip-hover">
+                        <a href="{{url_for('home.novel', slug=novel.slug)}}">
+                            <img src="{{novel.image}}" data-src="{{novel.image}}}" alt="{{novel.alt}}">
+                        </a>
+                    </div>
+                    <div class="meta">
+                        <div class="title is-5">
+                            <a href="{{url_for('home.novel', slug=novel.slug)}}" title="{{novel.name}}">{{novel.name}}</a>
+                        </div>
+                        <div class="chapters">
+                            {% for chapter in novel.chapters %}
+                            <div class="chap-item">
+                                <h4>
+                                    <a title="{{novel.name}} - {{chapter.name}}" href="{{url_for('home.chapter', novel=novel.slug, slug=chapter.slug)}}">
+                                        {{chapter.name}}
+                                    </a>
+                                </h4>
+                                <div class="updated-date">
+                                    <span>{{chapter.get_date}}</span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block modal %}
+{% endblock %}

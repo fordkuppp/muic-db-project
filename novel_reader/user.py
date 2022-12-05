@@ -15,50 +15,44 @@ import bcrypt
 
 bp = Blueprint("user", __name__, url_prefix="/user")
 
+
 @bp.route("/profile")
 def profile():
-    user_id = session.get('user_id')
-    
+    user_id = session.get("user_id")
+
     db = get_db()
-    cur = db.cursor(dictionary=True)  
-    cur.execute(
-        "SELECT * FROM bookmark WHERE user_id = %s",
-        (user_id,)
-    )
+    cur = db.cursor(dictionary=True)
+    cur.execute("SELECT * FROM bookmark WHERE user_id = %s", (user_id,))
     novel_id = cur.fetchall()
     bookmarks = []
     for novel_id in novel_id:
-        cur.execute(
-            "SELECT * FROM novel WHERE id = %s",
-            (novel_id["novel_id"],)
-        )
+        cur.execute("SELECT * FROM novel WHERE id = %s", (novel_id["novel_id"],))
         bookmarks.append(cur.fetchall())
 
     cur.close()
-    return render_template("starter/profile.html", bookmarks = bookmarks)
+    return render_template("starter/profile.html", bookmarks=bookmarks)
+
 
 @bp.before_app_request
 def load_logged_in_user():
-    user_id = session.get('user_id')
+    user_id = session.get("user_id")
 
     if user_id is None:
         g.user = None
     else:
         db = get_db()
-        cur = db.cursor(dictionary=True)   
-        cur.execute(
-            "SELECT * FROM user WHERE id = %s",
-            (user_id,)
-        )
+        cur = db.cursor(dictionary=True)
+        cur.execute("SELECT * FROM user WHERE id = %s", (user_id,))
         g.user = cur.fetchone()
         cur.close()
-        
+
+
 @bp.route("/register", methods=["POST"])
 def register():
     try:
         db = get_db()
         cur = db.cursor(dictionary=True)
-
+        next = request.args.get("next")
         username = request.form["username"]
         password1 = request.form["password1"]
         password2 = request.form["password2"]
@@ -68,7 +62,8 @@ def register():
         hashed_password = bcrypt.hashpw(password1.encode("utf-8"), salt)
 
         if password1 != password2:
-            return "Passwords do not match!"
+            session["signup_pass"] = "Password don not match!"
+            return redirect(next)
 
         add_user = (
             "INSERT INTO reader_db.user "
@@ -80,57 +75,58 @@ def register():
         cur.execute(add_user, data_user)
         db.commit()
 
-        cur.execute(
-            "SELECT * FROM user WHERE username = %s;",
-            (username,)
-        )
-        
+        cur.execute("SELECT * FROM user WHERE username = %s;", (username,))
+
         user = cur.fetchone()
-        
+
         session.clear()
         cur.close()
         session["user_id"] = user["id"]
         session["role_id"] = user["role_id"]
-        
-        return redirect("/")
+
+        return redirect(next)
 
     except IntegrityError:
-        return "Username or email is already in used!"
+        session["signup_user"] = "Username or email is already in used!"
+        return redirect(next)
 
 
 @bp.route("/login", methods=["POST"])
 def login():
-    username = request.form['username']
-    password = request.form['password']
-    
+    username = request.form["username"]
+    password = request.form["password"]
+    next = request.args.get("next")
+    print(next)
+
     db = get_db()
     cur = db.cursor(dictionary=True)
-    
-    cur.execute(
-        "SELECT * FROM user WHERE username = %s",
-        (username,)
-    )
+
+    cur.execute("SELECT * FROM user WHERE username = %s", (username,))
     user = cur.fetchone()
-    
-    if user is None:
-        return "Incorrect username"
-    elif not bcrypt.checkpw(password.encode("utf-8"), user["password"].encode("utf-8")):
-        return "Incorrect password"
-    
+
+    if (user is None) or (
+        not not bcrypt.checkpw(password.encode("utf-8"), user["password"].encode("utf-8"))
+    ):
+        session["login_error"] = "Invalid username or password"
+        return redirect(next)
+
     cur.close()
     session.clear()
-    session['user_id'] = user["id"]
+    session["user_id"] = user["id"]
     session["role_id"] = user["role_id"]
-    return redirect("/")
+    return redirect(next)
+
 
 @bp.route("/logout")
 def logout():
     session.clear()
     return redirect("/")
 
+
 @bp.route("/forget", methods=["POST"])
 def forget():
     pass
+
 
 @bp.route("/forget/<string:token>/", methods=["POST", "GET"])
 def new_pass(token: str):
@@ -141,5 +137,5 @@ def new_pass(token: str):
 
 
 @bp.route("/<string:username>/all")
-def all_novels():
+def all_novels(username: str):
     pass

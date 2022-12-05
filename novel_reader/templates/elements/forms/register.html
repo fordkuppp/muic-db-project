@@ -1,18 +1,22 @@
-<div class="modal" id="signup-modal">
+<div class="modal {% if session['signup_user'] or session['signup_pass'] %} is-active {% endif %}" id="signup-modal">
     <div class="modal-card">
         <header class="modal-card-head">
             <strong class="modal-card-title">Register</strong>
             <button class="delete" aria-label="close" onclick="closeSignupBlock();"></button>
         </header>
         <section class="modal-card-body">
-            <form method="post" action="{{url_for('user.register')}}">
+            <form method="post" action="{{url_for('user.register')}}?next={{ request.path }}">
                 <div class="field"><label class="label">Email</label>
                     <div class="control has-icons-left has-icons-right">
                         <input class="input" type="text" placeholder="Email" id="email" name="email" required>
                         <span class="icon is-small is-left">
                             <i class="fa fa-envelope"></i>
                         </span>
-                        <p class="help is-danger"></p>
+                        <p class="help is-danger">
+                            {% if session['signup_user'] %}
+                            {{session.pop('signup_user')}}
+                            {% endif %}
+                        </p>
                     </div>
                 </div>
                 <div class="field">
@@ -43,7 +47,11 @@
                             <i class="fa fa-lock"></i>
                         </span>
                     </div>
-                    <p id="match" class="help is-danger"></p>
+                    <p id="match" class="help is-danger">
+                        {% if session['signup_pass'] %}
+                        {{session.pop('signup_pass')}}
+                        {% endif %}
+                    </p>
                 </div>
                 <div class="field">
                     <div class="control">

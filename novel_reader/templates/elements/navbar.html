@@ -70,7 +70,7 @@
                     </a>
                 </div>
             </div>
-            <a class="navbar-item" {% if g.user.role_id == 1 or g.user.role_id ==2 %} href="{{url_for('user.all_novel')}}" {% else %} onclick="openLoginBlock()" {% endif %}>
+            <a class="navbar-item" {% if g.user.role_id == 1 or g.user.role_id ==2 %} href="{{url_for('user.all_novels', username=g.user.username)}}" {% else %} onclick="openLoginBlock()" {% endif %}>
                 WRITE NOVEL
             </a>
             {% if g.user.role_id == 2 %}

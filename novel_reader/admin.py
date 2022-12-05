@@ -81,3 +81,18 @@ def novel_add():
     cur.close()
     
     return redirect("/")
+
+@bp.route("/remove", methods=["GET","DELETE"])
+def novel_remove():
+    novel_id = request.args.get('id')
+    
+    db = get_db()
+    cur = db.cursor(dictionary=True)
+    cur.execute(
+        "DELETE FROM reader_db.novel WHERE id = %s;",
+        (novel_id,)
+    )
+    db.commit()
+    cur.close()
+    
+    return redirect("/")

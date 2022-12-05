@@ -1,8 +1,7 @@
 create table genre
 (
-    id   int          not null
-        primary key,
     name varchar(255) not null
+        primary key
 );
 
 create table role
@@ -28,11 +27,12 @@ create table novel
     description text         null,
     created     datetime     not null,
     modified    datetime     null,
-    genre_id    int          not null,
+    genre_name  varchar(255) not null,
     status_id   int          not null,
-    constraint genre_id
-        foreign key (genre_id) references genre (id),
-    constraint status_id
+    view        int          null,
+    constraint genre_name_fk
+        foreign key (genre_name) references genre (name),
+    constraint status_id_fk
         foreign key (status_id) references status (id)
 );
 
@@ -68,8 +68,6 @@ create table bookmark
 (
     user_id  int not null,
     novel_id int not null,
-    constraint bookmark_novel_id
-        foreign key (novel_id) references novel (id),
     constraint bookmark_user_id
         foreign key (user_id) references user (id)
 );

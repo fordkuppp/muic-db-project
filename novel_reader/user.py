@@ -96,7 +96,6 @@ def login():
     username = request.form["username"]
     password = request.form["password"]
     next = request.args.get("next")
-    print(next)
 
     db = get_db()
     cur = db.cursor(dictionary=True)
@@ -134,33 +133,6 @@ def new_pass(token: str):
         pass
     else:
         return render_template("starter/reset.html")
-
-
-@bp.route("/novels")
-def novels():
-    latest: list = []
-    for _ in range(30):
-        latest.append(
-            {
-                "name": "Best Novel",
-                "image": "/static/cover-default.png",
-                "slug": "best-novel",
-                "alt": "alt",
-                "chapters": [
-                    {
-                        "name": "chapter XX",
-                        "slug": "chapter-xx",
-                        "get_date": "2 hours ago",
-                    },
-                    {
-                        "name": "chapter XX",
-                        "slug": "chapter-xx",
-                        "get_date": "2 hours ago",
-                    },
-                ],
-            }
-        )
-    return render_template("starter/user/novel.html", latest=latest)
 
 
 @bp.route("/bookmarks")

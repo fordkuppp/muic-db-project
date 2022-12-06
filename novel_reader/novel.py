@@ -107,6 +107,11 @@ def get_first_chapter_id(novel_id):
     )
     chapter_num = cur.fetchone()
 
+    if chapter_num is None:
+        db.commit()
+        cur.close()
+        return None
+    
     cur.execute(
         "SELECT id FROM chapter WHERE novel_id = %s AND chapter_num = %s;",
         (novel_id, chapter_num[0],)

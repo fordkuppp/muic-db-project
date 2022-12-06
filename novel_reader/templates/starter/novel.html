@@ -9,7 +9,7 @@
             <div class="img-cover">
                 <img src="{{novel.image}}" data-src="{{novel.image}}" alt="{{novel.name}}">
             </div>
-            {% if chapters is defined %}
+            {% if chapters == None %}
                 <div class="read-box">
                     <a id="readchapterbtn" href="{{url_for('novel.chapter', novel=novel.id, slug=first)}}"
                         title="Read Chapter 1">READ

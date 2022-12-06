@@ -43,6 +43,22 @@ def chapter(novel: str, slug: str):
     
     return render_template("starter/chapter.html", chapter=chapter, prev=prev_chapter, next=next_chapter)
 
+@bp.route("/latest/")
+def latest():
+    data: list = []
+    for i in get_latest_novels(2147483647):
+        data.append(i)
+
+    return render_template("starter/list.html", endpoint="LATEST NOVELS", result=data)
+
+@bp.route("/popular/")
+def popular():
+    data: list = []
+    for i in get_most_viewed_novels(2147483647):
+        data.append(i)
+
+    return render_template("starter/list.html", endpoint="POPULAR NOVELS", result=data)
+
 def get_chapters(novel_id):
     db = get_db()
     cur = db.cursor(dictionary=True)
@@ -155,3 +171,29 @@ def get_prev_chapter_id(novel_id, current_chapter_num):
     cur.close()
 
     return chapter_id[0]
+
+def get_latest_novels(n=10):
+    db = get_db()
+    cur = db.cursor(dictionary=True)
+    cur.execute(
+        "SELECT * FROM novel ORDER BY modified LIMIT %s;",
+        (n,)
+    )
+    novels = cur.fetchall()
+    db.commit()
+    cur.close()
+    
+    return novels
+
+def get_most_viewed_novels(n=10):
+    db = get_db()
+    cur = db.cursor(dictionary=True)
+    cur.execute(
+        "SELECT * FROM novel ORDER BY view LIMIT %s;",
+        (n,)
+    )
+    novels = cur.fetchall()
+    db.commit()
+    cur.close()
+    
+    return novels

@@ -23,19 +23,19 @@
             <article class="book-item latest-item">
                 <div class="inner">
                     <div class="thumb tooltip-hover">
-                        <a href="{{url_for('home.novel', slug=novel.slug)}}">
+                        <a href="{{url_for('novel.novel_home', slug=novel.id)}}">
                             <img src="{{novel.image}}" data-src="{{novel.image}}}" alt="{{novel.alt}}">
                         </a>
                     </div>
                     <div class="meta">
                         <div class="title is-5">
-                            <a href="{{url_for('home.novel', slug=novel.slug)}}" title="{{novel.name}}">{{novel.name}}</a>
+                            <a href="{{url_for('novel.novel_home', slug=novel.slug)}}" title="{{novel.name}}">{{novel.name}}</a>
                         </div>
                         <div class="chapters">
                             {% for chapter in novel.chapters %}
                             <div class="chap-item">
                                 <h4>
-                                    <a title="{{novel.name}} - {{chapter.name}}" href="{{url_for('home.chapter', novel=novel.slug, slug=chapter.slug)}}">
+                                    <a title="{{novel.name}} - {{chapter.name}}" href="{{url_for('novel.chapter', novel=novel.slug, slug=chapter.slug)}}">
                                         {{chapter.name}}
                                     </a>
                                 </h4>

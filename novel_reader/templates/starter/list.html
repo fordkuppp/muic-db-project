@@ -15,8 +15,8 @@
             <article class="book-item">
                 <div class="book-detailed-item">
                     <div class="thumb">
-                        <a title="{{novel.name}}" href="{{url_for('home.novel', slug=novel.slug)}}">
-                            <img src="{{novel.image}}" data-src="{{url_for('home.novel', slug=novel.slug)}}" alt="{{novel.alt}}"
+                        <a title="{{novel.name}}" href="{{url_for('novel.novel_home', slug=novel.id)}}">
+                            <img src="{{novel.image}}" data-src="{{url_for('novel.novel_home', slug=novel.id)}}" alt="{{novel.alt}}"
                                 title="{{novel.name}}">
                         </a>
                         <span class="latest-chapter" title="{{novel.latest_chap}}">
@@ -25,7 +25,7 @@
                     </div>
                     <div class="meta">
                         <div class="title is-4">
-                                <a title="{{novel.name}}" href="{{url_for('home.novel', slug=novel.slug)}}">
+                                <a title="{{novel.name}}" href="{{url_for('novel.novel_home', slug=novel.slug)}}">
                                     {{novel.name}}
                                 </a>
                         </div>

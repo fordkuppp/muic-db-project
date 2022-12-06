@@ -9,16 +9,31 @@
             <div class="img-cover">
                 <img src="{{novel.image}}" data-src="{{novel.image}}" alt="{{novel.name}}">
             </div>
-            {% if chapters == None %}
-                <div class="read-box">
+            <div class="read-box">
+                {% if chapters != [] %}
                     <a id="readchapterbtn" href="{{url_for('novel.chapter', novel=novel.id, slug=first)}}"
                         title="Read Chapter 1">READ
                     </a>
+                {% endif %}
+                {% if g.user %}
+                    {% if bookmark_check(novel.id) %}
+                        <form method="post" id="bookmark_add" action="{{url_for('user.bookmark_add', novel_id=novel.id)}}"></form>
+                        <a class="bookmark-btn" title="Bookmark" onclick="document.getElementById('bookmark_add').submit();">
+                            <i class="far fa-heart"></i>
+                        </a>
+                    {% else %}
+                        <form method="post" id="bookmark_remove" action="{{url_for('user.bookmark_remove', novel_id=novel.id)}}"></form>
+                        <a class="bookmark-btn" title="Bookmark" onclick="document.getElementById('bookmark_remove').submit();">
+                            <i class="far fa-solid fa-heart"></i>
+                        </a>
+                    {% endif %}
+                {% else %} 
                     <a class="bookmark-btn" title="Bookmark" onclick="openLoginBlock();">
                         <i class="far fa-heart"></i>
                     </a>
-                </div>
-            {% endif %}
+                {% endif %}
+            </div>
+            
         </div>
         <div class="detail">
             <div class="block-head title is-4">

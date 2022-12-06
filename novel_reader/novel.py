@@ -9,6 +9,7 @@ from flask import (
     url_for,
 )
 from novel_reader.db import get_db
+from novel_reader.user import bookmark_check
 from typing import Any
 
 bp = Blueprint("novel", __name__, url_prefix="/novel")
@@ -22,8 +23,7 @@ def novel_home(slug: str):
         chapters.append(i)
         
     data = get_novel(novel_id)
-
-    return render_template("starter/novel.html", novel=data[0], chapters = chapters, first=get_first_chapter_id(novel_id))
+    return render_template("starter/novel.html", novel=data[0], chapters = chapters, first=get_first_chapter_id(novel_id), bookmark_check=bookmark_check)
 
 @bp.route("/<string:novel>/ch/<string:slug>/")
 def chapter(novel: str, slug: str):

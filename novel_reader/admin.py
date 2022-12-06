@@ -60,6 +60,14 @@ def chapter_edit():
     )
     cur.execute("SELECT * FROM chapter WHERE novel_id = %s", (novel_id,))
     chapters = cur.fetchall()
+    
+    now = datetime.now()
+    now = now.strftime('%Y-%m-%d %H:%M:%S')
+    
+    cur.execute("UPDATE novel SET modified = %s WHERE id = %s;",
+                (now, novel_id)
+    )
+    
     db.commit()
     cur.close()
         
@@ -81,6 +89,14 @@ def chapter_add():
 
     cur.execute("SELECT * FROM chapter WHERE novel_id = %s", (novel_id,))
     chapters = cur.fetchall()
+    
+    now = datetime.now()
+    now = now.strftime('%Y-%m-%d %H:%M:%S')
+    
+    cur.execute("UPDATE novel SET modified = %s WHERE id = %s;",
+                (now, novel_id)
+    )
+    
     db.commit()
     cur.close()
         

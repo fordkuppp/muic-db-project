@@ -38,7 +38,7 @@ def novel_edit():
     cur.execute("SELECT * FROM chapter WHERE novel_id = %s", (novel_id,))
     chapters = cur.fetchall()
     cur.close()
-    return render_template("starter/admin/novel/edit.html", chapters = chapters)
+    return render_template("starter/admin/novel/edit.html", chapters = chapters, novel_id = novel_id)
 
 @bp.route("/chapter/edit", methods=["POST"])
 def chapter_edit():
@@ -113,6 +113,11 @@ def novel_remove():
     
     db = get_db()
     cur = db.cursor(dictionary=True)
+    cur.execute(
+        "DELETE FROM reader_db.chapter WHERE novel_id = %s;",
+        (novel_id,)
+    )
+    db.commit()
     cur.execute(
         "DELETE FROM reader_db.novel WHERE id = %s;",
         (novel_id,)

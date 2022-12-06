@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block main %}
+
 <section class="block">
     <div class="block-head">
             <span>All Chapters</span>
@@ -22,6 +23,10 @@
                     <input type="hidden" name="novelId" value={{novel_id}}>
                 </div>
                     <div class="modal-body my-4">
+                            <div class="mb-3">
+                                <label for="chapterNum" class="form-label">Chapter number</label>
+                                <input type="number" class="form-control" id="chapterNum" name="chapterNum" required>
+                            </div>
                             <div class="mb-3">
                                 <label for="chapterName" class="form-label">Chapter name</label>
                                 <input type="text" class="form-control" id="chapterName" name="chapterName" required>
@@ -42,6 +47,9 @@
 <table class="table">
 {% for chapter in chapters %}
     <tr>
+        <td>
+            {{ chapter.chapter_num }}
+        </td>
         <td>
             {{ chapter.name }}
         </td>
@@ -68,6 +76,10 @@
                             </div>
                                 <div class="modal-body my-4">
                                         <div class="mb-3">
+                                            <label for="chapterNum" class="form-label">Chapter number</label>
+                                            <input type="number" class="form-control" id="chapterNum" name="chapterNum" required>
+                                        </div>
+                                        <div class="mb-3">
                                             <label for="chapterName" class="form-label">Chapter name</label>
                                             <input type="text" class="form-control" id="chapterName" name="chapterName" required>
                                         </div>
@@ -84,6 +96,7 @@
                     </div>
                 </div>
             </form>
+            <button formmethod="DELETE" class="btn btn-success" type="button" onclick="location.href='{{url_for('admin.chapter_remove')}}?novelId={{ novel_id }}&chapterId={{ chapter.id }}'">remove chapter</button>
         </td>
     </tr>
 {% endfor %}

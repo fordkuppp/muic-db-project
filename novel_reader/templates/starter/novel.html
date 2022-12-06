@@ -7,16 +7,18 @@
     <div class="book-info">
         <div id="cover" class="cover block">
             <div class="img-cover">
-                <img src="{{novel.image}}" data-src="{{novel.image}}" alt="{{novel.alt}}">
+                <img src="{{novel.image}}" data-src="{{novel.image}}" alt="{{novel.name}}">
             </div>
-            <div class="read-box">
-                <a id="readchapterbtn" href="{{url_for('home.chapter', novel=novel.slug, slug=novel.chapters.0.slug)}}"
-                    title="Read Chapter 1">READ
-                </a>
-                <a class="bookmark-btn" title="Bookmark" onclick="openLoginBlock();">
-                    <i class="far fa-heart"></i>
-                </a>
-            </div>
+            {% if chapters is defined %}
+                <div class="read-box">
+                    <a id="readchapterbtn" href="{{url_for('novel.chapter', novel=novel.id, slug=first)}}"
+                        title="Read Chapter 1">READ
+                    </a>
+                    <a class="bookmark-btn" title="Bookmark" onclick="openLoginBlock();">
+                        <i class="far fa-heart"></i>
+                    </a>
+                </div>
+            {% endif %}
         </div>
         <div class="detail">
             <div class="block-head title is-4">
@@ -25,14 +27,14 @@
             <div class="meta block-body mt-1" style="margin-bottom:0;">
                 <p>
                     <strong>Author :</strong>
-                    <a href="{{novel.author.slug}}">
-                        <span>{{novel.author.username}}</span>
+                    <a href="{{novel.author}}">
+                        <span>{{novel.author}}</span>
                     </a>
                 </p>
                 <p>
                     <strong>Status :</strong>
-                    <a href="{{novel.status.slug}}">
-                        <span>{{novel.status.name}}</span>
+                    <a href="{{novel.status}}">
+                        <span>{{novel.status}}</span>
                     </a>
                 </p>
                 <p><strong>Genres :</strong>
@@ -45,11 +47,15 @@
                 </p>
                 <p>
                     <strong>Chapters: </strong>
-                    <span>{{novel.chapters|length}}</span>
+                    <span>{{chapters|length}}</span>
                 </p>
                 <p>
                     <strong>Last update: </strong>
                     <span>{{novel.modified}}</span>
+                </p>
+                <p>
+                    <strong>View count: </strong>
+                    <span>{{novel.view}}</span>
                 </p>
 
             </div>
@@ -66,14 +72,14 @@
     </div>
     <div class="mt-1 chapters">
         <div class="block-head title is-4">
-            <span>CHAPTERS ({{novel.chapters|length}})</span>
+            <span>CHAPTERS ({{chapters|length}})</span>
         </div>
         <div class="block-body" id="chapters">
             <div id="chapter-list-inner">
                 <ul class="chapter-list" id="chapter-list">
-                    {% for item in novel.chapters %}
+                    {% for item in chapters %}
                     <li id="c-{{loop.index}}">
-                        <a href="{{url_for('home.chapter',novel=novel.slug, slug=item.slug)}}"
+                        <a href="{{url_for('novel.chapter',novel=novel.id, slug=item.id)}}"
                             title="{{novel.name}} - {{item.name}}">
                             <div>
                                 <strong class="chapter-title">

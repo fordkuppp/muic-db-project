@@ -44,9 +44,9 @@ def novel_edit():
 def chapter_edit():
     chapter_name = request.form["chapterName"]
     chapter_content = request.form["chapterContent"]
+    chapter_num = request.form["chapterNum"]
     chapter_id = request.form["chapterId"]
     novel_id = request.form["novelId"]
-    print(chapter_name, chapter_id)
     db = get_db()
     cur = db.cursor(dictionary=True)
     
@@ -57,6 +57,10 @@ def chapter_edit():
     cur.execute(
         "UPDATE chapter SET content = %s WHERE id = %s;",
         (chapter_content, chapter_id)
+    )
+    cur.execute(
+        "UPDATE chapter SET chapter_num = %s WHERE id = %s;",
+        (chapter_num, chapter_id)
     )
     cur.execute("SELECT * FROM chapter WHERE novel_id = %s", (novel_id,))
     chapters = cur.fetchall()
@@ -77,14 +81,15 @@ def chapter_edit():
 def chapter_add():
     chapter_name = request.form["chapterName"]
     chapter_content = request.form["chapterContent"]
+    chapter_num = request.form["chapterNum"]
     novel_id = request.form["novelId"]
     db = get_db()
     cur = db.cursor(dictionary=True)
     
     cur.execute(
-        "INSERT INTO reader_db.chapter (name, novel_id, content)\
-        VALUES (%s, %s, %s);",
-        (chapter_name, novel_id, chapter_content)
+        "INSERT INTO reader_db.chapter (name, novel_id, content, chapter_num)\
+        VALUES (%s, %s, %s, %s);",
+        (chapter_name, novel_id, chapter_content, chapter_num)
     )
 
     cur.execute("SELECT * FROM chapter WHERE novel_id = %s", (novel_id,))
@@ -102,6 +107,23 @@ def chapter_add():
         
     return render_template("starter/admin/novel/edit.html", chapters = chapters, novel_id = novel_id)
 
+@bp.route("/chapter/remove", methods=["GET","DELETE"])
+def chapter_remove():
+    chapter_id = request.args.get("chapterId")
+    
+    db = get_db()
+    cur = db.cursor(dictionary=True)
+    
+    cur.execute(
+        "DELETE FROM reader_db.chapter WHERE id = %s;",
+        (chapter_id,)
+    )
+    
+    db.commit()
+    cur.close()
+    
+    return redirect("/")
+
 @bp.route("/add", methods=["POST"])
 def novel_add():
     novel_name = request.form["novelName"]
@@ -114,8 +136,8 @@ def novel_add():
     db = get_db()
     cur = db.cursor(dictionary=True)
     cur.execute(
-        "INSERT INTO reader_db.novel (name, image, description, created, modified, genre_name, status_id)\
-        VALUES (%s, %s, %s, %s, %s, %s, 1);", # TODO make the genre/status id chooseable from dropdown box
+        "INSERT INTO reader_db.novel (name, image, description, created, modified, genre_name, status)\
+        VALUES (%s, %s, %s, %s, %s, %s, 'Active');", # TODO make the genre/status id chooseable from dropdown box
         (novel_name, novel_image, novel_description, now, now, novel_genre)
     )
     db.commit()

@@ -6,11 +6,11 @@
 {% block main %}
 <div class="block viewer">
     <div class="block-head title is-4" align="center">
-        <span>TITLE</span>
+        <span>{{chapter.name}}</span>
     </div>
     <div class="viewer-content">
-        <div class="content-inner">
-            {{chapter.content|safe}}
+        <div style="white-space: pre-line;" class="content-inner">
+            {{chapter.content}}
         </div>
         <div class="action">
             <div class="viewer-button">
@@ -18,13 +18,13 @@
                     <li>
                         {% if prev %}
                         <a id="btn-prev" title="Previous chapter" class="button is-primary"
-                            href="{{url_for('home.chapter', novel=prev.novel.slug, slug=prev.slug)}}">❮</a>
+                            href="{{url_for('novel.chapter', novel=chapter.novel_id, slug=prev)}}">❮</a>
                         {% else %}
                         <a id="btn-prev" title="Previous chapter" class="button is-primary" disabled>❮</a>
                         {% endif %}
                     </li>
                     <li>
-                        <a title="Novel index" href="{{url_for('home.novel', slug=chapter.novel.slug)}}"
+                        <a title="Novel index" href="{{url_for('novel.novel_home', slug=chapter.novel_id)}}"
                             class="button is-primary">
                             <i class="fa-solid fa-house" style="margin-right: 5px;"></i>
                             HOME
@@ -33,7 +33,7 @@
                     <li>
                         {% if next %}
                         <a id="btn-next" title="Next chapter" class="button is-primary"
-                            href="{{url_for('home.chapter', novel=next.novel.slug, slug=next.slug)}}">❯</a>
+                            href="{{url_for('novel.chapter', novel=chapter.novel_id, slug=next)}}">❯</a>
                         {% else %}
                         <a id="btn-next" title="Next chapter" class="button is-primary" disabled>❯</a>
                         {% endif %}

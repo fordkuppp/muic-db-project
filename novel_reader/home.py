@@ -37,23 +37,9 @@ def latest():
 
 @bp.route("/popular/")
 def popular():
-    data: list[dict] = []
-    for _ in range(4):
-        data.append(
-            {
-                "name": "Best Novel",
-                "image": "/static/cover-default.png",
-                "slug": "best-novel",
-                "alt": "alt",
-                "hits": 30,
-                "description": "This is novel description that is very very and very super duper long.",
-                "genres": [
-                    {"name": "Action", "slug": "action"},
-                    {"name": "Martial Arts", "slug": "martial-arts"},
-                ],
-                "latest_chap": "chapter XX",
-            }
-        )
+    data: list = []
+    for i in get_most_viewed_novels(2147483647):
+        data.append(i)
 
     return render_template("starter/list.html", endpoint="POPULAR NOVELS", result=data)
 

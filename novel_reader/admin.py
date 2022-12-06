@@ -145,9 +145,9 @@ def novel_add():
     
     return redirect("/")
 
-@bp.route("/remove", methods=["GET","DELETE"])
+@bp.route("/remove", methods=["GET"])
 def novel_remove():
-    novel_id = request.args.get("novel-id")
+    novel_id = request.args.get("novelId")
     
     db = get_db()
     cur = db.cursor(dictionary=True)
@@ -159,6 +159,54 @@ def novel_remove():
     cur.execute(
         "DELETE FROM reader_db.novel WHERE id = %s;",
         (novel_id,)
+    )
+    db.commit()
+    cur.close()
+    
+    return redirect("/")
+
+@bp.route("/rename", methods=["POST", "GET"])
+def novel_edit_name():
+    novel_id = request.args.get("novelId")
+    name = request.form["novelName"]
+    print(novel_id,name)
+    db = get_db()
+    cur = db.cursor(dictionary=True)
+    cur.execute(
+        "UPDATE novel SET name = %s WHERE id = %s;",
+        (name, novel_id)
+    )
+    db.commit()
+    cur.close()
+    
+    return redirect("/")
+
+@bp.route("/editimage", methods=["POST"])
+def novel_edit_image():
+    novel_id = request.args.get("novelId")
+    image = request.form["novelImage"]
+    
+    db = get_db()
+    cur = db.cursor(dictionary=True)
+    cur.execute(
+        "UPDATE novel SET image = %s WHERE id = %s;",
+        (image, novel_id)
+    )
+    db.commit()
+    cur.close()
+    
+    return redirect("/")
+
+@bp.route("/editdescription", methods=["POST"])
+def novel_edit_description():
+    novel_id = request.args.get("novelId")
+    description = request.form["novelDescription"]
+
+    db = get_db()
+    cur = db.cursor(dictionary=True)
+    cur.execute(
+        "UPDATE novel SET description = %s WHERE id = %s;",
+        (description, novel_id)
     )
     db.commit()
     cur.close()

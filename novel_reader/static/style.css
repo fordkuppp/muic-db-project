@@ -24,6 +24,10 @@ div.main.container {
     margin-top: 0.25rem !important;
 }
 
+.navbar a {
+    text-decoration: none;
+}
+
 section.header {
     width: 100%;
     background: #fbfbfb;

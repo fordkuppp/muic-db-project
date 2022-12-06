@@ -48,7 +48,7 @@ def latest():
     data: list = []
     for i in get_latest_novels(2147483647):
         data.append(i)
-
+    
     return render_template("starter/list.html", endpoint="LATEST NOVELS", result=data)
 
 @bp.route("/popular/")
@@ -211,6 +211,8 @@ def get_latest_novels(n=10):
     novels = cur.fetchall()
     db.commit()
     cur.close()
+
+    novels.reverse()
     
     return novels
 
@@ -224,6 +226,8 @@ def get_most_viewed_novels(n=10):
     novels = cur.fetchall()
     db.commit()
     cur.close()
+    
+    novels.reverse()
     
     return novels
 

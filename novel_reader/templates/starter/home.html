@@ -16,7 +16,7 @@
             data-flickity='{"autoPlay": true, "pauseAutoPlayOnHover": true,  "pageDots": false, "contain": true}'>
             {% for novel in popular %}
             <article class="carousel-cell trending-item">
-                <a title="{{novel.name}}" href="{{url_for('home.novel', slug=novel.slug)}}">
+                <a title="{{novel.name}}" href="{{url_for('home.novel', slug=novel.id)}}">
                     <div class="inner">
                         <div class="icon">
                             <img src="{{novel.image}}" data-src="{{novel.image}}" alt="{{novel.alt}}"
@@ -48,7 +48,7 @@
         <article class="book-item latest-item">
             <div class="inner">
                 <div class="thumb tooltip-hover">
-                    <a href="{{url_for('home.novel', slug=novel.slug)}}">
+                    <a href="{{url_for('home.novel', slug=novel.id)}}">
                         <img src="{{novel.image}}" data-src="{{novel.image}}}" alt="{{novel.alt}}">
                     </a>
                 </div>

@@ -16,63 +16,21 @@ bp = Blueprint("home", __name__, url_prefix="/")
 
 @bp.route("/")
 def home():
-    # This is sample data for showing template
     popular: list[dict[str, str]] = []
     latest: list = []
-    for _ in range(18):
-        popular.append(
-            {
-                "name": "Novel Name",
-                "image": "/static/cover-default.png",
-                "slug": "best-novel",
-                "alt": "alt",
-                "latest_chap": "chapter X",
-            }
-        )
+    for i in get_most_viewed_novels(18):
+        popular.append(i)
+    for i in get_latest_novels(28):
+        latest.append(i)
 
-    for _ in range(30):
-        latest.append(
-            {
-                "name": "Best Novel",
-                "image": "/static/cover-default.png",
-                "slug": "best-novel",
-                "alt": "alt",
-                "chapters": [
-                    {
-                        "name": "chapter XX",
-                        "slug": "chapter-xx",
-                        "get_date": "2 hours ago",
-                    },
-                    {
-                        "name": "chapter XX",
-                        "slug": "chapter-xx",
-                        "get_date": "2 hours ago",
-                    },
-                ],
-            }
-        )
     return render_template("starter/home.html", popular=popular, latest=latest)
 
 
 @bp.route("/latest/")
 def latest():
-    data: list[dict] = []
-    for _ in range(40):
-        data.append(
-            {
-                "name": "Best Novel",
-                "image": "/static/cover-default.png",
-                "slug": "best-novel",
-                "alt": "alt",
-                "hits": 30,
-                "description": "This is novel description that is very very and very super duper long.",
-                "genres": [
-                    {"name": "Action", "slug": "action"},
-                    {"name": "Martial Arts", "slug": "martial-arts"},
-                ],
-                "latest_chap": "chapter XX",
-            }
-        )
+    data: list = []
+    for i in get_latest_novels(2147483647):
+        data.append(i)
 
     return render_template("starter/list.html", endpoint="LATEST NOVELS", result=data)
 
@@ -80,7 +38,7 @@ def latest():
 @bp.route("/popular/")
 def popular():
     data: list[dict] = []
-    for _ in range(40):
+    for _ in range(4):
         data.append(
             {
                 "name": "Best Novel",
@@ -240,3 +198,29 @@ def chapter(novel: str, slug: str):
         "slug": "chapter-02",
     }
     return render_template("starter/chapter.html", chapter=chapter, prev=prev, next=next)
+
+def get_latest_novels(n=10):
+    db = get_db()
+    cur = db.cursor(dictionary=True)
+    cur.execute(
+        "SELECT * FROM novel ORDER BY modified LIMIT %s;",
+        (n,)
+    )
+    novels = cur.fetchall()
+    db.commit()
+    cur.close()
+    
+    return novels
+
+def get_most_viewed_novels(n=10):
+    db = get_db()
+    cur = db.cursor(dictionary=True)
+    cur.execute(
+        "SELECT * FROM novel ORDER BY view LIMIT %s;",
+        (n,)
+    )
+    novels = cur.fetchall()
+    db.commit()
+    cur.close()
+    
+    return novels

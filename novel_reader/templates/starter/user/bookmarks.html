@@ -19,7 +19,7 @@
     </div>
     <div class="mainbar">
         <div class="block-body grid-items">
-            {% for novel in latest %}
+            {% for novel in novels %}
             <article class="book-item latest-item">
                 <div class="inner">
                     <div class="thumb tooltip-hover">
@@ -29,21 +29,7 @@
                     </div>
                     <div class="meta">
                         <div class="title is-5">
-                            <a href="{{url_for('novel.novel_home', slug=novel.slug)}}" title="{{novel.name}}">{{novel.name}}</a>
-                        </div>
-                        <div class="chapters">
-                            {% for chapter in novel.chapters %}
-                            <div class="chap-item">
-                                <h4>
-                                    <a title="{{novel.name}} - {{chapter.name}}" href="{{url_for('novel.chapter', novel=novel.slug, slug=chapter.slug)}}">
-                                        {{chapter.name}}
-                                    </a>
-                                </h4>
-                                <div class="updated-date">
-                                    <span>{{chapter.get_date}}</span>
-                                </div>
-                            </div>
-                            {% endfor %}
+                            <a href="{{url_for('novel.novel_home', slug=novel.id)}}" title="{{novel.name}}">{{novel.name}}</a>
                         </div>
                     </div>
                 </div>

@@ -168,29 +168,29 @@ def bookmark_remove(novel_id: str):
 
 @bp.route("/bookmarks")
 def bookmarks():
-    latest: list = []
-    for _ in range(28):
-        latest.append(
-            {
-                "name": "Best Novel",
-                "image": "/static/cover-default.png",
-                "slug": "best-novel",
-                "alt": "alt",
-                "chapters": [
-                    {
-                        "name": "chapter XX",
-                        "slug": "chapter-xx",
-                        "get_date": "2 hours ago",
-                    },
-                    {
-                        "name": "chapter XX",
-                        "slug": "chapter-xx",
-                        "get_date": "2 hours ago",
-                    },
-                ],
-            }
+    user_id = session["user_id"]
+    
+    db = get_db()
+    cur = db.cursor(dictionary=True)
+        
+    cur.execute(
+        "SELECT novel_id FROM bookmark WHERE user_id = %s;",
+        (user_id,)
+    )
+    bookmarks_list =  cur.fetchall()
+        
+    novels: list = []
+    for i in bookmarks_list:
+        print(i)
+        cur.execute(
+            "SELECT name, image FROM novel WHERE id = %s;",
+            (i["novel_id"],)
         )
-    return render_template("starter/user/bookmarks.html", latest=latest)
+        novels.append(cur.fetchone())
+        
+    db.commit()
+    cur.close()
+    return render_template("starter/user/bookmarks.html", novels=novels)
 
 def bookmark_check(novel_id): # Return False if there is bookmark, True if no bookmark
     db = get_db()

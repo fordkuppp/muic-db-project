@@ -26,14 +26,25 @@
                                 {{ novel.name }}
                             </a>
                         </div>
-                        {% with id=novel.id, name=novel.name %}
+                        {% with novel=novel %}
                         {% include "elements/novel-forms/remove.html" %}
+                        {% include "elements/novel-forms/name.html" %}
+                        {% include "elements/novel-forms/image.html" %}
+                        {% include "elements/novel-forms/description.html" %}
                         {% endwith %}
                     </td>
                     <td style="text-align: right;">
-                        <a href="{{url_for('admin.novel_remove')}}?novelId={{ novel.id }}"
-                            class="button is-warning js-modal-trigger">
-                            <i class="fa-solid fa-pen-to-square" style="margin: 0;"></i>
+                        <a class="button is-warning js-modal-trigger" data-target="name-{{novel.id}}">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                            <strong>name</strong>
+                        </a>
+                        <a class="button is-warning js-modal-trigger" data-target="image-{{novel.id}}">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                            <strong>image</strong>
+                        </a>
+                        <a class="button is-warning js-modal-trigger" data-target="des-{{novel.id}}">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                            <strong>description</strong>
                         </a>
                         <a class="button is-danger js-modal-trigger" data-target="deleted-{{novel.id}}">
                             <i class="fa-solid fa-trash-can" style="margin: 0;"></i>
@@ -43,38 +54,7 @@
                 {% endfor %}
             </tbody>
         </table>
-        <table>
-            {% for novel in novels %}
-            <tr>
-                <td>
-                    {{ novel.name }}
-                </td>
-                <td>
-                    <button class="btn btn-success" type="button"
-                        onclick="location.href='{{url_for('admin.novel_edit')}}?novelId={{ novel.id }}'">add/edit
-                        chapter</button>
-                    <button class="btn btn-success" type="button"
-                        onclick="location.href='{{url_for('admin.novel_remove')}}?novelId={{ novel.id }}'">remove
-                        novel</button>
-                    <form action="{{url_for('admin.novel_edit_name')}}?novelId={{novel.id}}" method="post">
-                        <input type="text" id="novelName" name="novelName">
-                        <button type="submit"> submit rename </button>
-                    </form>
-
-                    <form action="{{url_for('admin.novel_edit_image')}}?novelId={{ novel.id }}" method="post">
-                        <input type="text" id="novelImage" name="novelImage">
-                        <button type="submit"> submit new image </button>
-                    </form>
-                    <form action="{{url_for('admin.novel_edit_description')}}?novelId={{novel.id}}" method="post">
-                        <textarea type="text" id="novelDescription" name="novelDescription"></textarea>
-                        <button type="submit"> submit new description </button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
     </div>
-
 </section>
 {% endblock %}
 

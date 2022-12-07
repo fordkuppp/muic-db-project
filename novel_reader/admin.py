@@ -144,7 +144,7 @@ def novel_add():
     db.commit()
     cur.close()
 
-    return redirect("/")
+    return redirect(url_for("admin.admin"))
 
 
 @bp.route("/remove", methods=["GET"])
@@ -153,24 +153,15 @@ def novel_remove():
 
     db = get_db()
     cur = db.cursor(dictionary=True)
-    cur.execute(
-        "DELETE FROM chapter WHERE novel_id = %s;",
-        (novel_id,)
-    )
+    cur.execute("DELETE FROM chapter WHERE novel_id = %s;", (novel_id,))
     db.commit()
-    cur.execute(
-        "DELETE FROM novel WHERE id = %s;",
-        (novel_id,)
-    )
+    cur.execute("DELETE FROM novel WHERE id = %s;", (novel_id,))
     db.commit()
-    cur.execute(
-        "DELETE FROM bookmark WHERE novel_id = %s;",
-        (novel_id,)
-    )
+    cur.execute("DELETE FROM bookmark WHERE novel_id = %s;", (novel_id,))
     db.commit()
     cur.close()
 
-    return redirect("/")
+    return redirect(url_for("admin.admin"))
 
 
 @bp.route("/rename", methods=["POST", "GET"])
@@ -184,7 +175,7 @@ def novel_edit_name():
     db.commit()
     cur.close()
 
-    return redirect("/")
+    return redirect(url_for("admin.admin"))
 
 
 @bp.route("/editimage", methods=["POST"])
@@ -198,7 +189,7 @@ def novel_edit_image():
     db.commit()
     cur.close()
 
-    return redirect("/")
+    return redirect(url_for("admin.admin"))
 
 
 @bp.route("/editdescription", methods=["POST"])
@@ -214,4 +205,4 @@ def novel_edit_description():
     db.commit()
     cur.close()
 
-    return redirect("/")
+    return redirect(url_for("admin.admin"))

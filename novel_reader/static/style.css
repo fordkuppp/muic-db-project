@@ -128,9 +128,13 @@ section.header {
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-.modal-card {
+.modal-content {
     width: 90%;
     max-width: 400px;
+}
+
+.modal-content {
+    max-width: fit-content;
 }
 
 .normal .modal-card {

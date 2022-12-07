@@ -1,4 +1,4 @@
-<div class="modal normal" id="deleted-{{id}}">
+<div class="modal normal" id="deleted-{{novel.id}}">
     <div class="modal-background"></div>
     <div class="modal-card">
         <header class="modal-card-head">
@@ -6,14 +6,14 @@
             <button class="delete" aria-label="close"></button>
         </header>
         <section class="modal-card-body">
-            <p>Do you want to deleted {{name}}</p>
+            <p>Do you want to deleted {{novel.name}}</p>
         </section>
         <footer class="modal-card-foot">
-            <a onclick="document.getElementById('deleted-{{id}}').classList.remove('is-active')"
+            <a onclick="document.getElementById('deleted-{{novel.id}}').classList.remove('is-active')"
                 class="button is-primary">
                 <strong>cancel</strong>
             </a>
-            <a href="{{url_for('admin.novel_remove')}}?novelId={{id}}" class="button is-danger">
+            <a href="{{url_for('admin.novel_remove')}}?novelId={{novel.id}}" class="button is-danger">
                 <strong>confirm</strong>
             </a>
         </footer>

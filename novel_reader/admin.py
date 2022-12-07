@@ -152,12 +152,17 @@ def novel_remove():
     db = get_db()
     cur = db.cursor(dictionary=True)
     cur.execute(
-        "DELETE FROM reader_db.chapter WHERE novel_id = %s;",
+        "DELETE FROM chapter WHERE novel_id = %s;",
         (novel_id,)
     )
     db.commit()
     cur.execute(
-        "DELETE FROM reader_db.novel WHERE id = %s;",
+        "DELETE FROM novel WHERE id = %s;",
+        (novel_id,)
+    )
+    db.commit()
+    cur.execute(
+        "DELETE FROM bookmark WHERE novel_id = %s;",
         (novel_id,)
     )
     db.commit()

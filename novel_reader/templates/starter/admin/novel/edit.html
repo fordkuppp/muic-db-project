@@ -96,7 +96,7 @@
                     </div>
                 </div>
             </form>
-            <button formmethod="DELETE" class="btn btn-success" type="button" onclick="location.href='{{url_for('admin.chapter_remove')}}?novelId={{ novel_id }}&chapterId={{ chapter.id }}'">remove chapter</button>
+            <button formmethod="DELETE" class="btn btn-success" type="button" onclick="location.href='{{url_for('admin.chapter_remove')}}?novelId={{ chapter.novel_id }}&chapterId={{ chapter.id }}'">remove chapter</button>
         </td>
     </tr>
 {% endfor %}

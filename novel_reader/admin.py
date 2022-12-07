@@ -41,8 +41,9 @@ def novel_edit():
     cur.execute("SELECT * FROM chapter WHERE novel_id = %s", (novel_id,))
     chapters = cur.fetchall()
     cur.close()
+    print(chapters)
     return render_template(
-        "starter/admin/novel/edit.html", chapters=chapters, novel_id=novel_id
+        "starter/admin/chapter.html", chapters=chapters, novel_id=novel_id
     )
 
 
@@ -63,8 +64,8 @@ def chapter_edit():
     cur.execute(
         "UPDATE chapter SET chapter_num = %s WHERE id = %s;", (chapter_num, chapter_id)
     )
-    cur.execute("SELECT * FROM chapter WHERE novel_id = %s", (novel_id,))
-    chapters = cur.fetchall()
+    # cur.execute("SELECT * FROM chapter WHERE novel_id = %s", (novel_id,))
+    # chapters = cur.fetchall()
 
     now = datetime.now()
     now = now.strftime("%Y-%m-%d %H:%M:%S")
@@ -74,9 +75,7 @@ def chapter_edit():
     db.commit()
     cur.close()
 
-    return render_template(
-        "starter/admin/novel/edit.html", chapters=chapters, novel_id=novel_id
-    )
+    return redirect(url_for("admin.novel_edit") + f"?novelId={novel_id}")
 
 
 @bp.route("/chapter/add", methods=["POST"])
@@ -94,8 +93,8 @@ def chapter_add():
         (chapter_name, novel_id, chapter_content, chapter_num),
     )
 
-    cur.execute("SELECT * FROM chapter WHERE novel_id = %s", (novel_id,))
-    chapters = cur.fetchall()
+    # cur.execute("SELECT * FROM chapter WHERE novel_id = %s", (novel_id,))
+    # chapters = cur.fetchall()
 
     now = datetime.now()
     now = now.strftime("%Y-%m-%d %H:%M:%S")
@@ -105,14 +104,13 @@ def chapter_add():
     db.commit()
     cur.close()
 
-    return render_template(
-        "starter/admin/novel/edit.html", chapters=chapters, novel_id=novel_id
-    )
+    return redirect(url_for("admin.novel_edit") + f"?novelId={novel_id}")
 
 
 @bp.route("/chapter/remove", methods=["GET", "DELETE"])
 def chapter_remove():
     chapter_id = request.args.get("chapterId")
+    novel_id = request.args.get("novelId")
 
     db = get_db()
     cur = db.cursor(dictionary=True)
@@ -122,7 +120,7 @@ def chapter_remove():
     db.commit()
     cur.close()
 
-    return redirect("/")
+    return redirect(url_for("admin.novel_edit") + f"?novelId={novel_id}")
 
 
 @bp.route("/add", methods=["POST"])
@@ -143,7 +141,6 @@ def novel_add():
     )
     db.commit()
     cur.close()
-
     return redirect(url_for("admin.admin"))
 
 

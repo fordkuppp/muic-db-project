@@ -26,12 +26,10 @@
                                 {{ novel.name }}
                             </a>
                         </div>
-                        {% with novel=novel %}
                         {% include "elements/novel-forms/remove.html" %}
                         {% include "elements/novel-forms/name.html" %}
                         {% include "elements/novel-forms/image.html" %}
                         {% include "elements/novel-forms/description.html" %}
-                        {% endwith %}
                     </td>
                     <td style="text-align: right;">
                         <a class="button is-warning js-modal-trigger" data-target="name-{{novel.id}}">

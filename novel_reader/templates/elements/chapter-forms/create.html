@@ -1,0 +1,51 @@
+<div class="modal normal" id="create">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <strong class="modal-card-title">New Chapter</strong>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <form method="post" action="{{url_for('admin.chapter_add')}}">
+                <input type="hidden" name="novelId" value={{novel_id}}>
+                <div class="field">
+                    <label class="label">Chapter Number</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input class="input" type="text" placeholder="Chapter number" name="chapterNum" required>
+                        <span class="icon is-small is-left">
+                            <i class="fa-solid fa-list-ol"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Chapter Name</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input class="input" type="text" placeholder="New chpater title" name="chapterName" required>
+                        <span class="icon is-small is-left">
+                            <i class="fa-solid fa-book"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Description</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <textarea class="textarea" placeholder="Enter your chapter here!!" rows="20" name="chapterContent" id="default"></textarea>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <p class="help is-danger">
+                        </p>
+                        <button class="button submit is-primary" type="submit">
+                            <strong>
+                                SAVE
+                            </strong>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </section>
+        <footer class="modal-card-foot">
+        </footer>
+    </div>
+</div>

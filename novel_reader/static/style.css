@@ -258,7 +258,7 @@ i {
     margin: 0;
 }
 
-.block-head .button {
+a.button {
     text-decoration: none;
 }
 
@@ -753,4 +753,8 @@ strong {
 
 .mainbar .block-body .latest-item {
     width: 25%;
+}
+
+.block-body .table {
+    margin-top: 1.5rem;
 }

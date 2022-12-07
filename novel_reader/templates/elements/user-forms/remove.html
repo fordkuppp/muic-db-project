@@ -1,0 +1,21 @@
+<div class="modal normal" id="deleted_user-{{novel.id}}">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <strong class="modal-card-title">Deleted Confirmation</strong>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <p>Do you want to deleted {{novel.username}}</p>
+        </section>
+        <footer class="modal-card-foot">
+            <a onclick="document.getElementById('deleted_user-{{novel.id}}').classList.remove('is-active')"
+                class="button is-primary">
+                <strong>cancel</strong>
+            </a>
+            <a href="{{url_for('admin.user_remove')}}?userId={{novel.id}}" class="button is-danger">
+                <strong>confirm</strong>
+            </a>
+        </footer>
+    </div>
+</div>

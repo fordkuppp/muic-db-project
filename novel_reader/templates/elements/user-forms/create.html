@@ -1,0 +1,90 @@
+<div class="modal normal" id="create_user">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <strong class="modal-card-title">Add user</strong>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <form method="post" action="{{url_for('admin.add_user')}}">
+                <div class="field"><label class="label">Email</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input class="input" type="text" placeholder="Email" id="email" name="email" required>
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-envelope"></i>
+                        </span>
+                        <p class="help is-danger">
+                        </p>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Username</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input class="input" type="text" placeholder="Display name" id="username" name="username"
+                            required>
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Password</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input class="input" type="password" placeholder="Password" id="password1" name="password1"
+                            onkeyup='check();' required>
+                        <span class="icon is-small is-left"><i class="fa fa-lock"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Confirm Password</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input class="input" type="password" placeholder="Retype password" id="password2"
+                            name="password2" onkeyup='check();' required>
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-lock"></i>
+                        </span>
+                    </div>
+                    <p id="match" class="help is-danger">
+                    </p>
+                </div>
+				<div class="field">
+                    <label class="label">Role</label>
+                    <div class="select" >
+                        <select name="role">
+                          <option value=1>User</option>
+                          <option value=2>Admin</option>
+                        </select>
+                      </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button class="button submit is-primary" type="submit">
+                            <strong>ADD
+                            </strong>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </section>
+        <footer class="modal-card-foot">
+        </footer>
+    </div>
+</div>
+
+<script>
+    const pass1 = document.getElementById('password1');
+    const pass2 = document.getElementById('password2');
+    const target = document.getElementById('match');
+    var check = function () {
+        if (pass1.value != pass2.value) {
+            target.innerHTML = 'Passwords do not match';
+        }
+        else if (pass1.length < 8) {
+            target.innerHTML = 'Passwords must have at least 8 characters'
+        }
+        else {
+            target.innerHTML = '';
+        }
+    }
+</script>

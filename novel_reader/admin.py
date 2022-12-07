@@ -30,7 +30,11 @@ def admin():
     cur.execute("SELECT * FROM novel")
     novels = cur.fetchall()
     cur.close()
-    return render_template("starter/admin/admin.html", novels=novels)
+    cur2 = db.cursor(dictionary=True)
+    cur2.execute("SELECT * FROM user")
+    users = cur2.fetchall()
+    cur2.close()
+    return render_template("starter/admin/admin.html", novels=novels,users=users)
 
 
 @bp.route("/novel/edit")
@@ -198,6 +202,75 @@ def novel_edit_description():
     cur = db.cursor(dictionary=True)
     cur.execute(
         "UPDATE novel SET description = %s WHERE id = %s;", (description, novel_id)
+    )
+    db.commit()
+    cur.close()
+
+    return redirect(url_for("admin.admin"))
+
+@bp.route("/user/add", methods=["POST"])
+def add_user():
+    db = get_db()
+    cur = db.cursor(dictionary=True)
+    username = request.form["username"]
+    password1 = request.form["password1"]
+    password2 = request.form["password2"]
+    email = request.form["email"]
+    role = request.form.get("role")
+    time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(password1.encode("utf-8"), salt)
+
+    add_user = (
+        "INSERT INTO reader_db.user "
+        "(username, email, password, last_login, role_id) "
+        "VALUES (%s, %s, %s, %s, %s);"
+    )
+    data_user = (username, email, hashed_password, time,role)
+
+    cur.execute(add_user, data_user)
+    db.commit()
+
+    return redirect(url_for("admin.admin"))
+        
+@bp.route("/user/remove", methods=["GET"])
+def user_remove():
+    user_id = request.args.get("userId")
+
+    db = get_db()
+    cur = db.cursor(dictionary=True)
+    cur.execute("DELETE FROM bookmark WHERE user_id = %s;", (user_id,))
+    db.commit()
+    cur.execute("DELETE FROM user WHERE id = %s;", (user_id,))
+    db.commit()
+    cur.close()
+
+    return redirect(url_for("admin.admin"))
+
+@bp.route("/user/editEmail", methods=["POST"])
+def user_edit_email():
+    user_id = request.args.get("userId")
+    email = request.form["email"]
+
+    db = get_db()
+    cur = db.cursor(dictionary=True)
+    cur.execute(
+        "UPDATE user SET email = %s WHERE id = %s;", (email, user_id)
+    )
+    db.commit()
+    cur.close()
+
+    return redirect(url_for("admin.admin"))
+    
+@bp.route("/user/editRole", methods=["POST"])
+def user_edit_role():
+    user_id = request.args.get("userId")
+    role = request.form.get("role")
+
+    db = get_db()
+    cur = db.cursor(dictionary=True)
+    cur.execute(
+        "UPDATE user SET role_id = %s WHERE id = %s;", (role, user_id)
     )
     db.commit()
     cur.close()

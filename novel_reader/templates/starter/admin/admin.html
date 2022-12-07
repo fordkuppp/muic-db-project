@@ -1,4 +1,4 @@
-{% extends 'default.html' %}
+{% extends 'admin-default.html' %}
 
 {% block head %}
 
@@ -7,75 +7,50 @@
 {% block main %}
 <section class="block">
     <div class="block-head">
+        <div class="title is-5 bolder">
             <span>All novels</span>
+        </div>
+        <a class="button is-primary js-modal-trigger" data-target="create" data-bs-toggle="modal" data-bs-target="#add">
+            <i class="fa-solid fa-plus"></i>
+            <strong>NEW</strong>
+        </a>
     </div>
     <div class="container">
         <table>
-        {% for novel in novels %}
+            {% for novel in novels %}
             <tr>
                 <td>
                     {{ novel.name }}
                 </td>
                 <td>
-                    <button class="btn btn-success" type="button" onclick="location.href='{{url_for('admin.novel_edit')}}?novelId={{ novel.id }}'">add/edit chapter</button>
-                    <button class="btn btn-success" type="button" onclick="location.href='{{url_for('admin.novel_remove')}}?novelId={{ novel.id }}'">remove novel</button>
+                    <button class="btn btn-success" type="button"
+                        onclick="location.href='{{url_for('admin.novel_edit')}}?novelId={{ novel.id }}'">add/edit
+                        chapter</button>
+                    <button class="btn btn-success" type="button"
+                        onclick="location.href='{{url_for('admin.novel_remove')}}?novelId={{ novel.id }}'">remove
+                        novel</button>
                     <form action="{{url_for('admin.novel_edit_name')}}?novelId={{novel.id}}" method="post">
-                        <input type="text" id="novelName" name="novelName">new name</input>
+                        <input type="text" id="novelName" name="novelName">
                         <button type="submit"> submit rename </button>
                     </form>
 
                     <form action="{{url_for('admin.novel_edit_image')}}?novelId={{ novel.id }}" method="post">
-                        <input type="text" id="novelImage" name="novelImage"> new image url</input>
+                        <input type="text" id="novelImage" name="novelImage">
                         <button type="submit"> submit new image </button>
                     </form>
                     <form action="{{url_for('admin.novel_edit_description')}}?novelId={{novel.id}}" method="post">
                         <textarea type="text" id="novelDescription" name="novelDescription"></textarea>
-                        <button type="submit"> submit new description </button>                
+                        <button type="submit"> submit new description </button>
                     </form>
                 </td>
             </tr>
-        {% endfor %}
+            {% endfor %}
         </table>
     </div>
-    <button 
-        class="btn btn-success" 
-        data-bs-toggle="modal" 
-        data-bs-target="#add" 
-        type="button">
-        add novel
-    </button>
-    <form action="{{url_for('admin.novel_add')}}" method="post">
-        <div class="modal fade" id="add" tableindex="-1" aria-labelledby="modal" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="label">Add novel</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                        <div class="modal-body my-4">
-                                <div class="mb-3">
-                                    <label for="novelName" class="form-label">Name</label>
-                                    <input type="text" class="form-control" id="novelName" name="novelName" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="novelImage" class="form-label">Image</label>
-                                    <input type="text" class="form-control" id="novelImage" name="novelImage" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="novelDescription" class="form-label">Description</label>
-                                    <textarea type="text" class="form-control" id="novelDescription" name="novelDescription" required></textarea>
-                                </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button class="btn btn-primary" type="submit">Submit</button>
-                        </div>
-                </div>
-            </div>
-        </div>
-    </form>
+
 </section>
 {% endblock %}
 
 {% block modal %}
+{% include "elements/novel-forms/create.html" %}
 {% endblock %}

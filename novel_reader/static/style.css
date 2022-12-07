@@ -24,10 +24,6 @@ div.main.container {
     margin-top: 0.25rem !important;
 }
 
-.navbar a {
-    text-decoration: none;
-}
-
 section.header {
     width: 100%;
     background: #fbfbfb;
@@ -48,10 +44,12 @@ section.header {
 
 .navbar a {
     text-transform: uppercase;
+    text-decoration: none;
 }
 
 .navbar {
-    padding-left: 1.25rem;
+    padding-left: 1.25rem !important;
+    padding: 0 !important;
 }
 
 #search {
@@ -126,13 +124,17 @@ section.header {
     color: #ffffff;
 }
 
-.modal {
-    background-color: rgba(0, 0, 0, 0.3);
+.modal-background {
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-card {
     width: 90%;
     max-width: 400px;
+}
+
+.normal .modal-card {
+    max-width: 640px;
 }
 
 .modal-card-foot {
@@ -179,6 +181,7 @@ section.header {
     padding: 5px 7.5px;
     transition: all .3s ease-in-out;
     min-height: 60px;
+    width: calc(16.66%);
 }
 
 .trending-item .inner {
@@ -242,8 +245,21 @@ section.header {
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
 }
 
+i {
+    margin-right: 5px;
+}
+
+
+.block-head {
+    padding: 10px;
+}
+
 .block-head .title {
     margin: 0;
+}
+
+.block-head .button {
+    text-decoration: none;
 }
 
 .block-head .right-icon {

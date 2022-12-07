@@ -4,21 +4,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Novel Reader</title>
+    <title>Novel Reader | Admin</title>
     <script src="https://kit.fontawesome.com/7a215e7166.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
-    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="/static/style.css">
     <script src="/static/index.js" defer></script>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     {% block head %}
     {% endblock %}
 </head>
 <body>
     <div class="layout">
         <header class="header">
-            {% include "elements/navbar.html" %}
+            {% include "elements/admin-navbar.html" %}
         </header>
         <div class="main container is-max-widescreen">
         {% block main %}
@@ -28,9 +27,6 @@
             {% include "elements/footer.html" %}
         </footer>
     </div>
-    {% include "elements/forms/login.html" %}
-    {% include "elements/forms/register.html" %}
-    {% include "elements/forms/forget.html" %}
     {% block modal %}
     {% endblock %}
 </body>

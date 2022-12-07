@@ -1,0 +1,69 @@
+<div class="modal normal" id="create">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <strong class="modal-card-title">New Novel</strong>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <form method="post" action="{{url_for('admin.novel_add')}}">
+                <div class="field">
+                    <label class="label">Name</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input class="input" type="text" placeholder="Your novel name" name="novelName" required>
+                        <span class="icon is-small is-left">
+                            <i class="fa-solid fa-book"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Cover image</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input class="input" type="url" placeholder="Your image url" name="novelImage" required>
+                        <span class="icon is-small is-left">
+                            <i class="fa-regular fa-image"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Description</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <textarea class="textarea" placeholder="Your novel summary" rows="10" name="novelDescription" required></textarea>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Genres</label>
+                    <div class="select is-multiple" name="novelGenres">
+                        <select multiple size="5">
+                          <option value="Argentina">Argentina</option>
+                          <option value="Bolivia">Bolivia</option>
+                          <option value="Brazil">Brazil</option>
+                          <option value="Chile">Chile</option>
+                          <option value="Colombia">Colombia</option>
+                          <option value="Ecuador">Ecuador</option>
+                          <option value="Guyana">Guyana</option>
+                          <option value="Paraguay">Paraguay</option>
+                          <option value="Peru">Peru</option>
+                          <option value="Suriname">Suriname</option>
+                          <option value="Uruguay">Uruguay</option>
+                          <option value="Venezuela">Venezuela</option>
+                        </select>
+                      </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <p class="help is-danger">
+                        </p>
+                        <button class="button submit is-primary" type="submit">
+                            <strong>
+                                CREATE
+                            </strong>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </section>
+        <footer class="modal-card-foot">
+        </footer>
+    </div>
+</div>

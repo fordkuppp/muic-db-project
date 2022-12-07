@@ -1,0 +1,58 @@
+{% extends 'admin-default.html' %}
+
+{% block head %}
+{% endblock %}
+
+{% block main %}
+<section class="block">
+    <div class="block-head">
+        <div class="title is-5 bolder">
+            <span>All users</span>
+        </div>
+        <a class="button is-primary js-modal-trigger" data-target="create_user">
+            <i class="fa-solid fa-plus"></i>
+            <strong>NEW</strong>
+        </a>
+    </div>
+    <div class="block-body container">
+        <table class="table is-hoverable is-fullwidth">
+            <tbody>
+                {% for novel in users %}
+                <tr>
+                    <td>
+                        <div class="title is-6">
+                                {{ novel.username }}
+                        </div>
+                        {% with novel=novel %}
+                        {% include "elements/user-forms/remove.html" %}
+                        {% include "elements/user-forms/role.html" %}
+                        {% include "elements/user-forms/email.html" %}
+                        {% endwith %}
+                    </td>
+                    <td style="text-align: right;">
+                        <a class="button is-warning js-modal-trigger" data-target="email-{{novel.id}}">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                            <strong>email</strong>
+                        </a>
+						<a class="button is-warning js-modal-trigger" data-target="role-{{novel.id}}">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                            <strong>role</strong>
+                        </a>
+                        <a class="button is-danger js-modal-trigger" data-target="deleted_user-{{novel.id}}">
+                            <i class="fa-solid fa-trash-can" style="margin: 0;"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}
+
+{% block modal %}
+{% include "elements/user-forms/create.html" %}
+{% endblock %}
+
+
+

@@ -30,11 +30,7 @@ def admin():
     cur.execute("SELECT * FROM novel")
     novels = cur.fetchall()
     cur.close()
-    cur2 = db.cursor(dictionary=True)
-    cur2.execute("SELECT * FROM user")
-    users = cur2.fetchall()
-    cur2.close()
-    return render_template("starter/admin/admin.html", novels=novels,users=users)
+    return render_template("starter/admin/admin.html", novels=novels)
 
 
 @bp.route("/novel/edit")
@@ -45,10 +41,19 @@ def novel_edit():
     cur.execute("SELECT * FROM chapter WHERE novel_id = %s", (novel_id,))
     chapters = cur.fetchall()
     cur.close()
-    print(chapters)
     return render_template(
         "starter/admin/chapter.html", chapters=chapters, novel_id=novel_id
     )
+
+
+@bp.route("/user/edit")
+def user_edit():
+    db = get_db()
+    cur = db.cursor(dictionary=True)
+    cur.execute("SELECT * FROM user")
+    users = cur.fetchall()
+    cur.close()
+    return render_template("starter/admin/user.html", users=users)
 
 
 @bp.route("/chapter/edit", methods=["POST"])
@@ -179,7 +184,7 @@ def novel_edit_name():
     return redirect(url_for("admin.admin"))
 
 
-@bp.route("/editimage", methods=["POST"])
+@bp.route("/edit/image", methods=["POST"])
 def novel_edit_image():
     novel_id = request.args.get("novelId")
     image = request.form["novelImage"]
@@ -193,7 +198,7 @@ def novel_edit_image():
     return redirect(url_for("admin.admin"))
 
 
-@bp.route("/editdescription", methods=["POST"])
+@bp.route("/edit/description", methods=["POST"])
 def novel_edit_description():
     novel_id = request.args.get("novelId")
     description = request.form["novelDescription"]
@@ -207,6 +212,7 @@ def novel_edit_description():
     cur.close()
 
     return redirect(url_for("admin.admin"))
+
 
 @bp.route("/user/add", methods=["POST"])
 def add_user():
@@ -226,13 +232,14 @@ def add_user():
         "(username, email, password, last_login, role_id) "
         "VALUES (%s, %s, %s, %s, %s);"
     )
-    data_user = (username, email, hashed_password, time,role)
+    data_user = (username, email, hashed_password, time, role)
 
     cur.execute(add_user, data_user)
     db.commit()
 
     return redirect(url_for("admin.admin"))
-        
+
+
 @bp.route("/user/remove", methods=["GET"])
 def user_remove():
     user_id = request.args.get("userId")
@@ -247,6 +254,7 @@ def user_remove():
 
     return redirect(url_for("admin.admin"))
 
+
 @bp.route("/user/editEmail", methods=["POST"])
 def user_edit_email():
     user_id = request.args.get("userId")
@@ -254,14 +262,13 @@ def user_edit_email():
 
     db = get_db()
     cur = db.cursor(dictionary=True)
-    cur.execute(
-        "UPDATE user SET email = %s WHERE id = %s;", (email, user_id)
-    )
+    cur.execute("UPDATE user SET email = %s WHERE id = %s;", (email, user_id))
     db.commit()
     cur.close()
 
     return redirect(url_for("admin.admin"))
-    
+
+
 @bp.route("/user/editRole", methods=["POST"])
 def user_edit_role():
     user_id = request.args.get("userId")
@@ -269,9 +276,7 @@ def user_edit_role():
 
     db = get_db()
     cur = db.cursor(dictionary=True)
-    cur.execute(
-        "UPDATE user SET role_id = %s WHERE id = %s;", (role, user_id)
-    )
+    cur.execute("UPDATE user SET role_id = %s WHERE id = %s;", (role, user_id))
     db.commit()
     cur.close()
 

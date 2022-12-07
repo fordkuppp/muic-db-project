@@ -28,9 +28,11 @@
             {% include "elements/footer.html" %}
         </footer>
     </div>
+    {% if not g.user %}
     {% include "elements/forms/login.html" %}
     {% include "elements/forms/register.html" %}
     {% include "elements/forms/forget.html" %}
+    {% endif %}
     {% block modal %}
     {% endblock %}
 </body>

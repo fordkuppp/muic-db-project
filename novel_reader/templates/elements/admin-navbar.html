@@ -7,14 +7,14 @@
         </div>
         <div class="navbar-end">
             <div class="navbar-item">
-                    <div class="buttons">
-                        <a class="button is-primary" href="{{ url_for('home.home') }}">
-                            <strong>HOME</strong>
-                        </a>
-                        <a class="button is-light" href="{{ url_for('user.logout') }}">
-                            Log out
-                        </a>
-                    </div>
+                <div class="buttons">
+                    <a class="button is-primary" href="{{ url_for('home.home') }}">
+                        <strong>HOME</strong>
+                    </a>
+                    <a class="button is-light" href="{{ url_for('user.logout') }}">
+                        Log out
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -22,7 +22,7 @@
 <nav class="navbar main" role="navigation" aria-label="main navigation">
     <div class="container is-max-widescreen">
         <div class="navbar-start">
-            <a class="navbar-item" href="{{url_for('novel.latest')}}">
+            <a class="navbar-item" href="{{url_for('admin.admin')}}">
                 NOVEL
             </a>
             <a class="navbar-item" href="{{url_for('novel.popular')}}">

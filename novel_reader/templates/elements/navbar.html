@@ -19,10 +19,10 @@
             <div class="navbar-item">
                 {% if not g.user %}
                     <div class="buttons">
-                        <a class="button is-primary" onclick="openSignupBlock();">
+                        <a class="button is-primary js-modal-trigger" data-target="signup-modal">
                             <strong>Register</strong>
                         </a>
-                        <a class="button is-light" onclick="openLoginBlock();">
+                        <a class="button is-light js-modal-trigger" data-target="login-modal">
                             Log in
                         </a>
                     </div>

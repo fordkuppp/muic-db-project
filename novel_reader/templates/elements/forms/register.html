@@ -1,8 +1,9 @@
 <div class="modal {% if session['signup_user'] or session['signup_pass'] %} is-active {% endif %}" id="signup-modal">
+    <div class="modal-background"></div>
     <div class="modal-card">
         <header class="modal-card-head">
             <strong class="modal-card-title">Register</strong>
-            <button class="delete" aria-label="close" onclick="closeSignupBlock();"></button>
+            <button class="delete" aria-label="close"></button>
         </header>
         <section class="modal-card-body">
             <form method="post" action="{{url_for('user.register')}}?next={{ request.path }}">

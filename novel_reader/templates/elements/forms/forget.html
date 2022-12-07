@@ -1,8 +1,9 @@
 <div class="modal" id="forget-modal">
+    <div class="modal-background"></div>
     <div class="modal-card">
         <header class="modal-card-head">
             <strong class="modal-card-title">Forget Password</strong>
-            <button class="delete" aria-label="close" onclick="closeForgetBlock();"></button>
+            <button class="delete" aria-label="close"></button>
         </header>
         <section class="modal-card-body">
             <form method="post" action="{{url_for('user.forget')}}">

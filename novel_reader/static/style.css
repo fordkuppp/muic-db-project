@@ -298,7 +298,7 @@ a.button {
 }
 
 .grid-items {
-    padding: 7.5px;
+    padding: 20px;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -482,7 +482,7 @@ a.button {
     text-transform: uppercase;
 }
 
-.book-detailed-item .thumb img {
+.thumb img {
     height: auto;
     width: 100%;
     top: 0;

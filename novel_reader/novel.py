@@ -19,17 +19,31 @@ bp = Blueprint("novel", __name__, url_prefix="/novel")
 def novel_home(slug: str):
     chapters: list[dict] = []
     novel_id = slug
+    data = get_novel(novel_id)[0]
 
+    db = get_db()
+    cur = db.cursor(dictionary=True)
+    cur.execute("SELECT genre_id FROM novel_genres WHERE novel_id = %s", (novel_id,))
+    data["genres"] = [i["genre_id"] for i in cur.fetchall()]
+    print(data)
+    cur.execute("SELECT * FROM genre")
+    genres = cur.fetchall()
+    cur.execute("SELECT * FROM status")
+    status = cur.fetchall()
+    cur.execute("SELECT * FROM user WHERE id = %s", (data["user_id"],))
+    author = cur.fetchone()
+    cur.close()
     for i in get_chapters(novel_id):
         chapters.append(i)
-
-    data = get_novel(novel_id)
     return render_template(
         "starter/novel.html",
-        novel=data[0],
+        novel=data,
         chapters=chapters,
         first=get_first_chapter_id(novel_id),
         bookmark_check=bookmark_check,
+        author=author,
+        status=status,
+        genres=genres,
     )
 
 
@@ -99,7 +113,9 @@ def hiatus():
 def get_chapters(novel_id):
     db = get_db()
     cur = db.cursor(dictionary=True)
-    cur.execute("SELECT * FROM chapter WHERE novel_id = %s;", (novel_id,))
+    cur.execute(
+        "SELECT * FROM chapter WHERE novel_id = %s ORDER BY created DESC;", (novel_id,)
+    )
     chapters = cur.fetchall()
     db.commit()
     cur.close()

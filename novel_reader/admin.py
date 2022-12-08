@@ -12,6 +12,7 @@ from novel_reader.db import get_db
 from datetime import datetime
 from mysql.connector import IntegrityError
 import bcrypt
+from novel_reader.novel import get_chapters
 
 bp = Blueprint("admin", __name__, url_prefix="/admin")
 
@@ -143,10 +144,7 @@ def chapter():
     db = get_db()
     cur = db.cursor(dictionary=True)
     novel_id = request.args.get("novelId")
-    cur.execute(
-        "SELECT * FROM chapter WHERE novel_id = %s ORDER BY created DESC", (novel_id,)
-    )
-    chapters = cur.fetchall()
+    chapters = get_chapters(novel_id)
     cur.close()
     return render_template(
         "starter/admin/chapter.html", chapters=chapters, novel_id=novel_id

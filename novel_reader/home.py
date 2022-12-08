@@ -27,7 +27,7 @@ def home():
     return render_template("starter/home.html", popular=popular, latest=latest)
 
 
-@bp.route("/status/on_going/")
+@bp.route("/status/active/")
 def on_going():
     data: list[dict] = []
     for _ in range(40):

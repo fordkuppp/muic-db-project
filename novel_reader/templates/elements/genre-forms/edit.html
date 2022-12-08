@@ -1,27 +1,20 @@
-<div class="modal normal" id="edit-{{chapter.id}}">
+<div class="modal" id="edit-{{genre.id}}">
     <div class="modal-background"></div>
     <div class="modal-card">
         <header class="modal-card-head">
-            <strong class="modal-card-title">New Chapter</strong>
+            <strong class="modal-card-title">New Genre</strong>
             <button class="delete" aria-label="close"></button>
         </header>
         <section class="modal-card-body">
-            <form method="post" action="{{url_for('admin.chapter_edit')}}">
-                <input type="hidden" name="chapterId" value={{chapter.id}}>
-                <input type="hidden" name="novelId" value={{novel_id}}>
+            <form method="post" action="{{url_for('admin.genre_edit')}}">
+                <input type="hidden" name="id" value={{genre.id}}>
                 <div class="field">
-                    <label class="label">Chapter Name</label>
+                    <label class="label">Genre Name</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="text" placeholder="New chpater title" name="chapterName" value="{{chapter.name}}" required>
+                        <input class="input" type="text" placeholder="Genre name" name="name" value="{{genre.name}}"required>
                         <span class="icon is-small is-left">
                             <i class="fa-solid fa-book"></i>
                         </span>
-                    </div>
-                </div>
-                <div class="field">
-                    <label class="label">Description</label>
-                    <div class="control has-icons-left has-icons-right">
-                        <textarea class="textarea" placeholder="Enter your chapter here!!" rows="20" name="chapterContent" id="default">{{chapter.content}}</textarea>
                     </div>
                 </div>
                 <div class="field">

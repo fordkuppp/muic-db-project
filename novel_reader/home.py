@@ -92,7 +92,6 @@ def hiatus():
                 "latest_chap": "chapter XX",
             }
         )
-
     return render_template("starter/list.html", endpoint="HIATUS NOVELS", result=data)
 
 
@@ -115,5 +114,4 @@ def search():
                 "latest_chap": "chapter XX",
             }
         )
-
     return render_template("starter/list.html", endpoint="SEARCH: KEYWORD", result=data)

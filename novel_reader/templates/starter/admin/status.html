@@ -1,20 +1,13 @@
 {% extends 'admin-default.html' %}
 
 {% block head %}
-<script src="https://cdn.tiny.cloud/1/jugfmzszaf6z27ollir1c9lwjpb7yxs8c4jxf27rb9g5gt4s/tinymce/6/tinymce.min.js"
-    referrerpolicy="origin"></script>
-<script>
-    tinymce.init({
-        selector: 'textarea#default'
-    });
-</script>
 {% endblock %}
 
 {% block main %}
 <section class="block">
     <div class="block-head">
         <div class="title is-5 bolder">
-            <span>All Chapters</span>
+            <span>All status</span>
         </div>
         <a class="button is-primary js-modal-trigger" data-target="create">
             <i class="fa-solid fa-plus"></i>
@@ -24,25 +17,22 @@
     <div class="block-body container">
         <table class="table is-hoverable is-fullwidth">
             <tbody>
-                {% for chapter in chapters %}
+                {% for item in status %}
                 <tr>
-                    <th>
-                        {{loop.revindex}}
-                    </th>
                     <td>
                         <div class="title is-6">
-                            <a>
-                                {{ chapter.name }}
-                            </a>
+                            {{ item.name }}
                         </div>
-                        {% include "elements/chapter-forms/edit.html" %}
-                        {% include "elements/chapter-forms/remove.html" %}
+                        {% with novel=novel %}
+                        {% include "elements/status-forms/remove.html" %}
+                        {% include "elements/status-forms/edit.html" %}
+                        {% endwith %}
                     </td>
                     <td style="text-align: right;">
-                        <a class="button is-warning js-modal-trigger" data-target="edit-{{chapter.id}}">
+						<a class="button is-warning js-modal-trigger" data-target="edit-{{item.id}}">
                             <i class="fa-solid fa-pen-to-square" style="margin: 0;"></i>
                         </a>
-                        <a class="button is-danger js-modal-trigger" data-target="deleted-{{chapter.id}}">
+                        <a class="button is-danger js-modal-trigger" data-target="deleted-{{item.id}}">
                             <i class="fa-solid fa-trash-can" style="margin: 0;"></i>
                         </a>
                     </td>
@@ -55,5 +45,8 @@
 {% endblock %}
 
 {% block modal %}
-{% include "elements/chapter-forms/create.html" %}
+{% include "elements/status-forms/create.html" %}
 {% endblock %}
+
+
+

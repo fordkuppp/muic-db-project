@@ -1,18 +1,18 @@
-<div class="modal" id="email-{{novel.id}}">
+<div class="modal" id="create">
     <div class="modal-background"></div>
     <div class="modal-card">
         <header class="modal-card-head">
-            <strong class="modal-card-title">Edit email</strong>
+            <strong class="modal-card-title">New Genre</strong>
             <button class="delete" aria-label="close"></button>
         </header>
         <section class="modal-card-body">
-            <form method="post" action="{{url_for('admin.user_edit_email')}}?userId={{ novel.id }}">
+            <form method="post" action="{{url_for('admin.genre_add')}}">
                 <div class="field">
-                    <label class="label">Email</label>
+                    <label class="label">Genre Name</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="text" placeholder="Email" name="email" required>
+                        <input class="input" type="text" placeholder="New Genre Name" name="name" required>
                         <span class="icon is-small is-left">
-                            <i class="fa-solid fa-book"></i>
+                            <i class="fa-solid fa-tag"></i>
                         </span>
                     </div>
                 </div>
@@ -22,7 +22,7 @@
                         </p>
                         <button class="button submit is-primary" type="submit">
                             <strong>
-                                SAVE
+                                create
                             </strong>
                         </button>
                     </div>

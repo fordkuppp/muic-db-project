@@ -66,7 +66,7 @@ def register():
             return redirect(next_path)
 
         add_user = (
-            "INSERT INTO reader_db.user "
+            "INSERT INTO user "
             "(username, email, password, last_login, role_id) "
             "VALUES (%s, %s, %s, %s, 1);"
         )
@@ -134,74 +134,70 @@ def new_pass(token: str):
     else:
         return render_template("starter/reset.html")
 
+
 @bp.route("/bookmark/add/<string:novel_id>/", methods=["POST"])
 def bookmark_add(novel_id: str):
     user_id = session["user_id"]
-    
+
     db = get_db()
     cur = db.cursor(dictionary=True)
-    
+
     cur.execute(
-        "INSERT INTO reader_db.bookmark (user_id, novel_id) VALUES (%s, %s);",
-        (user_id, novel_id)
+        "INSERT INTO bookmark (user_id, novel_id) VALUES (%s, %s);",
+        (user_id, novel_id),
     )
     db.commit()
     cur.close()
-    
+
     return redirect("/novel/" + novel_id)
+
 
 @bp.route("/bookmark/remove/<string:novel_id>/", methods=["POST"])
 def bookmark_remove(novel_id: str):
     user_id = session["user_id"]
-    
+
     db = get_db()
     cur = db.cursor(dictionary=True)
-    
+
     cur.execute(
-        "DELETE FROM bookmark WHERE user_id = %s AND novel_id = %s;",
-        (user_id, novel_id)
+        "DELETE FROM bookmark WHERE user_id = %s AND novel_id = %s;", (user_id, novel_id)
     )
     db.commit()
     cur.close()
-    
+
     return redirect("/novel/" + novel_id)
+
 
 @bp.route("/bookmarks")
 def bookmarks():
     user_id = session["user_id"]
-    
+
     db = get_db()
     cur = db.cursor(dictionary=True)
-        
-    cur.execute(
-        "SELECT novel_id FROM bookmark WHERE user_id = %s;",
-        (user_id,)
-    )
-    bookmarks_list =  cur.fetchall()
-        
+
+    cur.execute("SELECT novel_id FROM bookmark WHERE user_id = %s;", (user_id,))
+    bookmarks_list = cur.fetchall()
+
     novels: list = []
     for i in bookmarks_list:
-        print(i)
-        cur.execute(
-            "SELECT name, image FROM novel WHERE id = %s;",
-            (i["novel_id"],)
-        )
+        cur.execute("SELECT * FROM novel WHERE id = %s;", (i["novel_id"],))
         novels.append(cur.fetchone())
-        
+
     db.commit()
     cur.close()
     return render_template("starter/user/bookmarks.html", novels=novels)
 
-def bookmark_check(novel_id): # Return False if there is bookmark, True if no bookmark
+
+def bookmark_check(novel_id):  # Return False if there is bookmark, True if no bookmark
     db = get_db()
-    cur = db.cursor(buffered=True)    
-    
+    cur = db.cursor(buffered=True)
+
     cur.execute(
         "SELECT * FROM bookmark WHERE user_id = %s AND novel_id = %s;",
-        (session["user_id"], novel_id)
+        (session["user_id"], novel_id),
     )
     result = cur.fetchone()
-    if (result is None):
+    if result is None:
         db.commit()
         cur.close()
         return True

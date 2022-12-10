@@ -60,18 +60,11 @@
                 <p><strong>Genres :</strong>
                     {% for item in genres %}
                     {% if item.id in novel.genres %}
-                    {% if loop.last %}
-                    <a href="">
-                        {{item.name}}
-                    </a>
-                    {% else %}
-                    <a href="">
+                    <a href="{{url_for('novel.genre', id=item.id)}}">
                         {{item.name}},
                     </a>
                     {% endif %}
-                    {% endif %}
                     {% endfor %}
-
                 </p>
                 <p>
                     <strong>Last update: </strong>

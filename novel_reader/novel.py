@@ -95,6 +95,23 @@ def status(id: str):
     )
 
 
+@bp.route("/genre/<string:id>/")
+def genre(id: str):
+    db = get_db()
+    cur = cur = db.cursor(dictionary=True)
+    cur.execute("SELECT name FROM genre WHERE id = %s", (id,))
+    genre = cur.fetchone()
+    cur.execute(
+        "SELECT * FROM novel WHERE id in (SELECT novel_id FROM novel_genres WHERE genre_id = %s) ORDER BY modified DESC;",
+        (id,),
+    )
+    data = cur.fetchall()
+    cur.close()
+    return render_template(
+        "starter/list.html", endpoint=f"{genre['name'].upper()} NOVELS", result=data
+    )
+
+
 def get_chapters(novel_id):
     db = get_db()
     cur = db.cursor(dictionary=True)

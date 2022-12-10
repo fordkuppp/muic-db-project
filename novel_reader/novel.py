@@ -219,26 +219,20 @@ def get_prev_chapter_id(novel_id, current_chapter_num):
 def get_latest_novels(n=10):
     db = get_db()
     cur = db.cursor(dictionary=True)
-    cur.execute("SELECT * FROM novel ORDER BY modified LIMIT %s;", (n,))
+    cur.execute("SELECT * FROM novel ORDER BY modified DESC LIMIT %s;", (n,))
     novels = cur.fetchall()
     db.commit()
     cur.close()
-
-    novels.reverse()
-
     return novels
 
 
 def get_most_viewed_novels(n=10):
     db = get_db()
     cur = db.cursor(dictionary=True)
-    cur.execute("SELECT * FROM novel ORDER BY view LIMIT %s;", (n,))
+    cur.execute("SELECT * FROM novel ORDER BY view DESC LIMIT %s;", (n,))
     novels = cur.fetchall()
     db.commit()
     cur.close()
-
-    novels.reverse()
-
     return novels
 
 

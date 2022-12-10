@@ -1,4 +1,4 @@
-<div class="modal normal" id="create">
+<div class="modal normal" id="edit-{{novel.id}}">
     <div class="modal-background"></div>
     <div class="modal-card">
         <header class="modal-card-head">
@@ -6,11 +6,13 @@
             <button class="delete" aria-label="close"></button>
         </header>
         <section class="modal-card-body">
-            <form method="post" action="{{url_for('user.novel_add')}}" id="create-form">
+            <form method="post" action="{{url_for('user.novel_edit')}}">
+                <input type="hidden" name="novel_id" value="{{novel.id}}">
                 <div class="field">
                     <label class="label">Name</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="text" placeholder="Your novel name" name="name" required>
+                        <input class="input" type="text" placeholder="Your novel name" name="name"
+                            value="{{novel.name}}" required>
                         <span class="icon is-small is-left">
                             <i class="fa-solid fa-book"></i>
                         </span>
@@ -19,7 +21,8 @@
                 <div class="field">
                     <label class="label">Cover image</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="url" placeholder="Your image url" name="image" required>
+                        <input class="input" type="url" placeholder="Your image url" name="image"
+                            value="{{novel.image}}" required>
                         <span class="icon is-small is-left">
                             <i class="fa-regular fa-image"></i>
                         </span>
@@ -28,31 +31,23 @@
                 <div class="field">
                     <label class="label">Description</label>
                     <div class="control has-icons-left has-icons-right">
-                        <textarea class="textarea" placeholder="Your novel summary" rows="10" name="description" required></textarea>
+                        <textarea class="textarea" placeholder="Your novel summary" rows="10" name="description"
+                            required>{{novel.description}}</textarea>
                     </div>
-                </div>
-                <div class="field">
-                    <label class="label">Genres</label>
-                    <p class="help is-info">
-                        This can't be change later
-                    </p>
-                    <div class="select is-multiple">
-                        <select multiple size="5" name="genres">
-                        {% for item in genres %}
-                        <option value="{{item.id}}">{{item.name}}</option>
-                        {% endfor %}
-                        </select>
-                      </div>
                 </div>
                 <div class="field">
                     <label class="label">Status</label>
                     <div class="select">
                         <select name="status">
-                        {% for item in status %}
-                        <option value="{{item.id}}">{{item.name}}</option>
-                        {% endfor %}
+                            {% for item in status %}
+                            {% if item.id == novel.status_id %}
+                            <option value="{{item.id}}" selected>{{item.name}}</option>
+                            {% else %}
+                            <option value="{{item.id}}">{{item.name}}</option>
+                            {% endif %}
+                            {% endfor %}
                         </select>
-                      </div>
+                    </div>
                 </div>
                 <div class="field">
                     <div class="control">
@@ -60,7 +55,7 @@
                         </p>
                         <button class="button submit is-primary" type="submit">
                             <strong>
-                                CREATE
+                                SAVE
                             </strong>
                         </button>
                     </div>

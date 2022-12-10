@@ -247,6 +247,26 @@ def novel_add():
     return redirect(url_for("user.your_novel"))
 
 
+@bp.route("/novel/edit/", methods=["POST"])
+def novel_edit():
+    novel = get_novel(request.form["novel_id"])[0]
+    if novel["user_id"] != session["user_id"]:
+        return redirect(url_for("user.your_novel"))
+    novel_name = request.form["name"]
+    novel_image = request.form["image"]
+    novel_description = request.form["description"]
+    novel_status = request.form["status"]
+    db = get_db()
+    cur = db.cursor(dictionary=True)
+    cur.execute(
+        "UPDATE novel SET name=%s, image=%s, description=%s, status_id=%s WHERE id=%s;",
+        (novel_name, novel_image, novel_description, novel_status, novel["id"]),
+    )
+    db.commit()
+    cur.close()
+    return redirect(url_for("user.your_novel"))
+
+
 @bp.route("/novel/remove/", methods=["GET"])
 def novel_remove():
     novel = get_novel(request.args.get("novelId"))[0]
@@ -257,54 +277,6 @@ def novel_remove():
     cur.execute("DELETE FROM novel WHERE id = %s;", (novel["id"],))
     db.commit()
     cur.close()
-    return redirect(url_for("user.your_novel"))
-
-
-@bp.route("/novel/rename/", methods=["POST", "GET"])
-def novel_edit_name():
-    novel = get_novel(request.args.get("novelId"))[0]
-    if novel["user_id"] != session["user_id"]:
-        return redirect(url_for("user.your_novel"))
-    name = request.form["novelName"]
-    db = get_db()
-    cur = db.cursor(dictionary=True)
-    cur.execute("UPDATE novel SET name = %s WHERE id = %s;", (name, novel["d"]))
-    db.commit()
-    cur.close()
-
-    return redirect(url_for("user.your_novel"))
-
-
-@bp.route("/novel/edit/image", methods=["POST"])
-def novel_edit_image():
-    novel = get_novel(request.args.get("novelId"))[0]
-    if novel["user_id"] != session["user_id"]:
-        return redirect(url_for("user.your_novel"))
-    image = request.form["novelImage"]
-    db = get_db()
-    cur = db.cursor(dictionary=True)
-    cur.execute("UPDATE novel SET image = %s WHERE id = %s;", (image, novel["id"]))
-    db.commit()
-    cur.close()
-
-    return redirect(url_for("user.your_novel"))
-
-
-@bp.route("/novel/edit/description", methods=["POST"])
-def novel_edit_description():
-    novel = get_novel(request.args.get("novelId"))[0]
-    if novel["user_id"] != session["user_id"]:
-        return redirect(url_for("user.your_novel"))
-    description = request.form["novelDescription"]
-
-    db = get_db()
-    cur = db.cursor(dictionary=True)
-    cur.execute(
-        "UPDATE novel SET description = %s WHERE id = %s;", (description, novel["id"])
-    )
-    db.commit()
-    cur.close()
-
     return redirect(url_for("user.your_novel"))
 
 
@@ -325,7 +297,6 @@ def chapter_edit():
     chapter_name = request.form["chapterName"]
     chapter_content = request.form["chapterContent"]
     chapter_id = request.form["chapterId"]
-    print(chapter_id, chapter_name, chapter_content)
     novel = get_novel(request.form["novelId"])[0]
     if novel["user_id"] != session["user_id"]:
         return redirect(url_for("user.your_novel"))

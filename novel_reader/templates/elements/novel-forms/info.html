@@ -1,0 +1,40 @@
+<div class="modal normal" id="info-{{novel.id}}">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <strong class="modal-card-title">Novel Info</strong>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <div class="field">
+                <label class="label">Name</label>
+                <div class="control has-icons-left has-icons-right">
+                    <input class="input" type="text" placeholder="Your novel name" name="name" value="{{novel.name}}"
+                        readonly>
+                    <span class="icon is-small is-left">
+                        <i class="fa-solid fa-book"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Cover image</label>
+                <div class="control has-icons-left has-icons-right">
+                    <input class="input" type="url" placeholder="Your image url" name="image" value="{{novel.image}}"
+                        readonly>
+                    <span class="icon is-small is-left">
+                        <i class="fa-regular fa-image"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Description</label>
+                <div class="control has-icons-left has-icons-right">
+                    <textarea class="textarea" placeholder="Your novel summary" rows="13" name="description"
+                        readonly>{{novel.description}}</textarea>
+                </div>
+            </div>
+        </section>
+        <footer class="modal-card-foot">
+        </footer>
+    </div>
+</div>

@@ -6,8 +6,8 @@
             <button class="delete" aria-label="close"></button>
         </header>
         <section class="modal-card-body">
-            <form method="post" action="{{url_for('admin.chapter_add')}}">
-                <input type="hidden" name="novelId" value={{novel_id}}>
+            <form method="post" action="{{url_for('user.chapter_add')}}">
+                <input type="hidden" name="novelId" value={{novel.id}}>
                 <div class="field">
                     <label class="label">Chapter Name</label>
                     <div class="control has-icons-left has-icons-right">
@@ -18,9 +18,9 @@
                     </div>
                 </div>
                 <div class="field">
-                    <label class="label">Description</label>
+                    <label class="label">Content</label>
                     <div class="control has-icons-left has-icons-right">
-                        <textarea class="textarea" placeholder="Enter your chapter here!!" rows="20" name="chapterContent" id="default"></textarea>
+                        <textarea class="textarea" placeholder="Enter your chapter here!!" rows="17" name="chapterContent" id="default"></textarea>
                     </div>
                 </div>
                 <div class="field">

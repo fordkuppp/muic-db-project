@@ -1,0 +1,76 @@
+{% extends 'default.html' %}
+
+{% block head %}
+{% endblock %}
+
+{% block main %}
+<div class="controller block">
+    <div class="sidebar">
+        <div class="nav-item" align="center">
+            <a href="{{url_for('user.profile')}}" class="nav-link">
+                <strong>Profile</strong>
+            </a>
+        </div>
+        <div class="nav-item" align="center">
+            <a href="{{url_for('user.bookmarks')}}" class="nav-link">
+                <strong>bookmarks</strong>
+            </a>
+        </div>
+        <div class="nav-item selected" align="center">
+            <a class="nav-link">
+                <strong>your novels</strong>
+            </a>
+        </div>
+    </div>
+    <div class="mainbar">
+        <div class="block-body">
+            <section style="justify-content: end; display: flex;">
+                <a class="button is-primary js-modal-trigger" data-target="create">
+                    <i class="fa-solid fa-plus"></i>
+                    <strong>NEW</strong>
+                </a>
+            </section>
+            <table class="table is-hoverable is-fullwidth">
+                <tbody>
+                    {% for novel in novels %}
+                    <tr>
+                        <td>
+                            <div class="title is-6">
+                                <a href="{{url_for('user.chapter')}}?novelId={{ novel.id }}">
+                                    {{ novel.name }}
+                                </a>
+                            </div>
+                            {% include "elements/novel-forms/remove.html" %}
+                            {% include "elements/novel-forms/name.html" %}
+                            {% include "elements/novel-forms/image.html" %}
+                            {% include "elements/novel-forms/description.html" %}
+                        </td>
+                        <td style="text-align: right;">
+                            <a class="button is-warning js-modal-trigger" data-target="name-{{novel.id}}">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                                <strong>name</strong>
+                            </a>
+                            <a class="button is-warning js-modal-trigger" data-target="image-{{novel.id}}">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                                <strong>image</strong>
+                            </a>
+                            <a class="button is-warning js-modal-trigger" data-target="des-{{novel.id}}">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                                <strong>description</strong>
+                            </a>
+                            <a class="button is-danger js-modal-trigger" data-target="deleted-{{novel.id}}">
+                                <i class="fa-solid fa-trash-can" style="margin: 0;"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block modal %}
+{% include "elements/novel-forms/create.html" %}
+{% endblock %}

@@ -1,25 +1,14 @@
 {% extends 'admin-default.html' %}
 
 {% block head %}
-<script src="https://cdn.tiny.cloud/1/jugfmzszaf6z27ollir1c9lwjpb7yxs8c4jxf27rb9g5gt4s/tinymce/6/tinymce.min.js"
-    referrerpolicy="origin"></script>
-<script>
-    tinymce.init({
-        selector: 'textarea#default'
-    });
-</script>
 {% endblock %}
 
 {% block main %}
 <section class="block">
     <div class="block-head">
         <div class="title is-5 bolder">
-            <span>All Chapters</span>
+            <span>{{novel.name}}</span>
         </div>
-        <a class="button is-primary js-modal-trigger" data-target="create">
-            <i class="fa-solid fa-plus"></i>
-            <strong>NEW</strong>
-        </a>
     </div>
     <div class="block-body container">
         <table class="table is-hoverable is-fullwidth">
@@ -35,12 +24,12 @@
                                 {{ chapter.name }}
                             </a>
                         </div>
-                        {% include "elements/chapter-forms/edit.html" %}
+                        {% include "elements/chapter-forms/info.html" %}
                         {% include "elements/chapter-forms/remove.html" %}
                     </td>
                     <td style="text-align: right;">
-                        <a class="button is-warning js-modal-trigger" data-target="edit-{{chapter.id}}">
-                            <i class="fa-solid fa-pen-to-square" style="margin: 0;"></i>
+                        <a class="button is-info js-modal-trigger" data-target="info-{{chapter.id}}">
+                            <i class="fa-sharp fa-solid fa-info" style="margin: 0;"></i>
                         </a>
                         <a class="button is-danger js-modal-trigger" data-target="deleted-{{chapter.id}}">
                             <i class="fa-solid fa-trash-can" style="margin: 0;"></i>
@@ -55,5 +44,4 @@
 {% endblock %}
 
 {% block modal %}
-{% include "elements/chapter-forms/create.html" %}
 {% endblock %}

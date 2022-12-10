@@ -1,0 +1,71 @@
+{% extends 'default.html' %}
+
+{% block head %}
+{% endblock %}
+
+{% block main %}
+<div class="controller block">
+    <div class="sidebar">
+        <div class="nav-item" align="center">
+            <a href="{{url_for('user.profile')}}" class="nav-link">
+                <strong>Profile</strong>
+            </a>
+        </div>
+        <div class="nav-item" align="center">
+            <a href="{{url_for('user.bookmarks')}}" class="nav-link">
+                <strong>bookmarks</strong>
+            </a>
+        </div>
+        <div class="nav-item" align="center">
+            <a href="{{url_for('user.your_novel')}}" class="nav-link">
+                <strong>your novels</strong>
+            </a>
+        </div>
+    </div>
+    <div class="mainbar">
+        <div class="block-body">
+            <section style="justify-content: space-between; display: flex;">
+                <div class="title is-5 bolder">
+                    <span>{{novel.name}}</span>
+                </div>
+                <a class="button is-primary js-modal-trigger" data-target="create">
+                    <i class="fa-solid fa-plus"></i>
+                    <strong>NEW</strong>
+                </a>
+            </section>
+            <table class="table is-hoverable is-fullwidth">
+                <tbody>
+                    {% for chapter in chapters %}
+                    <tr>
+                        <th>
+                            {{loop.revindex}}
+                        </th>
+                        <td>
+                            <div class="title is-6">
+                                <a>
+                                    {{ chapter.name }}
+                                </a>
+                            </div>
+                            {% include "elements/chapter-forms/edit.html" %}
+                            {% include "elements/chapter-forms/remove.html" %}
+                        </td>
+                        <td style="text-align: right;">
+                            <a class="button is-warning js-modal-trigger" data-target="edit-{{chapter.id}}">
+                                <i class="fa-solid fa-pen-to-square" style="margin: 0;"></i>
+                            </a>
+                            <a class="button is-danger js-modal-trigger" data-target="deleted-{{chapter.id}}">
+                                <i class="fa-solid fa-trash-can" style="margin: 0;"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block modal %}
+{% include "elements/chapter-forms/create.html" %}
+{% endblock %}

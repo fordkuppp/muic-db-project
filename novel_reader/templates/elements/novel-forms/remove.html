@@ -13,9 +13,15 @@
                 class="button is-primary">
                 <strong>cancel</strong>
             </a>
+            {% if page == "admin" %}
             <a href="{{url_for('admin.novel_remove')}}?novelId={{novel.id}}" class="button is-danger">
                 <strong>confirm</strong>
             </a>
+            {% else %}
+            <a href="{{url_for('user.novel_remove')}}?novelId={{novel.id}}" class="button is-danger">
+                <strong>confirm</strong>
+            </a>
+            {% endif %}
         </footer>
     </div>
 </div>

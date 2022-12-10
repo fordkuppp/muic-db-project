@@ -6,11 +6,11 @@
             <button class="delete" aria-label="close"></button>
         </header>
         <section class="modal-card-body">
-            <form method="post" action="{{url_for('admin.novel_edit_image')}}?novelId={{ novel.id }}">
+            <form method="post" action="{{url_for('user.novel_edit_image')}}?novelId={{ novel.id }}">
                 <div class="field">
                     <label class="label">Cover image</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="url" placeholder="Your image url" name="novelImage" required>
+                        <input class="input" type="url" placeholder="Your image url" name="novelImage" value="{{novel.image}}"required>
                         <span class="icon is-small is-left">
                             <i class="fa-regular fa-image"></i>
                         </span>

@@ -6,11 +6,13 @@
             <button class="delete" aria-label="close"></button>
         </header>
         <section class="modal-card-body">
-            <form method="post" action="{{url_for('admin.novel_edit_description')}}?novelId={{ novel.id }}">
+            <form method="post" action="{{url_for('user.novel_edit_description')}}?novelId={{ novel.id }}">
                 <div class="field">
                     <label class="label">Description</label>
                     <div class="control has-icons-left has-icons-right">
-                        <textarea class="textarea" placeholder="Your novel summary" rows="10" name="novelDescription" required></textarea>
+                        <textarea class="textarea" placeholder="Your novel summary" rows="10" name="novelDescription" required>
+                            {{novel.description}}
+                        </textarea>
                     </div>
                 </div>
                 <div class="field">

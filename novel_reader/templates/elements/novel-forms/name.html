@@ -6,11 +6,11 @@
             <button class="delete" aria-label="close"></button>
         </header>
         <section class="modal-card-body">
-            <form method="post" action="{{url_for('admin.novel_edit_name')}}?novelId={{novel.id}}">
+            <form method="post" action="{{url_for('user.novel_edit_name')}}?novelId={{novel.id}}">
                 <div class="field">
                     <label class="label">Name</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="text" placeholder="Your novel name" name="novelName" required>
+                        <input class="input" type="text" placeholder="Your novel name" name="novelName" value="{{novel.name}}" required>
                         <span class="icon is-small is-left">
                             <i class="fa-solid fa-book"></i>
                         </span>

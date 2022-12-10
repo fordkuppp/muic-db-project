@@ -13,7 +13,7 @@
                 class="button is-primary">
                 <strong>cancel</strong>
             </a>
-            <a href="{{url_for('admin.novel_remove')}}?novelId={{chapter.id}}" class="button is-danger">
+            <a href="{{url_for('user.chapter_remove')}}?novelId={{novel.id}}&chapterId={{chapter.id}}" class="button is-danger">
                 <strong>confirm</strong>
             </a>
         </footer>

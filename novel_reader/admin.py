@@ -12,7 +12,7 @@ from novel_reader.db import get_db
 from datetime import datetime
 from mysql.connector import IntegrityError
 import bcrypt
-from novel_reader.novel import get_chapters
+from novel_reader.novel import get_chapters, get_novel
 
 bp = Blueprint("admin", __name__, url_prefix="/admin")
 
@@ -21,7 +21,7 @@ bp = Blueprint("admin", __name__, url_prefix="/admin")
 def check_admin_role():
     role_id = session.get("role_id")
     if role_id != 2:
-        return "You are not an admin!"
+        return redirect("/")
 
 
 @bp.route("/novel/")
@@ -30,53 +30,12 @@ def novel():
     cur = db.cursor(dictionary=True)
     cur.execute("SELECT * FROM novel ORDER BY modified DESC")
     novels = cur.fetchall()
-    cur.execute("SELECT * FROM genre")
-    genres = cur.fetchall()
-    cur.execute("SELECT * FROM status")
-    status = cur.fetchall()
     cur.close()
     return render_template(
-        "starter/admin/admin.html", novels=novels, genres=genres, status=status
+        "starter/admin/admin.html",
+        novels=novels,
+        page="admin",
     )
-
-
-@bp.route("/novel/add/", methods=["POST"])
-def novel_add():
-    novel_name = request.form["name"]
-    novel_image = request.form["image"]
-    novel_description = request.form["description"]
-    novel_author = request.form["author"]
-    novel_status = request.form["status"]
-    novel_genres = request.form.getlist("genres")
-    now = datetime.now()
-    now = now.strftime("%Y-%m-%d %H:%M:%S")
-
-    db = get_db()
-    cur = db.cursor(dictionary=True)
-    cur.execute(
-        "INSERT INTO novel (name, image, description, created, modified, user_id, status_id)\
-        VALUES (%s, %s, %s, %s, %s, %s, %s);",  # TODO make the genre/status id chooseable from dropdown box
-        (
-            novel_name,
-            novel_image,
-            novel_description,
-            now,
-            now,
-            novel_author,
-            novel_status,
-        ),
-    )
-    db.commit()
-    cur.execute("SELECT * FROM novel where created = %s;", (now,))
-    novel = cur.fetchone()
-    for i in novel_genres:
-        cur.execute(
-            "INSERT INTO novel_genres (novel_id, genre_id) VALUES (%s, %s);",
-            (novel["id"], i),
-        )
-    db.commit()
-    cur.close()
-    return redirect(url_for("admin.novel"))
 
 
 @bp.route("/novel/remove/", methods=["GET"])
@@ -92,50 +51,6 @@ def novel_remove():
     cur.execute("DELETE FROM bookmark WHERE novel_id = %s;", (novel_id,))
     db.commit()
     cur.close()
-
-    return redirect(url_for("admin.novel"))
-
-
-@bp.route("/novel/rename/", methods=["POST", "GET"])
-def novel_edit_name():
-    novel_id = request.args.get("novelId")
-    name = request.form["novelName"]
-    db = get_db()
-    cur = db.cursor(dictionary=True)
-    cur.execute("UPDATE novel SET name = %s WHERE id = %s;", (name, novel_id))
-    db.commit()
-    cur.close()
-
-    return redirect(url_for("admin.novel"))
-
-
-@bp.route("/novel/edit/image", methods=["POST"])
-def novel_edit_image():
-    novel_id = request.args.get("novelId")
-    image = request.form["novelImage"]
-
-    db = get_db()
-    cur = db.cursor(dictionary=True)
-    cur.execute("UPDATE novel SET image = %s WHERE id = %s;", (image, novel_id))
-    db.commit()
-    cur.close()
-
-    return redirect(url_for("admin.novel"))
-
-
-@bp.route("/novel/edit/description", methods=["POST"])
-def novel_edit_description():
-    novel_id = request.args.get("novelId")
-    description = request.form["novelDescription"]
-
-    db = get_db()
-    cur = db.cursor(dictionary=True)
-    cur.execute(
-        "UPDATE novel SET description = %s WHERE id = %s;", (description, novel_id)
-    )
-    db.commit()
-    cur.close()
-
     return redirect(url_for("admin.novel"))
 
 
@@ -143,12 +58,10 @@ def novel_edit_description():
 def chapter():
     db = get_db()
     cur = db.cursor(dictionary=True)
-    novel_id = request.args.get("novelId")
-    chapters = get_chapters(novel_id)
+    novel = get_novel(request.args.get("novelId"))[0]
+    chapters = get_chapters(novel["id"])
     cur.close()
-    return render_template(
-        "starter/admin/chapter.html", chapters=chapters, novel_id=novel_id
-    )
+    return render_template("starter/admin/chapter.html", chapters=chapters, novel=novel)
 
 
 @bp.route("/chapter/edit/", methods=["POST"])
@@ -293,7 +206,7 @@ def user_edit_role():
 def genre():
     db = get_db()
     cur = db.cursor(dictionary=True)
-    cur.execute("SELECT * FROM genre")
+    cur.execute("SELECT * FROM genre ORDER BY name")
     genres = cur.fetchall()
     cur.close()
     return render_template("starter/admin/genre.html", genres=genres)
@@ -343,7 +256,7 @@ def genre_remove():
 def status():
     db = get_db()
     cur = db.cursor(dictionary=True)
-    cur.execute("SELECT * FROM status")
+    cur.execute("SELECT * FROM status ORDER BY name")
     status = cur.fetchall()
     cur.close()
     return render_template("starter/admin/status.html", status=status)

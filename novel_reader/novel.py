@@ -9,7 +9,6 @@ from flask import (
     url_for,
 )
 from novel_reader.db import get_db
-from novel_reader.user import bookmark_check
 from typing import Any
 
 bp = Blueprint("novel", __name__, url_prefix="/novel")
@@ -255,3 +254,21 @@ def get_hiatus_novels(n=10):
     cur.close()
 
     return novels
+
+
+def bookmark_check(novel_id):  # Return False if there is bookmark, True if no bookmark
+    db = get_db()
+    cur = db.cursor(buffered=True)
+
+    cur.execute(
+        "SELECT * FROM bookmark WHERE user_id = %s AND novel_id = %s;",
+        (session["user_id"], novel_id),
+    )
+    result = cur.fetchone()
+    if result is None:
+        db.commit()
+        cur.close()
+        return True
+    db.commit()
+    cur.close()
+    return False

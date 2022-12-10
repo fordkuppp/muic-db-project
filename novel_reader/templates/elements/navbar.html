@@ -59,13 +59,13 @@
                     STATUS
                 </a>
                 <div class="navbar-dropdown">
-                    <a class="navbar-item" href="{{url_for('novel.active')}}">
-                        ACTIVE
+                    <a class="navbar-item" href="{{url_for('novel.status', id=1)}}">
+                        ON-GOING
                     </a>
-                    <a class="navbar-item" href="{{url_for('novel.completed')}}">
+                    <a class="navbar-item" href="{{url_for('novel.status', id=2)}}">
                         COMPLETED
                     </a>
-                    <a class="navbar-item" href="{{url_for('novel.hiatus')}}">
+                    <a class="navbar-item" href="{{url_for('novel.status', id=3)}}">
                         HIATUS
                     </a>
                 </div>

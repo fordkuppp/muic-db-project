@@ -48,11 +48,11 @@ create table novel
     modified    datetime     null,
     status_id   int          not null,
     user_id int not null,
-    view        int          null,
+    view        int         default 0,
     constraint novel_user_id_fk
-        foreign key (user_id) references user (id),
+        foreign key (user_id) references user (id) on delete cascade,
     constraint novel_status_id_fk
-        foreign key (status_id) references status (id)
+        foreign key (status_id) references status (id) on delete
 );
 
 create table chapter
@@ -64,21 +64,21 @@ create table chapter
     content  text         not null,
     created datetime not null,
     constraint chapter_novel_id
-        foreign key (novel_id) references novel (id)
+        foreign key (novel_id) references novel (id) on delete cascade
 );
 
 create table bookmark
 (
     user_id  int not null,
     novel_id int not null,
-    constraint bookmark_user_id_fk foreign key (user_id) references user (id),
-    constraint bookmark_novel_id_fk foreign key (novel_id) references novel (id)
+    constraint bookmark_user_id_fk foreign key (user_id) references user (id) on delete cascade,
+    constraint bookmark_novel_id_fk foreign key (novel_id) references novel (id)  on delete cascade
 );
 
 create table novel_genres
 (
     novel_id int not null,
     genre_id int not null,
-    constraint novel_id_fk foreign key (novel_id) references novel (id),
-    constraint genre_id_fk foreign key (genre_id) references genre (id)
+    constraint novel_id_fk foreign key (novel_id) references novel (id) on delete cascade,
+    constraint genre_id_fk foreign key (genre_id) references genre (id) on delete cascade
 );

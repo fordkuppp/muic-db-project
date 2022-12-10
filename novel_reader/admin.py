@@ -64,49 +64,6 @@ def chapter():
     return render_template("starter/admin/chapter.html", chapters=chapters, novel=novel)
 
 
-@bp.route("/chapter/edit/", methods=["POST"])
-def chapter_edit():
-    chapter_name = request.form["chapterName"]
-    chapter_content = request.form["chapterContent"]
-    chapter_id = request.form["chapterId"]
-    novel_id = request.form["novelId"]
-    db = get_db()
-    cur = db.cursor(dictionary=True)
-
-    cur.execute("UPDATE chapter SET name = %s WHERE id = %s;", (chapter_name, chapter_id))
-    cur.execute(
-        "UPDATE chapter SET content = %s WHERE id = %s;", (chapter_content, chapter_id)
-    )
-
-    db.commit()
-    cur.close()
-
-    return redirect(url_for("admin.chapter") + f"?novelId={novel_id}")
-
-
-@bp.route("/chapter/add/", methods=["POST"])
-def chapter_add():
-    chapter_name = request.form["chapterName"]
-    chapter_content = request.form["chapterContent"]
-    novel_id = request.form["novelId"]
-    now = datetime.now()
-    now = now.strftime("%Y-%m-%d %H:%M:%S")
-    db = get_db()
-    cur = db.cursor(dictionary=True)
-
-    cur.execute(
-        "INSERT INTO chapter (name, novel_id, content, created)\
-        VALUES (%s, %s, %s, %s);",
-        (chapter_name, novel_id, chapter_content, now),
-    )
-    cur.execute("UPDATE novel SET modified = %s WHERE id = %s;", (now, novel_id))
-
-    db.commit()
-    cur.close()
-
-    return redirect(url_for("admin.chapter") + f"?novelId={novel_id}")
-
-
 @bp.route("/chapter/remove/", methods=["GET", "DELETE"])
 def chapter_remove():
     chapter_id = request.args.get("chapterId")

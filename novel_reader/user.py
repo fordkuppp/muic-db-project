@@ -17,6 +17,20 @@ import bcrypt
 bp = Blueprint("user", __name__, url_prefix="/user")
 
 
+@bp.before_app_request
+def load_logged_in_user():
+    user_id = session.get("user_id")
+
+    if user_id is None:
+        g.user = None
+    else:
+        db = get_db()
+        cur = db.cursor(dictionary=True)
+        cur.execute("SELECT * FROM user WHERE id = %s", (user_id,))
+        g.user = cur.fetchone()
+        cur.close()
+
+
 @bp.route("/profile")
 def profile():
     user_id = session.get("user_id")
@@ -32,20 +46,6 @@ def profile():
 
     cur.close()
     return render_template("starter/user/profile.html", bookmarks=bookmarks)
-
-
-@bp.before_app_request
-def load_logged_in_user():
-    user_id = session.get("user_id")
-
-    if user_id is None:
-        g.user = None
-    else:
-        db = get_db()
-        cur = db.cursor(dictionary=True)
-        cur.execute("SELECT * FROM user WHERE id = %s", (user_id,))
-        g.user = cur.fetchone()
-        cur.close()
 
 
 @bp.route("/register", methods=["POST"])
@@ -254,11 +254,7 @@ def novel_remove():
         return redirect(url_for("user.your_novel"))
     db = get_db()
     cur = db.cursor(dictionary=True)
-    cur.execute("DELETE FROM chapter WHERE novel_id = %s;", (novel["id"],))
-    db.commit()
     cur.execute("DELETE FROM novel WHERE id = %s;", (novel["id"],))
-    db.commit()
-    cur.execute("DELETE FROM bookmark WHERE novel_id = %s;", (novel["id"],))
     db.commit()
     cur.close()
     return redirect(url_for("user.your_novel"))

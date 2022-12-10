@@ -24,7 +24,6 @@ def novel_home(slug: str):
     cur = db.cursor(dictionary=True)
     cur.execute("SELECT genre_id FROM novel_genres WHERE novel_id = %s", (novel_id,))
     data["genres"] = [i["genre_id"] for i in cur.fetchall()]
-    print(data)
     cur.execute("SELECT * FROM genre")
     genres = cur.fetchall()
     cur.execute("SELECT * FROM status")
@@ -82,31 +81,18 @@ def popular():
     return render_template("starter/list.html", endpoint="POPULAR NOVELS", result=data)
 
 
-@bp.route("/active")
-def active():
-    data: list = []
-    for i in get_active_novels(2147483647):
-        data.append(i)
-
-    return render_template("starter/list.html", endpoint="ACTIVE NOVELS", result=data)
-
-
-@bp.route("/completed")
-def completed():
-    data: list = []
-    for i in get_completed_novels(2147483647):
-        data.append(i)
-
-    return render_template("starter/list.html", endpoint="COMPLETED NOVELS", result=data)
-
-
-@bp.route("/hiatus")
-def hiatus():
-    data: list = []
-    for i in get_hiatus_novels(2147483647):
-        data.append(i)
-
-    return render_template("starter/list.html", endpoint="HIATUS NOVELS", result=data)
+@bp.route("/status/<string:id>/")
+def status(id: str):
+    db = get_db()
+    cur = cur = db.cursor(dictionary=True)
+    cur.execute("SELECT name FROM status WHERE id = %s", (id,))
+    status = cur.fetchone()
+    cur.execute("SELECT * FROM novel where status_id = %s ORDER BY modified DESC", (id,))
+    data = cur.fetchall()
+    cur.close()
+    return render_template(
+        "starter/list.html", endpoint=f"{status['name'].upper()} NOVELS", result=data
+    )
 
 
 def get_chapters(novel_id):
@@ -219,39 +205,6 @@ def get_most_viewed_novels(n=10):
     cur.close()
 
     novels.reverse()
-
-    return novels
-
-
-def get_active_novels(n=10):
-    db = get_db()
-    cur = db.cursor(dictionary=True)
-    cur.execute("SELECT * FROM novel WHERE status = 'Active' LIMIT %s;", (n,))
-    novels = cur.fetchall()
-    db.commit()
-    cur.close()
-
-    return novels
-
-
-def get_completed_novels(n=10):
-    db = get_db()
-    cur = db.cursor(dictionary=True)
-    cur.execute("SELECT * FROM novel WHERE status = 'Completed' LIMIT %s;", (n,))
-    novels = cur.fetchall()
-    db.commit()
-    cur.close()
-
-    return novels
-
-
-def get_hiatus_novels(n=10):
-    db = get_db()
-    cur = db.cursor(dictionary=True)
-    cur.execute("SELECT * FROM novel WHERE status = 'Hiatus' LIMIT %s;", (n,))
-    novels = cur.fetchall()
-    db.commit()
-    cur.close()
 
     return novels
 

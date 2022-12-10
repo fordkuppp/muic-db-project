@@ -50,7 +50,7 @@
                     <strong>Status :</strong>
                     {% for item in status %}
                     {% if item.id == novel.status_id %}
-                    <a href="">
+                    <a href="{{url_for('novel.status', id=item.id)}}">
                         <span>{{item.name}}</span>
                     </a>
                     {% endif %}

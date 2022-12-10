@@ -95,6 +95,22 @@ def status(id: str):
     )
 
 
+@bp.route("/author/<string:id>/")
+def author(id: str):
+    db = get_db()
+    cur = cur = db.cursor(dictionary=True)
+    cur.execute("SELECT username FROM user WHERE id = %s", (id,))
+    author = cur.fetchone()
+    cur.execute("SELECT * FROM novel where user_id = %s ORDER BY modified DESC", (id,))
+    data = cur.fetchall()
+    cur.close()
+    return render_template(
+        "starter/list.html",
+        endpoint=f"{author['username'].upper()}'S NOVELS",
+        result=data,
+    )
+
+
 @bp.route("/genre/<string:id>/")
 def genre(id: str):
     db = get_db()

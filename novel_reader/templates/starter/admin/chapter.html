@@ -1,6 +1,14 @@
 {% extends 'admin-default.html' %}
 
 {% block head %}
+<script src="https://cdn.tiny.cloud/1/jugfmzszaf6z27ollir1c9lwjpb7yxs8c4jxf27rb9g5gt4s/tinymce/6/tinymce.min.js"
+    referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+        selector: 'textarea#default',
+        readonly: true
+    });
+</script>
 {% endblock %}
 
 {% block main %}

@@ -21,8 +21,7 @@
             <div class="field">
                 <label class="label">Content</label>
                 <div class="control has-icons-left has-icons-right">
-                    <textarea class="textarea" placeholder="Enter your chapter here!!" rows="17" name="chapterContent"
-                        readonly>{{chapter.content}}</textarea>
+                    <textarea class="textarea" placeholder="Enter your chapter here!!" rows="17" name="chapterContent" id="default">{{chapter.content|safe}}</textarea>
                 </div>
             </div>
         </section>

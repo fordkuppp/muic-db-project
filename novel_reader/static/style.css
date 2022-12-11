@@ -690,7 +690,7 @@ a.button {
 }
 
 .viewer-content {
-    padding: 20px;
+    padding: 30px;
 }
 
 .viewer-button ul {
@@ -702,8 +702,19 @@ a.button {
     margin-left: 5px;
 }
 
-.content-inner>* {
+.content-inner * {
     all: revert;
+}
+
+
+.content-inner p {
+    margin: 0;
+}
+
+.content-inner div {
+    padding: 0;
+    margin: 0;
+    display: grid;
 }
 
 .controller {

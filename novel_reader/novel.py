@@ -128,6 +128,22 @@ def genre(id: str):
     )
 
 
+@bp.route("/search/")
+def search():
+    text = request.args.get("q")
+    db = get_db()
+    cur = cur = db.cursor(dictionary=True)
+    cur.execute(
+        "SELECT * FROM novel WHERE name LIKE %s ORDER BY modified DESC;",
+        (f"%{text}%",),
+    )
+    data = cur.fetchall()
+    cur.close()
+    return render_template(
+        "starter/list.html", endpoint=f"SEARCH: {text.upper()}", result=data
+    )
+
+
 def get_chapters(novel_id):
     db = get_db()
     cur = db.cursor(dictionary=True)

@@ -1,7 +1,6 @@
 {% extends 'default.html' %}
 
 {% block head %}
-<script src="https://unpkg.com/htmx.org@1.8.4" integrity="sha384-wg5Y/JwF7VxGk4zLsJEcAojRtlVp1FKKdGy1qN+OMtdq72WRvX/EdRdqg/LOhYeV" crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block main %}
@@ -46,7 +45,7 @@
                         </td>
                         <td style="text-align: right;">
                             <a class="button is-warning js-modal-trigger" data-target="edit-{{novel.id}}">
-                                <i class="fa-solid fa-pen-to-square"></i>
+                                <i class="fa-solid fa-pen-to-square" style="margin: 0;"></i>
                             </a>
                             <a class="button is-danger js-modal-trigger" data-target="deleted-{{novel.id}}">
                                 <i class="fa-solid fa-trash-can" style="margin: 0;"></i>

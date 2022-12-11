@@ -1,15 +1,10 @@
 from flask import (
     Blueprint,
-    flash,
-    g,
-    redirect,
     render_template,
     request,
     session,
-    url_for,
 )
 from novel_reader.db import get_db
-from typing import Any
 
 bp = Blueprint("novel", __name__, url_prefix="/novel")
 

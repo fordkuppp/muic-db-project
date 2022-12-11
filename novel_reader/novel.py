@@ -13,18 +13,23 @@ bp = Blueprint("novel", __name__, url_prefix="/novel")
 def novel_home(slug: str):
     chapters: list[dict] = []
     novel_id = slug
-    data = get_novel(novel_id)[0]
+    # data = get_novel(novel_id)[0]
 
     db = get_db()
     cur = db.cursor(dictionary=True)
+    cur.execute(
+        "SELECT \
+            novel.id, novel.name, novel.image, novel.description, novel.modified, novel.status_id, s.name as status_name, novel.user_id, novel.view, u.username\
+                FROM novel JOIN user u on u.id = novel.user_id JOIN status s on s.id = novel.status_id \
+                    WHERE novel.id = %s;",
+        (novel_id,),
+    )
+    data = cur.fetchone()
+    print(data)
     cur.execute("SELECT genre_id FROM novel_genres WHERE novel_id = %s", (novel_id,))
     data["genres"] = [i["genre_id"] for i in cur.fetchall()]
     cur.execute("SELECT * FROM genre")
     genres = cur.fetchall()
-    cur.execute("SELECT * FROM status")
-    status = cur.fetchall()
-    cur.execute("SELECT * FROM user WHERE id = %s", (data["user_id"],))
-    author = cur.fetchone()
     cur.close()
     for i in get_chapters(novel_id):
         chapters.append(i)
@@ -34,8 +39,6 @@ def novel_home(slug: str):
         chapters=chapters,
         first=get_first_chapter_id(novel_id),
         bookmark_check=bookmark_check,
-        author=author,
-        status=status,
         genres=genres,
     )
 
@@ -61,29 +64,64 @@ def chapter(novel: str, slug: str):
 @bp.route("/latest/")
 def latest():
     data: list = []
+    db = get_db()
+    cur = db.cursor(dictionary=True, buffered=True)
     for i in get_latest_novels(2147483647):
-        data.append(i)
-
+        temp: dict = i.copy()
+        try:
+            cur.execute(
+                f"SELECT name FROM chapter WHERE novel_id = {temp['id']} ORDER BY created DESC;"
+            )
+            temp["latest_chap"] = cur.fetchone().get("name")
+        except AttributeError:
+            pass
+        finally:
+            data.append(temp)
     return render_template("starter/list.html", endpoint="LATEST NOVELS", result=data)
 
 
 @bp.route("/popular/")
 def popular():
     data: list = []
+    db = get_db()
+    cur = db.cursor(dictionary=True, buffered=True)
     for i in get_most_viewed_novels(2147483647):
-        data.append(i)
-
-    return render_template("starter/list.html", endpoint="POPULAR NOVELS", result=data)
+        temp: dict = i.copy()
+        try:
+            cur.execute(
+                f"SELECT name FROM chapter WHERE novel_id = {temp['id']} ORDER BY created DESC;"
+            )
+            temp["latest_chap"] = cur.fetchone().get("name")
+        except AttributeError:
+            pass
+        finally:
+            data.append(temp)
+    return render_template(
+        "starter/list.html",
+        endpoint="POPULAR NOVELS",
+        result=data,
+    )
 
 
 @bp.route("/status/<string:id>/")
 def status(id: str):
     db = get_db()
-    cur = cur = db.cursor(dictionary=True)
+    cur = cur = db.cursor(dictionary=True, buffered=True)
     cur.execute("SELECT name FROM status WHERE id = %s", (id,))
     status = cur.fetchone()
     cur.execute("SELECT * FROM novel where status_id = %s ORDER BY modified DESC", (id,))
-    data = cur.fetchall()
+    data = []
+    for i in cur.fetchall():
+        temp: dict = i.copy()
+        try:
+            cur.execute(
+                f"SELECT name FROM chapter WHERE novel_id = {temp['id']} ORDER BY created DESC;"
+            )
+            temp["latest_chap"] = cur.fetchone().get("name")
+        except AttributeError:
+            pass
+        finally:
+            data.append(temp)
     cur.close()
     return render_template(
         "starter/list.html", endpoint=f"{status['name'].upper()} NOVELS", result=data
@@ -93,11 +131,22 @@ def status(id: str):
 @bp.route("/author/<string:id>/")
 def author(id: str):
     db = get_db()
-    cur = cur = db.cursor(dictionary=True)
+    cur = cur = db.cursor(dictionary=True, buffered=True)
     cur.execute("SELECT username FROM user WHERE id = %s", (id,))
     author = cur.fetchone()
     cur.execute("SELECT * FROM novel where user_id = %s ORDER BY modified DESC", (id,))
-    data = cur.fetchall()
+    data = []
+    for i in cur.fetchall():
+        temp: dict = i.copy()
+        try:
+            cur.execute(
+                f"SELECT name FROM chapter WHERE novel_id = {temp['id']} ORDER BY created DESC;"
+            )
+            temp["latest_chap"] = cur.fetchone().get("name")
+        except AttributeError:
+            pass
+        finally:
+            data.append(temp)
     cur.close()
     return render_template(
         "starter/list.html",
@@ -109,14 +158,25 @@ def author(id: str):
 @bp.route("/genre/<string:id>/")
 def genre(id: str):
     db = get_db()
-    cur = cur = db.cursor(dictionary=True)
+    cur = cur = db.cursor(dictionary=True, buffered=True)
     cur.execute("SELECT name FROM genre WHERE id = %s", (id,))
     genre = cur.fetchone()
     cur.execute(
         "SELECT * FROM novel WHERE id in (SELECT novel_id FROM novel_genres WHERE genre_id = %s) ORDER BY modified DESC;",
         (id,),
     )
-    data = cur.fetchall()
+    data = []
+    for i in cur.fetchall():
+        temp: dict = i.copy()
+        try:
+            cur.execute(
+                f"SELECT name FROM chapter WHERE novel_id = {temp['id']} ORDER BY created DESC;"
+            )
+            temp["latest_chap"] = cur.fetchone().get("name")
+        except AttributeError:
+            pass
+        finally:
+            data.append(temp)
     cur.close()
     return render_template(
         "starter/list.html", endpoint=f"{genre['name'].upper()} NOVELS", result=data

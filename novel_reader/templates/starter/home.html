@@ -60,12 +60,12 @@
                         {% for chapter in novel.chapters %}
                         <div class="chap-item">
                             <h4>
-                                <a title="{{novel.name}} - {{chapter.name}}" href="{{url_for('home.chapter', novel=novel.id, slug=chapter.id)}}">
+                                <a title="{{novel.name}} - {{chapter.name}}" href="{{url_for('novel.chapter', novel=novel.id, slug=chapter.id)}}">
                                     {{chapter.name}}
                                 </a>
                             </h4>
                             <div class="updated-date">
-                                <span>{{chapter.get_date}}</span>
+                                <span>{{humantime(chapter.created)}}</span>
                             </div>
                         </div>
                         {% endfor %}

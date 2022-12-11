@@ -42,19 +42,15 @@
             <div class="meta block-body mt-1" style="margin-bottom:0;">
                 <p>
                     <strong>Author :</strong>
-                    <a href="{{url_for('novel.author', id=author.id)}}">
-                        <span>{{author.username}}</span>
+                    <a href="{{url_for('novel.author', id=novel.user_id)}}">
+                        <span>{{novel.username}}</span>
                     </a>
                 </p>
                 <p>
                     <strong>Status :</strong>
-                    {% for item in status %}
-                    {% if item.id == novel.status_id %}
-                    <a href="{{url_for('novel.status', id=item.id)}}">
-                        <span>{{item.name}}</span>
+                    <a href="{{url_for('novel.status', id=novel.status_id)}}">
+                        <span>{{novel.status_name}}</span>
                     </a>
-                    {% endif %}
-                    {% endfor %}
                     
                 </p>
                 <p><strong>Genres :</strong>

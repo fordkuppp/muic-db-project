@@ -396,7 +396,7 @@ a.button {
 
 .latest-item .inner .meta .chapters .chap-item h4 a {
     color: #000;
-    font-size: 11px;
+    font-size: 13px;
 }
 
 .latest-item .inner .meta .chapters .chap-item h4 a:hover {
@@ -415,6 +415,7 @@ a.button {
     white-space: nowrap;
     overflow: hidden;
     width: 100%;
+    font-size: 11px;
 }
 
 .load-more {
